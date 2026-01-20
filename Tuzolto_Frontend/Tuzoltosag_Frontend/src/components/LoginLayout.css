@@ -1,0 +1,149 @@
+
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #e6e6e6;
+}
+
+
+header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background-color: #f2f2f2;
+    gap: 20px;
+}
+
+.header-img {
+    width: 70%;
+    height: auto;
+}
+h1{
+    padding-top: 3%;
+}
+nav img {
+    width: 100%;
+}
+
+.navbar {
+    background-color: rgb(151, 22, 15);
+    padding: 1%;
+    display: flex;
+    align-items: center;
+    font-size: medium;
+}
+
+.navbar a {
+    text-decoration: none;
+    margin-right: 30px;
+}
+
+.navbar a:hover {
+    text-decoration: underline;
+}
+
+.login-btn {
+    margin-left: auto;
+    padding: 10px 15px;
+    cursor: pointer;
+    border-radius: 20px; 
+    font-size: medium;
+}
+
+
+.container {
+    display: flex;
+    padding: 20px;
+}
+
+
+.content {
+    width: 75%;
+}
+
+
+.mission {
+    display: flex;
+    margin-bottom: 20px;
+}
+
+.mission-img {
+    width: 250px;
+    height: 180px;
+    margin-right: 20px;
+}
+.mission-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+
+.mission-text h3 {
+    margin: 0;
+}
+
+.description {
+    margin-top: 15px;
+    background-color: #ccc;
+    padding: 100px 250px;
+    font-size: 32px;
+    text-align: justify;
+    box-sizing: border-box;
+}
+
+aside {
+    width: 25%;
+    padding-left: 10%;
+}
+
+.sidebar-box p {
+    margin: 0;
+    font-weight: bold;
+}
+
+
+.sidebar-box {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    gap: 10px;
+}
+
+.sidebar-img {
+    width: 45%;
+    object-fit: cover;
+}
+
+
+.container {
+    display: flex;
+    padding: 20px;
+    margin-left: 120px;
+    margin-right: 120px;
+}
+
+.navbar {
+    padding-left: 8%;
+    padding-right: 8%;
+    margin-bottom: 2%;
+}
+hr {
+    margin-bottom: 3%;
+    margin-top: 3%;
+}
+
+.loginBtn {
+  background-color: white;
+  margin-left: 90%;
+  padding: 10px 15px;
+  cursor: pointer;
+  border-radius: 20px; 
+  font-size: medium;
+  margin-right: 10%;
+}
+.linkColor {
+    color: white;
+}
