@@ -16,7 +16,8 @@ return new class extends Migration
             $table->timestamps();
             $table->string("header");
             $table->date("date");
-            $table->string("type");
+            $table->unsignedBigInteger("typeId");
+            $table->foreign("typeId")->references("id")->on("forum_types");
             $table->string("place");
             $table->string("description");
             $table->string("imageName");
