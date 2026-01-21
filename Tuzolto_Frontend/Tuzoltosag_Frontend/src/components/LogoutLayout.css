@@ -10,17 +10,17 @@ header {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 20px;
     background-color: #f2f2f2;
-    gap: 20px;
 }
 
-.header-img {
-    width: 70%;
+.headerImg {
+    width: 100%;
     height: auto;
+    margin: auto;
 }
 h1{
-    padding-top: 3%;
+    margin-top: 5%;
+    text-align: center;
 }
 nav img {
     width: 100%;
@@ -28,10 +28,9 @@ nav img {
 
 .navbar {
     background-color: rgb(151, 22, 15);
-    padding: 1%;
     display: flex;
     align-items: center;
-    font-size: medium;
+    font-size: large;
 }
 
 .navbar a {
@@ -42,15 +41,6 @@ nav img {
 .navbar a:hover {
     text-decoration: underline;
 }
-
-.login-btn {
-    margin-left: auto;
-    padding: 10px 15px;
-    cursor: pointer;
-    border-radius: 20px; 
-    font-size: medium;
-}
-
 
 .container {
     display: flex;
@@ -118,32 +108,33 @@ aside {
 }
 
 
-.container {
-    display: flex;
-    padding: 20px;
-    margin-left: 120px;
-    margin-right: 120px;
-}
-
-.navbar {
-    padding-left: 8%;
-    padding-right: 8%;
-    margin-bottom: 2%;
-}
 hr {
     margin-bottom: 3%;
     margin-top: 3%;
 }
 
 .loginBtn {
-  background-color: white;
-  margin-left: 90%;
-  padding: 10px 15px;
-  cursor: pointer;
-  border-radius: 20px; 
-  font-size: medium;
-  margin-right: 10%;
+    background-color: white;
+    cursor: pointer;
+    border-radius: 20px; 
+    font-size: large;
+    text-align: center;
+    text-decoration: none;
+    color: black;
+    width: 150px;
 }
+
 .linkColor {
     color: white;
 }
+/*
+@media only screen and (max-width: 800px){
+
+}
+
+@media only screen and (max-width: 992px){
+    .headerImg{
+        display: none;
+    }
+}
+*/
