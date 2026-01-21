@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Forum;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Validator;
 class ForumController extends Controller
 {
     /**
@@ -28,7 +28,27 @@ class ForumController extends Controller
      */
     public function store(Request $request)
     {
-        //
+         $validator = Validator::make($request->all(), [
+                "header"=> "required",
+                "date"=> "required",
+                "typeId"=> "required|exists:forum_Types,id",
+                "place"=> "required",
+                "description"=>"required",
+                "imageName"=>"required"
+        ]);
+        if($validator->fails())
+            {
+                return response()->json(["message"=>"hiba","hibák"=>$validator->errors()],402);
+            }
+        $newRecord = new Forum();
+        $newRecord->header=$request->header;
+        $newRecord->date=$request->date;
+        $newRecord->typeId=$request->typeId;
+        $newRecord->place=$request->place;
+        $newRecord->description=$request->description;
+        $newRecord->imageName=$request->imageName;
+        $newRecord->save();
+        return response()->json(["message"=>"sikeres feltöltés"],201);
     }
 
     /**
