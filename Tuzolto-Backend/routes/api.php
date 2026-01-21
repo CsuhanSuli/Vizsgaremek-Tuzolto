@@ -17,8 +17,11 @@ Route::post('/login', [UserController::class, 'login']) ->name('login');
 
 //forum
 Route::get("/forum/get",[ForumController::class,"index"]);
-Route::post("/forum/store",[ForumController::class,"store"]);
+
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [UserController::class, 'logout']);
+
+    //forum
+    Route::post("/forum/store",[ForumController::class,"store"]);
 });
