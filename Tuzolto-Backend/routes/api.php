@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ForumController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -14,7 +15,9 @@ Route::post('/register', action: [UserController::class, 'register']);
 Route::post('/login', [UserController::class, 'login']) ->name('login');
 
 
-
+//forum
+Route::get("/forum/get",[ForumController::class,"index"]);
+Route::post("/forum/store",[ForumController::class,"store"]);
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [UserController::class, 'logout']);
