@@ -28,6 +28,7 @@ class ForumController extends Controller
      */
     public function store(Request $request)
     {
+        
          $validator = Validator::make($request->all(), [
                 "header"=> "required",
                 "date"=> "required",
