@@ -127,14 +127,23 @@ hr {
 .linkColor {
     color: white;
 }
-/*
+
 @media only screen and (max-width: 800px){
 
 }
 
-@media only screen and (max-width: 992px){
+@media only screen and (min-width: 1200px){
     .headerImg{
         display: none;
     }
+    
 }
-*/
+
+footer{
+    background-color: rgb(151, 22, 15);
+    display: flex;
+    align-items: center;
+    font-size: large;
+    color: white;
+    text-align: center;
+}

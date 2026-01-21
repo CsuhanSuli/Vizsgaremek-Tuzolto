@@ -23,7 +23,7 @@ const LogoutLayout = ({children}) => {
 
       <Navbar collapseOnSelect expand="lg" className="navbar">
       <Container>
-        <Navbar.Brand  className='linkColor ' href="http://localhost:5173/Home"><img src="" alt="" />Kezdőlap</Navbar.Brand>
+        <Navbar.Brand  className='linkColor ' href="http://localhost:5173/Home">Kezdőlap</Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="me-auto">
@@ -42,7 +42,19 @@ const LogoutLayout = ({children}) => {
       <main>
         {children}
       </main>
-
+      
+      <footer>
+        <Container>
+          <Col/>
+          <Col>
+            <p><strong>Vészhelyzet esetén hívj a 112-t!</strong></p>
+            <p><strong>Cím:</strong> 8630 Balatonboglár Klapka Gy. utca 9<br />
+                <strong>Telefonszám:</strong> +36 85/550-960<br />
+                <strong>Email:</strong> bbtuzoltosag@gmail.com</p>
+          </Col>
+            <Col/>
+        </Container>
+      </footer>
 
 </>
 
