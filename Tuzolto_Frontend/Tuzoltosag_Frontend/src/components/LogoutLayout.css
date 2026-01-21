@@ -127,7 +127,7 @@ hr {
 .linkColor {
     color: white;
 }
-
+/*
 @media only screen and (max-width: 800px){
 
 }
@@ -137,7 +137,7 @@ hr {
         display: none;
     }
     
-}
+}*/
 
 footer{
     background-color: rgb(151, 22, 15);
@@ -146,4 +146,8 @@ footer{
     font-size: large;
     color: white;
     text-align: center;
+}
+.attention {
+    text-decoration-line: underline;
+    text-decoration-style: double;
 }

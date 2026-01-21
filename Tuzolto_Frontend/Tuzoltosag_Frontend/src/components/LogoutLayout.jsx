@@ -47,7 +47,7 @@ const LogoutLayout = ({children}) => {
         <Container>
           <Col/>
           <Col>
-            <p><strong>Vészhelyzet esetén hívj a 112-t!</strong></p>
+            <p className='attention'><strong>Vészhelyzet esetén hívj a 112-t!</strong></p>
             <p><strong>Cím:</strong> 8630 Balatonboglár Klapka Gy. utca 9<br />
                 <strong>Telefonszám:</strong> +36 85/550-960<br />
                 <strong>Email:</strong> bbtuzoltosag@gmail.com</p>
