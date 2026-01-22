@@ -32,7 +32,6 @@ const LogoutLayout = ({children}) => {
             <Nav.Link className='linkColor' href="#contacts">Elérhetőségeink</Nav.Link>
           </Nav>
           <Nav>
-            {/*<Nav.Link className='loginBtn' href="http://localhost:5173/Login">Bejelentkezés</Nav.Link>*/}
             <button className='loginBtn' type="button" href="http://localhost:5173/Login">Bejelentkezés</button>
           </Nav>
         </Navbar.Collapse>
