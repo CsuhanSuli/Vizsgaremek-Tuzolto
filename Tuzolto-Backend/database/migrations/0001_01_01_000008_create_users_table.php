@@ -18,8 +18,6 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->boolean("40hours");
-            $table->unsignedBigInteger("examId");
-            $table->foreign("examId")->references("id")->on("exam_users");
             $table->rememberToken();
             $table->timestamps();
         });

@@ -8,7 +8,7 @@ class examUser extends Model
 {
     public function exams()
     {
-        return $this->hasMany(exams::class,"examId");
+        return $this->belongsTo(exams::class,"examId");
     }
     public function User()
     {
