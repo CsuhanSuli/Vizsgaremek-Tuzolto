@@ -17,6 +17,10 @@ return new class extends Migration
             $table->string("name");
             $table->unsignedBigInteger("toolTypeId");
             $table->foreign("toolTypeId")->references("id")->on("tool_types");
+            $table->unsignedBigInteger("placeId");
+            $table->unsignedBigInteger("carId");
+            $table->foreign("placeId")->references("id")->on("car_places");
+            $table->foreign("carId")->references("id")->on("cars");
         });
     }
 

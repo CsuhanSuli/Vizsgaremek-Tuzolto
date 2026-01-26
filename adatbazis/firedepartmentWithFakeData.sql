@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Gép: 127.0.0.1
--- Létrehozás ideje: 2026. Jan 21. 11:29
+-- Létrehozás ideje: 2026. Jan 26. 11:00
 -- Kiszolgáló verziója: 10.4.32-MariaDB
 -- PHP verzió: 8.2.12
 
@@ -90,16 +90,43 @@ CREATE TABLE `car_places` (
 -- --------------------------------------------------------
 
 --
--- Tábla szerkezet ehhez a táblához `car_tool_links`
+-- Tábla szerkezet ehhez a táblához `exams`
 --
 
-CREATE TABLE `car_tool_links` (
+CREATE TABLE `exams` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `placeId` bigint(20) UNSIGNED NOT NULL,
-  `carId` bigint(20) UNSIGNED NOT NULL,
-  `toolId` bigint(20) UNSIGNED NOT NULL
+  `name` varchar(255) NOT NULL,
+  `examType` bigint(20) UNSIGNED NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Tábla szerkezet ehhez a táblához `exam_types`
+--
+
+CREATE TABLE `exam_types` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `typName` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Tábla szerkezet ehhez a táblához `exam_users`
+--
+
+CREATE TABLE `exam_users` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `examDate` date NOT NULL,
+  `examId` bigint(20) UNSIGNED NOT NULL,
+  `userId` bigint(20) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -136,15 +163,6 @@ CREATE TABLE `forums` (
   `imageName` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- A tábla adatainak kiíratása `forums`
---
-
-INSERT INTO `forums` (`id`, `created_at`, `updated_at`, `header`, `date`, `typeId`, `place`, `description`, `imageName`) VALUES
-(1, '2026-01-21 10:28:07', '2026-01-21 10:28:07', 'Music Festival', '2026-03-15', 1, 'Central Park', 'Annual open-air music festival featuring multiple artists.', 'music_festival.jpg'),
-(2, '2026-01-21 10:28:07', '2026-01-21 10:28:07', 'Tech Conference', '2026-04-10', 2, 'Convention Center', 'Technology conference focusing on AI and cloud computing.', 'tech_conference.png'),
-(3, '2026-01-21 10:28:07', '2026-01-21 10:28:07', 'Art Exhibition', '2026-05-05', 3, 'Modern Art Museum', 'Exhibition showcasing contemporary local artists.', 'art_exhibition.jpg');
-
 -- --------------------------------------------------------
 
 --
@@ -157,15 +175,6 @@ CREATE TABLE `forum_types` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `typeName` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- A tábla adatainak kiíratása `forum_types`
---
-
-INSERT INTO `forum_types` (`id`, `created_at`, `updated_at`, `typeName`) VALUES
-(1, '2026-01-21 10:26:55', '2026-01-21 10:26:55', 'type_a'),
-(2, '2026-01-21 10:26:55', '2026-01-21 10:26:55', 'type_b'),
-(3, '2026-01-21 10:26:55', '2026-01-21 10:26:55', 'type_c');
 
 -- --------------------------------------------------------
 
@@ -219,20 +228,23 @@ CREATE TABLE `migrations` (
 --
 
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
-(1, '0001_01_01_000000_create_users_table', 1),
-(2, '0001_01_01_000001_create_cache_table', 1),
-(3, '0001_01_01_000002_create_jobs_table', 1),
-(4, '0002_00_00_091650_create_car_places_table', 1),
-(5, '0002_00_01_091814_create_cartypes_table', 1),
-(6, '0002_00_02_091546_create_cars_table', 1),
-(7, '0002_00_03_091705_create_tool_types_table', 1),
-(8, '0002_00_04_091642_create_tools_table', 1),
-(9, '0002_00_05_091700_create_car_tool_links_table', 1),
-(10, '0003_00_00_091933_create_forum_types_table', 1),
-(11, '0003_00_01_091913_create_forums_table', 1),
-(12, '0004_00_00_091854_create_review_types_table', 1),
-(13, '0004_00_01_091848_create_reviews_table', 1),
-(14, '2026_01_01_150852_create_personal_access_tokens_table', 1);
+(1, '0000_00_00_000000_create_schedules_table', 1),
+(2, '0000_00_00_000001_create_exam_types_table', 1),
+(3, '0000_00_00_000003_create_exams_table', 1),
+(4, '0001_01_01_0000010_create_jobs_table', 1),
+(5, '0001_01_01_000008_create_users_table', 1),
+(6, '0001_01_01_000009_create_cache_table', 1),
+(7, '0001_01_01_000011_create_exam_users_table', 1),
+(8, '0002_00_00_091650_create_car_places_table', 1),
+(9, '0002_00_01_091814_create_cartypes_table', 1),
+(10, '0002_00_02_091546_create_cars_table', 1),
+(11, '0002_00_03_091705_create_tool_types_table', 1),
+(12, '0002_00_04_091642_create_tools_table', 1),
+(13, '0003_00_00_091933_create_forum_types_table', 1),
+(14, '0003_00_01_091913_create_forums_table', 1),
+(15, '0004_00_00_091854_create_review_types_table', 1),
+(16, '0004_00_01_091848_create_reviews_table', 1),
+(17, '2026_01_01_150852_create_personal_access_tokens_table', 1);
 
 -- --------------------------------------------------------
 
@@ -299,6 +311,18 @@ CREATE TABLE `review_types` (
 -- --------------------------------------------------------
 
 --
+-- Tábla szerkezet ehhez a táblához `schedules`
+--
+
+CREATE TABLE `schedules` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Tábla szerkezet ehhez a táblához `sessions`
 --
 
@@ -322,7 +346,9 @@ CREATE TABLE `tools` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `name` varchar(255) NOT NULL,
-  `toolTypeId` bigint(20) UNSIGNED NOT NULL
+  `toolTypeId` bigint(20) UNSIGNED NOT NULL,
+  `placeId` bigint(20) UNSIGNED NOT NULL,
+  `carId` bigint(20) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -350,6 +376,7 @@ CREATE TABLE `users` (
   `email` varchar(255) NOT NULL,
   `email_verified_at` timestamp NULL DEFAULT NULL,
   `password` varchar(255) NOT NULL,
+  `40hours` tinyint(1) NOT NULL,
   `remember_token` varchar(100) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -391,13 +418,25 @@ ALTER TABLE `car_places`
   ADD PRIMARY KEY (`id`);
 
 --
--- A tábla indexei `car_tool_links`
+-- A tábla indexei `exams`
 --
-ALTER TABLE `car_tool_links`
+ALTER TABLE `exams`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `car_tool_links_placeid_foreign` (`placeId`),
-  ADD KEY `car_tool_links_carid_foreign` (`carId`),
-  ADD KEY `car_tool_links_toolid_foreign` (`toolId`);
+  ADD KEY `exams_examtype_foreign` (`examType`);
+
+--
+-- A tábla indexei `exam_types`
+--
+ALTER TABLE `exam_types`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- A tábla indexei `exam_users`
+--
+ALTER TABLE `exam_users`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `exam_users_examid_foreign` (`examId`),
+  ADD KEY `exam_users_userid_foreign` (`userId`);
 
 --
 -- A tábla indexei `failed_jobs`
@@ -468,6 +507,12 @@ ALTER TABLE `review_types`
   ADD PRIMARY KEY (`id`);
 
 --
+-- A tábla indexei `schedules`
+--
+ALTER TABLE `schedules`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- A tábla indexei `sessions`
 --
 ALTER TABLE `sessions`
@@ -480,7 +525,9 @@ ALTER TABLE `sessions`
 --
 ALTER TABLE `tools`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `tools_tooltypeid_foreign` (`toolTypeId`);
+  ADD KEY `tools_tooltypeid_foreign` (`toolTypeId`),
+  ADD KEY `tools_placeid_foreign` (`placeId`),
+  ADD KEY `tools_carid_foreign` (`carId`);
 
 --
 -- A tábla indexei `tool_types`
@@ -518,9 +565,21 @@ ALTER TABLE `car_places`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT a táblához `car_tool_links`
+-- AUTO_INCREMENT a táblához `exams`
 --
-ALTER TABLE `car_tool_links`
+ALTER TABLE `exams`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT a táblához `exam_types`
+--
+ALTER TABLE `exam_types`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT a táblához `exam_users`
+--
+ALTER TABLE `exam_users`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
@@ -533,13 +592,13 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT a táblához `forums`
 --
 ALTER TABLE `forums`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT a táblához `forum_types`
 --
 ALTER TABLE `forum_types`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT a táblához `jobs`
@@ -551,7 +610,7 @@ ALTER TABLE `jobs`
 -- AUTO_INCREMENT a táblához `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT a táblához `personal_access_tokens`
@@ -569,6 +628,12 @@ ALTER TABLE `reviews`
 -- AUTO_INCREMENT a táblához `review_types`
 --
 ALTER TABLE `review_types`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT a táblához `schedules`
+--
+ALTER TABLE `schedules`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
@@ -592,6 +657,44 @@ ALTER TABLE `users`
 --
 -- Megkötések a kiírt táblákhoz
 --
+INSERT INTO `forum_types` (`id`,`created_at`,`updated_at`,`typeName`) VALUES
+(1, '2026-01-26 11:00:00', '2026-01-26 11:00:00', 'Kimenetel'),
+(2, '2026-01-26 11:00:00', '2026-01-26 11:00:00', 'Gyakorlás'),
+(3, '2026-01-26 11:00:00', '2026-01-26 11:00:00', 'Hírek');
+
+INSERT INTO `cartypes` (`id`,`created_at`,`updated_at`,`typename`) VALUES
+(1, '2026-01-26 11:00:00', '2026-01-26 11:00:00', 'Tűzoltóautó'),
+(2, '2026-01-26 11:00:00', '2026-01-26 11:00:00', 'Létraautó'),
+(3, '2026-01-26 11:00:00', '2026-01-26 11:00:00', 'Vízszállító');
+
+INSERT INTO `car_places` (`id`,`created_at`,`updated_at`,`place`) VALUES
+(1, '2026-01-26 11:00:00', '2026-01-26 11:00:00', 'Telephely'),
+(2, '2026-01-26 11:00:00', '2026-01-26 11:00:00', 'Raktár'),
+(3, '2026-01-26 11:00:00', '2026-01-26 11:00:00', 'Főbejárat');
+
+INSERT INTO `tool_types` (`id`,`created_at`,`updated_at`,`typeName`) VALUES
+(1, '2026-01-26 11:00:00', '2026-01-26 11:00:00', 'Feszítő'),
+(2, '2026-01-26 11:00:00', '2026-01-26 11:00:00', 'Tűzoltó készlet'),
+(3, '2026-01-26 11:00:00', '2026-01-26 11:00:00', 'Védőfelszerelés');
+
+-- Insert cars (depends on cartypes)
+INSERT INTO `cars` (`id`,`created_at`,`updated_at`,`name`,`typeId`) VALUES
+(1, '2026-01-26 11:00:00', '2026-01-26 11:00:00', 'Rosenbauer Alpha', 1),
+(2, '2026-01-26 11:00:00', '2026-01-26 11:00:00', 'Magirus Ladder 12', 2),
+(3, '2026-01-26 11:00:00', '2026-01-26 11:00:00', 'MAN Water 3000', 3);
+
+-- Insert tools (depends on tool_types, car_places, cars)
+INSERT INTO `tools` (`id`,`created_at`,`updated_at`,`name`,`toolTypeId`,`placeId`,`carId`) VALUES
+(1, '2026-01-26 11:00:00', '2026-01-26 11:00:00', 'Hydraulikus feszítő', 1, 2, 1),
+(2, '2026-01-26 11:00:00', '2026-01-26 11:00:00', 'Tűzoltó tömlő 20m', 2, 1, 3),
+(3, '2026-01-26 11:00:00', '2026-01-26 11:00:00', 'Létra bilincs készlet', 3, 1, 2),
+(4, '2026-01-26 11:00:00', '2026-01-26 11:00:00', 'Szén-dioxid oltó', 2, 2, 1);
+
+-- Insert forums (depends on forum_types)
+INSERT INTO `forums` (`id`,`created_at`,`updated_at`,`header`,`date`,`typeId`,`place`,`description`,`imageName`) VALUES
+(1, '2026-01-26 11:00:00', '2026-01-26 11:00:00', 'Gyakorlati tűzoltó gyakorlat', '2026-01-15', 2, 'Telephely', 'Gyakorlás: tömlőkezelés és beavatkozás.', 'practice1.jpg'),
+(2, '2026-01-26 11:00:00', '2026-01-26 11:00:00', 'Lakástűz eloltása - sikeres kimenetel', '2026-01-10', 1, 'Klapka utca 9', 'Személyek kimenekítve, tűz eloltva.', 'incident1.jpg'),
+(3, '2026-01-26 11:00:00', '2026-01-26 11:00:00', 'Új felszerelés érkezett', '2026-01-20', 3, 'Raktár', 'Új védőfelszerelések és szerszámok érkeztek.', 'news1.jpg');
 
 --
 -- Megkötések a táblához `cars`
@@ -600,12 +703,17 @@ ALTER TABLE `cars`
   ADD CONSTRAINT `cars_typeid_foreign` FOREIGN KEY (`typeId`) REFERENCES `cartypes` (`id`);
 
 --
--- Megkötések a táblához `car_tool_links`
+-- Megkötések a táblához `exams`
 --
-ALTER TABLE `car_tool_links`
-  ADD CONSTRAINT `car_tool_links_carid_foreign` FOREIGN KEY (`carId`) REFERENCES `cars` (`id`),
-  ADD CONSTRAINT `car_tool_links_placeid_foreign` FOREIGN KEY (`placeId`) REFERENCES `car_places` (`id`),
-  ADD CONSTRAINT `car_tool_links_toolid_foreign` FOREIGN KEY (`toolId`) REFERENCES `tools` (`id`);
+ALTER TABLE `exams`
+  ADD CONSTRAINT `exams_examtype_foreign` FOREIGN KEY (`examType`) REFERENCES `exam_types` (`id`);
+
+--
+-- Megkötések a táblához `exam_users`
+--
+ALTER TABLE `exam_users`
+  ADD CONSTRAINT `exam_users_examid_foreign` FOREIGN KEY (`examId`) REFERENCES `exams` (`id`),
+  ADD CONSTRAINT `exam_users_userid_foreign` FOREIGN KEY (`userId`) REFERENCES `users` (`id`);
 
 --
 -- Megkötések a táblához `forums`
@@ -624,6 +732,8 @@ ALTER TABLE `reviews`
 -- Megkötések a táblához `tools`
 --
 ALTER TABLE `tools`
+  ADD CONSTRAINT `tools_carid_foreign` FOREIGN KEY (`carId`) REFERENCES `cars` (`id`),
+  ADD CONSTRAINT `tools_placeid_foreign` FOREIGN KEY (`placeId`) REFERENCES `car_places` (`id`),
   ADD CONSTRAINT `tools_tooltypeid_foreign` FOREIGN KEY (`toolTypeId`) REFERENCES `tool_types` (`id`);
 COMMIT;
 

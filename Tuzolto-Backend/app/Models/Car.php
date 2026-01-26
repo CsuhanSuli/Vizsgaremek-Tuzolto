@@ -6,9 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Car extends Model
 {
-    public function carToolLink()
+    public function tools()
     {
-        return $this->hasMany(carToolLink::class,"carId");
+        return $this->hasMany(tools::class,"carId");
     }
     public function review()
     {

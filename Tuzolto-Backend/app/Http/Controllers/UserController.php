@@ -19,7 +19,7 @@ class UserController extends Controller
             //e-mail formailag helyes
             'email' => 'required|email|unique:users',
             //confirmed: a jelszót meg kell erősíteni
-            'password' => 'required|min:8|confirmed',
+            'password' => 'required|min:4|confirmed',
         ]);
         //user létrehozása
         $user = User::create([

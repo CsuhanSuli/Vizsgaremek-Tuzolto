@@ -34,9 +34,9 @@ class ToolsController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(tools $tools)
+    public function show(string $id)
     {
-        //
+        return response()->json(tools::where("carId","=",$id)->with("carPlace")->get());
     }
 
     /**

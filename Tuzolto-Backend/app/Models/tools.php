@@ -6,12 +6,16 @@ use Illuminate\Database\Eloquent\Model;
 
 class tools extends Model
 {
-    public function carToolLink()
-    {
-        return $this->hasMany(carToolLink::class,"toolId");
-    }
-        public function toolType()
+    public function toolType()
     {
         return $this->belongsTo(toolType::class,"toolTypeId");
+    }
+    public function Car()
+    {
+        return $this->belongsTo(Car::class,"carId");
+    }
+    public function carPlace()
+    {
+        return $this->belongsTo(carPlace::class,"placeId");
     }
 }
