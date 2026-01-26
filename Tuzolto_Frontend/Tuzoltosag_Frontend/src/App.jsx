@@ -1,22 +1,22 @@
 import './App.css'
-import AllMission from './components/AllMission';
+import AllMission from './components/LoggedOut/Missions/AllMission';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import LogoutLayout from './components/LogoutLayout';
+import LoggedOutLayout from './components/LoggedOut/LoggedOutLayout';
 function App() {
 
   return (
     <>
 
-      <LogoutLayout>
+      <LoggedOutLayout>
         <Router>
           <Routes>
-            <Route path="/Home" element={<AllMission />} />
+            <Route path="" element={<AllMission />} />
             {/*<Route path="/FireFighters" element={<FireFighters/>} />
             <Route path="/Cars" element={<Cars/>} />
             <Route path="/Login" element={<Login/>} />*/}
           </Routes>
         </Router>
-      </LogoutLayout>
+      </LoggedOutLayout>
     </>
   )
 }

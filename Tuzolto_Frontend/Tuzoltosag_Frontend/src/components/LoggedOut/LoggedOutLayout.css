@@ -11,6 +11,8 @@ header {
     align-items: center;
     justify-content: center;
     background-color: #f2f2f2;
+    padding-bottom: 1%;
+    padding-top: 1%;
 }
 
 .headerImg {
@@ -19,11 +21,8 @@ header {
     margin: auto;
 }
 h1{
-    margin-top: 5%;
+    margin-top: 6%;
     text-align: center;
-}
-nav img {
-    width: 100%;
 }
 
 .navbar {
@@ -31,6 +30,7 @@ nav img {
     display: flex;
     align-items: center;
     font-size: large;
+    margin-bottom: 3%;
 }
 
 .navbar a {
@@ -40,16 +40,6 @@ nav img {
 
 .navbar a:hover {
     text-decoration: underline;
-}
-
-.container {
-    display: flex;
-    padding: 20px;
-}
-
-
-.content {
-    width: 75%;
 }
 
 .loginBtn {
@@ -66,15 +56,15 @@ nav img {
 .linkColor {
     color: white;
 }
-/*
-@media only screen and (max-width: 800px){
 
-}
-
-@media only screen and (min-width: 1200px){
-    .headerImg{
+@media only screen and (max-width: 760px){
+    h1{
         display: none;
     }
+}
+/*
+@media only screen and (min-width: 1200px){
+
     
 }*/
 
@@ -85,8 +75,13 @@ footer{
     font-size: large;
     color: white;
     text-align: center;
+    padding-top: 1%;
+    padding-bottom: 1%;
 }
 .attention {
     text-decoration-line: underline;
     text-decoration-style: double;
+}
+.fb_logo {
+    width: 50px;
 }
