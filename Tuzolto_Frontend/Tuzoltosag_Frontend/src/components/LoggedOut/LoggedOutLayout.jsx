@@ -22,7 +22,7 @@ const LoggedOutLayout = ({children}) => {
 
       <Navbar collapseOnSelect expand="lg" className="navbar">
       <Container>
-        <Navbar.Brand  className='linkColor ' href="http://localhost:5173/Home">Kezdőlap</Navbar.Brand>
+        <Navbar.Brand  className='linkColor ' href="http://localhost:5173">Kezdőlap</Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="me-auto">
@@ -38,7 +38,11 @@ const LoggedOutLayout = ({children}) => {
     </Navbar>
 
       <main>
-        {children}
+        <Container>
+          <Row>
+            {children}
+          </Row>
+        </Container>
       </main>
       
       <footer>
