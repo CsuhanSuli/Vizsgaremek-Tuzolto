@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string("name");
             $table->unsignedBigInteger("typeId");
             $table->foreign("typeId")->references("id")->on("cartypes");
+            $table->string("imageName");
         });
     }
 

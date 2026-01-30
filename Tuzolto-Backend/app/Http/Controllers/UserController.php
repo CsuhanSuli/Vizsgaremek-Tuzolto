@@ -43,7 +43,12 @@ class UserController extends Controller
         $credentials = $request->validate([
             'email' => 'required|email',
             'password' => 'required',
-        ]);
+        ],
+        [
+            'email.required' => 'nincs email megadva',
+            'password.required'=>"nincs jelszó megadva"
+        ]
+    );
 
         if (!Auth::attempt($credentials)) {
             return response()->json([
