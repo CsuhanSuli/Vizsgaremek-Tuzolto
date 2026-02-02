@@ -23,14 +23,12 @@ Route::get("/forum/get",[ForumController::class,"index"]);
 
 
 Route::get("/tools/show/{id}",[ToolsController::class,"show"]);
-
-
+//cars
+Route::get("/car/get",[CarController::class,"index"]);
 
 Route::middleware('auth:sanctum')->group(function () {
     //user
     Route::post('/user/logout', [UserController::class, 'logout']);
     //forum
-    Route::post("/forum/store",[ForumController::class,"store"]);
-    //testing
-    Route::post("/car/get",[CarController::class,"index"]);
+    Route::post("/forum/store",[ForumController::class,"store"])->middleware(isAdmin::class);
 });

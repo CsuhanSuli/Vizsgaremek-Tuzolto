@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Gép: 127.0.0.1
--- Létrehozás ideje: 2026. Jan 26. 11:00
+-- Létrehozás ideje: 2026. Feb 02. 11:16
 -- Kiszolgáló verziója: 10.4.32-MariaDB
 -- PHP verzió: 8.2.12
 
@@ -58,7 +58,8 @@ CREATE TABLE `cars` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `name` varchar(255) NOT NULL,
-  `typeId` bigint(20) UNSIGNED NOT NULL
+  `typeId` bigint(20) UNSIGNED NOT NULL,
+  `imageName` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -376,15 +377,63 @@ CREATE TABLE `users` (
   `email` varchar(255) NOT NULL,
   `email_verified_at` timestamp NULL DEFAULT NULL,
   `password` varchar(255) NOT NULL,
-  `40hours` tinyint(1) NOT NULL,
+  `40hours` tinyint(1) NOT NULL DEFAULT 0,
   `remember_token` varchar(100) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `isAdmin` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Indexek a kiírt táblákhoz
 --
+INSERT INTO `cartypes` (`id`,`created_at`,`updated_at`,`typename`) VALUES
+(1,'2026-02-02 11:20:00','2026-02-02 11:20:00','Pumper'),
+(2,'2026-02-02 11:20:00','2026-02-02 11:20:00','Ladder Truck'),
+(3,'2026-02-02 11:20:00','2026-02-02 11:20:00','Rescue'),
+(4,'2026-02-02 11:20:00','2026-02-02 11:20:00','Water Tanker');
+
+INSERT INTO `car_places` (`id`,`created_at`,`updated_at`,`place`) VALUES
+(1,'2026-02-02 11:21:00','2026-02-02 11:21:00','Front compartment'),
+(2,'2026-02-02 11:21:00','2026-02-02 11:21:00','Rear compartment'),
+(3,'2026-02-02 11:21:00','2026-02-02 11:21:00','Roof rack'),
+(4,'2026-02-02 11:21:00','2026-02-02 11:21:00','Cabin'),
+(5,'2026-02-02 11:21:00','2026-02-02 11:21:00','Storage');
+
+INSERT INTO `tool_types` (`id`,`created_at`,`updated_at`,`typeName`) VALUES
+(1,'2026-02-02 11:22:00','2026-02-02 11:22:00','Hose'),
+(2,'2026-02-02 11:22:00','2026-02-02 11:22:00','Ladder'),
+(3,'2026-02-02 11:22:00','2026-02-02 11:22:00','Medical'),
+(4,'2026-02-02 11:22:00','2026-02-02 11:22:00','Power Tool'),
+(5,'2026-02-02 11:22:00','2026-02-02 11:22:00','Cutting');
+
+INSERT INTO `forum_types` (`id`,`created_at`,`updated_at`,`typeName`) VALUES
+(1,'2026-02-02 11:23:00','2026-02-02 11:23:00','Incident Report'),
+(2,'2026-02-02 11:23:00','2026-02-02 11:23:00','Training'),
+(3,'2026-02-02 11:23:00','2026-02-02 11:23:00','News'),
+(4,'2026-02-02 11:23:00','2026-02-02 11:23:00','Announcement');
+
+INSERT INTO `cars` (`id`,`created_at`,`updated_at`,`name`,`typeId`,`imageName`) VALUES
+(1,'2026-02-02 11:25:00','2026-02-02 11:25:00','Engine 1',1,'engine1.jpg'),
+(2,'2026-02-02 11:25:00','2026-02-02 11:25:00','Ladder 2',2,'ladder2.jpg'),
+(3,'2026-02-02 11:25:00','2026-02-02 11:25:00','Rescue 3',3,'rescue3.jpg'),
+(4,'2026-02-02 11:25:00','2026-02-02 11:25:00','Water 4',4,'water4.jpg');
+
+INSERT INTO `tools` (`id`,`created_at`,`updated_at`,`name`,`toolTypeId`,`placeId`,`carId`) VALUES
+(1,'2026-02-02 11:27:00','2026-02-02 11:27:00','High-pressure hose 30m',1,1,1),
+(2,'2026-02-02 11:27:00','2026-02-02 11:27:00','Spare hose 20m',1,2,4),
+(3,'2026-02-02 11:27:00','2026-02-02 11:27:00','Extension ladder 12m',2,3,2),
+(4,'2026-02-02 11:27:00','2026-02-02 11:27:00','Medical kit (trauma)',3,4,3),
+(5,'2026-02-02 11:27:00','2026-02-02 11:27:00','Chainsaw (petrol)',4,3,2),
+(6,'2026-02-02 11:27:00','2026-02-02 11:27:00','Hydraulic spreader',5,1,1),
+(7,'2026-02-02 11:27:00','2026-02-02 11:27:00','CO2 extinguisher',4,5,1),
+(8,'2026-02-02 11:27:00','2026-02-02 11:27:00','Stabilization kit',3,5,3);
+
+INSERT INTO `forums` (`id`,`created_at`,`updated_at`,`header`,`date`,`typeId`,`place`,`description`,`imageName`) VALUES
+(1,'2026-02-02 11:30:00','2026-02-02 11:30:00','House fire - successful rescue','2026-02-01',1,'Klapka u. 9','All occupants evacuated, fire extinguished.','incident1.jpg'),
+(2,'2026-02-02 11:30:00','2026-02-02 11:30:00','Weekly hose-handling training','2026-01-30',2,'Training ground','Practice: hose deployment and nozzle handling.','training1.jpg'),
+(3,'2026-02-02 11:30:00','2026-02-02 11:30:00','New equipment delivered','2026-01-28',3,'Depot','New protective gear and tools received.','news1.jpg'),
+(4,'2026-02-02 11:30:00','2026-02-02 11:30:00','Station closed for maintenance','2026-02-10',4,'Station 1','Scheduled maintenance of garage area.','announce1.jpg');
 
 --
 -- A tábla indexei `cache`
@@ -657,44 +706,6 @@ ALTER TABLE `users`
 --
 -- Megkötések a kiírt táblákhoz
 --
-INSERT INTO `forum_types` (`id`,`created_at`,`updated_at`,`typeName`) VALUES
-(1, '2026-01-26 11:00:00', '2026-01-26 11:00:00', 'Kimenetel'),
-(2, '2026-01-26 11:00:00', '2026-01-26 11:00:00', 'Gyakorlás'),
-(3, '2026-01-26 11:00:00', '2026-01-26 11:00:00', 'Hírek');
-
-INSERT INTO `cartypes` (`id`,`created_at`,`updated_at`,`typename`) VALUES
-(1, '2026-01-26 11:00:00', '2026-01-26 11:00:00', 'Tűzoltóautó'),
-(2, '2026-01-26 11:00:00', '2026-01-26 11:00:00', 'Létraautó'),
-(3, '2026-01-26 11:00:00', '2026-01-26 11:00:00', 'Vízszállító');
-
-INSERT INTO `car_places` (`id`,`created_at`,`updated_at`,`place`) VALUES
-(1, '2026-01-26 11:00:00', '2026-01-26 11:00:00', 'Telephely'),
-(2, '2026-01-26 11:00:00', '2026-01-26 11:00:00', 'Raktár'),
-(3, '2026-01-26 11:00:00', '2026-01-26 11:00:00', 'Főbejárat');
-
-INSERT INTO `tool_types` (`id`,`created_at`,`updated_at`,`typeName`) VALUES
-(1, '2026-01-26 11:00:00', '2026-01-26 11:00:00', 'Feszítő'),
-(2, '2026-01-26 11:00:00', '2026-01-26 11:00:00', 'Tűzoltó készlet'),
-(3, '2026-01-26 11:00:00', '2026-01-26 11:00:00', 'Védőfelszerelés');
-
--- Insert cars (depends on cartypes)
-INSERT INTO `cars` (`id`,`created_at`,`updated_at`,`name`,`typeId`) VALUES
-(1, '2026-01-26 11:00:00', '2026-01-26 11:00:00', 'Rosenbauer Alpha', 1),
-(2, '2026-01-26 11:00:00', '2026-01-26 11:00:00', 'Magirus Ladder 12', 2),
-(3, '2026-01-26 11:00:00', '2026-01-26 11:00:00', 'MAN Water 3000', 3);
-
--- Insert tools (depends on tool_types, car_places, cars)
-INSERT INTO `tools` (`id`,`created_at`,`updated_at`,`name`,`toolTypeId`,`placeId`,`carId`) VALUES
-(1, '2026-01-26 11:00:00', '2026-01-26 11:00:00', 'Hydraulikus feszítő', 1, 2, 1),
-(2, '2026-01-26 11:00:00', '2026-01-26 11:00:00', 'Tűzoltó tömlő 20m', 2, 1, 3),
-(3, '2026-01-26 11:00:00', '2026-01-26 11:00:00', 'Létra bilincs készlet', 3, 1, 2),
-(4, '2026-01-26 11:00:00', '2026-01-26 11:00:00', 'Szén-dioxid oltó', 2, 2, 1);
-
--- Insert forums (depends on forum_types)
-INSERT INTO `forums` (`id`,`created_at`,`updated_at`,`header`,`date`,`typeId`,`place`,`description`,`imageName`) VALUES
-(1, '2026-01-26 11:00:00', '2026-01-26 11:00:00', 'Gyakorlati tűzoltó gyakorlat', '2026-01-15', 2, 'Telephely', 'Gyakorlás: tömlőkezelés és beavatkozás.', 'practice1.jpg'),
-(2, '2026-01-26 11:00:00', '2026-01-26 11:00:00', 'Lakástűz eloltása - sikeres kimenetel', '2026-01-10', 1, 'Klapka utca 9', 'Személyek kimenekítve, tűz eloltva.', 'incident1.jpg'),
-(3, '2026-01-26 11:00:00', '2026-01-26 11:00:00', 'Új felszerelés érkezett', '2026-01-20', 3, 'Raktár', 'Új védőfelszerelések és szerszámok érkeztek.', 'news1.jpg');
 
 --
 -- Megkötések a táblához `cars`
