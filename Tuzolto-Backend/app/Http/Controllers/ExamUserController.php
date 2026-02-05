@@ -12,7 +12,7 @@ class ExamUserController extends Controller
      */
     public function index()
     {
-        //
+        return response()->json(examUser::with("exams")->with("users")->get());
     }
 
     /**

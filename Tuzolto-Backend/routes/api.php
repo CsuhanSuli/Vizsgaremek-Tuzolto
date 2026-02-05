@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\CarController;
+use App\Http\Controllers\ExamUserController;
 use App\Http\Controllers\ForumController;
+use App\Http\Controllers\ForumTypeController;
 use App\Http\Controllers\ToolsController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\isAdmin;
@@ -31,4 +33,5 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/user/logout', [UserController::class, 'logout']);
     //forum
     Route::post("/forum/store",[ForumController::class,"store"])->middleware(isAdmin::class);
+    Route::post("/forumType/store",[ForumTypeController::class,"store"])->middleware(isAdmin::class);
 });
