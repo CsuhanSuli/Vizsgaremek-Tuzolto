@@ -26,7 +26,6 @@ const LoggedOutLayout = ({children}) => {
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link className='linkColor' href="http://localhost:5173/FireFighters">Rólunk</Nav.Link>
             <Nav.Link className='linkColor' href="http://localhost:5173/Cars">Autóink</Nav.Link>
             <Nav.Link className='linkColor' href="#contacts">Elérhetőségeink</Nav.Link>
           </Nav>
@@ -45,7 +44,7 @@ const LoggedOutLayout = ({children}) => {
         </Container>
       </main>
       
-      <footer>
+      <footer id='contacts'>
         <Container>
           <Col/>
           <Col>
