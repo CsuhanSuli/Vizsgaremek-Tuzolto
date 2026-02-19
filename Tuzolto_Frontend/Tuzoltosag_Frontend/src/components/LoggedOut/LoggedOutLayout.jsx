@@ -30,7 +30,10 @@ const LoggedOutLayout = ({children}) => {
             <Nav.Link className='linkColor' href="#contacts">Elérhetőségeink</Nav.Link>
           </Nav>
           <Nav>
-            <button className='loginBtn' type="button" href="http://localhost:5173/Login">Bejelentkezés</button>
+            <Nav.Link href="http://localhost:5173/Login">
+              <button className='loginBtn'>Bejelentkezés</button>
+            </Nav.Link>
+            
           </Nav>
         </Navbar.Collapse>
       </Container>
