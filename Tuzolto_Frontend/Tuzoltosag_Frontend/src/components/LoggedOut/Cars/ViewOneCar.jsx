@@ -6,9 +6,9 @@ function ViewOneCar({ car }) {
 
   return (
     <>
-      <Col lg={3} md={12} sm={12}>
-        <Card style={{ width: "18rem" }}>
-          <Card.Img variant="top" src={imageName} />
+      <Col className="d-flex justify-content-center mb-4">
+        <Card style={{ width: "25rem" }}>
+          <Card.Img variant="top" src={imageName}/>
           <Card.Body>
             <Card.Title>{name}</Card.Title>
             <Card.Text>
@@ -18,6 +18,7 @@ function ViewOneCar({ car }) {
           </Card.Body>
         </Card>
       </Col>
+
     </>
   );
 }
