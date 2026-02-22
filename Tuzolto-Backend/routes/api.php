@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CarController;
+use App\Http\Controllers\ExamsController;
 use App\Http\Controllers\ExamUserController;
 use App\Http\Controllers\ForumController;
 use App\Http\Controllers\ForumTypeController;
@@ -24,9 +25,26 @@ Route::post('/user/login', [UserController::class, 'login']) ->name('login');
 Route::get("/forum/get",[ForumController::class,"index"]);
 
 
-Route::get("/tools/show/{id}",[ToolsController::class,"show"]);
+
 //cars
 Route::get("/car/get",[CarController::class,"index"]);
+
+
+//thing that should be used with loging go here for testing
+
+//exam
+Route::get("/examUser/show",[ExamUserController::class,"show"]);
+Route::get("/examUser/index",[ExamUserController::class,"index"]);
+Route::post("/examUser/store",[ExamUserController::class,"store"]);
+
+Route::post("/exams/store",[ExamsController::class,"store"]);
+//tools
+Route::post("/tools/store",[ToolsController::class,"store"]);
+Route::get("/tools/show/{id}",[ToolsController::class,"show"]);
+
+//cars
+Route::post("/car/store",[CarController::class,"store"]);
+
 
 Route::middleware('auth:sanctum')->group(function () {
     //user

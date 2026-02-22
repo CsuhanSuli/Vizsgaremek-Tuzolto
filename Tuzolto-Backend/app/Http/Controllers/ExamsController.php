@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\exams;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class ExamsController extends Controller
 {
@@ -28,7 +29,19 @@ class ExamsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+            $validator = Validator::make($request->all(), [
+                "name"=> "required",
+                "examType"=> "required|exists:exam_types,id",
+        ]);
+        if($validator->fails())
+            {
+                return response()->json(["message"=>"hiba","hibák"=>$validator->errors()],402);
+            }
+        $newRecord = new exams();
+        $newRecord->name=$request->name;
+        $newRecord->examType=$request->examType;
+        $newRecord->save();
+        return response()->json(["message"=>"sikeres feltöltés"],201);
     }
 
     /**
@@ -52,7 +65,7 @@ class ExamsController extends Controller
      */
     public function update(Request $request, exams $exams)
     {
-        //
+
     }
 
     /**

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\examUser;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class ExamUserController extends Controller
 {
@@ -28,15 +29,35 @@ class ExamUserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+                  $validator = Validator::make($request->all(), [
+                "examDate"=> "required|before:today",
+                "examId"=> "required|exists:exams,id",
+                "userId"=> "required|exists:users,id",
+        ]);
+        if($validator->fails())
+            {
+                return response()->json(["message"=>"hiba","hibák"=>$validator->errors()],402);
+            }
+        $newRecord = new examUser();
+        $newRecord->name=$request->name;
+        $newRecord->toolTypeId=$request->toolTypeId;
+        $newRecord->placeId=$request->placeId;
+        $newRecord->carId=$request->carId;
+        $newRecord->save();
+        return response()->json(["message"=>"sikeres feltöltés"],201);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(examUser $examUser)
+    public function show(int $UserId)
     {
-        //
+        $data = examUser::where("userId",$UserId)->get();
+        if(empty($data))
+            {
+                return response()->json(["message"=>"404 nincs ijen vizsga"],404);
+            }
+        return response()->json($data);
     }
 
     /**

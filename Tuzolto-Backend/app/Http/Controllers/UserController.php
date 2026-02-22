@@ -73,5 +73,23 @@ class UserController extends Controller
             'message' => 'Sikeres kijelentkezés'
         ]);
     }
+    public function fortyHourUptdate(int $id)
+    {
+        $data = User::find($id);
+        if(empty($data))
+            {
+                return response()->json(["message"=>"404"], 404);
+            }
+        if($data->fortyHours == 0)
+            {
+                $data->fortyHours=1;
+                $data->save();
+            }
+        else
+            {
+                $data->fortyHours=0;
+                $data->save();
+            }
+    }
 }
 
