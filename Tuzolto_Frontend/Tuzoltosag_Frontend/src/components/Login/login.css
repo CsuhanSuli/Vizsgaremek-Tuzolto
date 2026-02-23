@@ -1,4 +1,4 @@
-.main-bg {
+/*.main-bg {
     background-color: #a80f0f;
     padding-bottom: 5%;
     padding-top: 5%;
@@ -28,6 +28,7 @@
   background-color: #e9e9e9;
   border: none;
   padding: 15px;
+  padding-right: 250px;
 }
 
 .custom-input:focus {
@@ -48,9 +49,82 @@
   background-color: black !important;
   color: white !important;
 }
-@media screen and (min-width: 768px) {
-    .left-side
-    {
+*/
+
+.main-bg {
+    background-color: #a80f0f;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5% 0;
+}
+
+.login-card {
+    display: flex;
+    border-radius: 30px;
+    overflow: hidden;
+    max-width: 900px;
+    width: 90%;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+
+.left-side {
+    background-color: white;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.logo-img {
+    width: 80%;
+    max-width: 250px;
+    height: auto;
+}
+
+.right-side {
+    background-color: #bfbfbf;
+    flex: 1;
+    padding: 60px 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.custom-input {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 12px 15px;
+    width: 100%;
+}
+
+.custom-input:focus {
+    box-shadow: none;
+    border: 1px solid #999;
+}
+
+.login-button {
+    background-color: #fff !important;
+    border: none;
+    border-radius: 25px;
+    padding: 10px 40px;
+    color: black !important;
+    font-weight: 500;
+    margin-top: 20px;
+}
+
+.login-button:hover {
+    background-color: #e0e0e0 !important;
+    color: black !important;
+}
+
+@media screen and (max-width: 767px) {
+    .left-side {
         display: none;
+    }
+    .login-card {
+        border-radius: 20px;
     }
 }
