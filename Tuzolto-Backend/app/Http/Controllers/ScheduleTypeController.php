@@ -2,17 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\schedule;
+use App\Models\scheduleType;
 use Illuminate\Http\Request;
 
-class ScheduleController extends Controller
+class ScheduleTypeController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return response()->json(schedule::with("users")->with("schedule_types")->get());
+        //
     }
 
     /**
@@ -34,7 +34,7 @@ class ScheduleController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(schedule $schedule)
+    public function show(scheduleType $scheduleType)
     {
         //
     }
@@ -42,7 +42,7 @@ class ScheduleController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(schedule $schedule)
+    public function edit(scheduleType $scheduleType)
     {
         //
     }
@@ -50,7 +50,7 @@ class ScheduleController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, schedule $schedule)
+    public function update(Request $request, scheduleType $scheduleType)
     {
         //
     }
@@ -58,7 +58,7 @@ class ScheduleController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(schedule $schedule)
+    public function destroy(scheduleType $scheduleType)
     {
         //
     }

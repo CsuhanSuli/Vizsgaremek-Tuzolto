@@ -14,6 +14,10 @@ class User extends Authenticatable
     {
         return $this->hasMany(examUser::class,"examId");
     }
+    public function scheduleTypeid()
+    {
+        return $this->hasMany(schedule::class,"userId");
+    }
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable, HasApiTokens;
 

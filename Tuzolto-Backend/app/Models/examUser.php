@@ -10,7 +10,7 @@ class examUser extends Model
     {
         return $this->belongsTo(exams::class,"examId");
     }
-    public function User()
+    public function users()
     {
         return $this->belongsTo(User::class,"examId");
     }

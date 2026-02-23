@@ -5,6 +5,7 @@ use App\Http\Controllers\ExamsController;
 use App\Http\Controllers\ExamUserController;
 use App\Http\Controllers\ForumController;
 use App\Http\Controllers\ForumTypeController;
+use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\ToolsController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\isAdmin;
@@ -46,10 +47,19 @@ Route::get("/tools/show/{id}",[ToolsController::class,"show"]);
 Route::post("/car/store",[CarController::class,"store"]);
 
 
+
+//schedules
+Route::get("/schedule/index",[ScheduleController::class,"index"]);
+
+//user
+Route::post('/user/logout', [UserController::class, 'logout']);
+//forum
+Route::post("/forum/store",[ForumController::class,"store"])->middleware(isAdmin::class);
+Route::post("/forumType/store",[ForumTypeController::class,"store"])->middleware(isAdmin::class);
+
+
+
+
 Route::middleware('auth:sanctum')->group(function () {
-    //user
-    Route::post('/user/logout', [UserController::class, 'logout']);
-    //forum
-    Route::post("/forum/store",[ForumController::class,"store"])->middleware(isAdmin::class);
-    Route::post("/forumType/store",[ForumTypeController::class,"store"])->middleware(isAdmin::class);
+
 });
