@@ -1,10 +1,12 @@
-import { IlamyCalendar } from '@ilamy/calendar';
+import FullCalendar from '@fullcalendar/react'
+import dayGridPlugin from '@fullcalendar/daygrid' // a plugin!
 import { useEffect } from 'react';
 import { useState } from 'react';
 
-export default function MyCalendar() {
-  
-  const [data, setData] = useState([])
+
+
+export default function Calendar() {
+const [data, setData] = useState([])
   useEffect(() => {
     fetch("http://127.0.0.1:8000/api/schedule/index")
       .then(res => res.json())
@@ -15,11 +17,8 @@ export default function MyCalendar() {
           {
             id: element.id,
             title: element.schedule_types.name + " " + element.users.name,
-            color: element.schedule_types.color,
-            start: element.date,
-            end: element.date,
-            allDay: true,
-            backgroundColor: 'white',
+            date: element.date,
+
           }
         )
           setData(event)
@@ -30,10 +29,12 @@ export default function MyCalendar() {
     if (data === null) {
     return <div>Loading...</div>;
   }
-    
+
   return (
-    <div className="p-6">
-       <IlamyCalendar events={data} />
-    </div>
-  );
+    <FullCalendar
+      plugins={[ dayGridPlugin ]}
+      initialView="dayGridMonth"
+      events={data}
+    />
+  )
 }
