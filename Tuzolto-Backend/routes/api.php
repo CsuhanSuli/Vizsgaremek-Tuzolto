@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\CarController;
+use App\Http\Controllers\CarPlaceController;
 use App\Http\Controllers\ExamsController;
+use App\Http\Controllers\ExamTypeController;
 use App\Http\Controllers\ExamUserController;
 use App\Http\Controllers\ForumController;
 use App\Http\Controllers\ForumTypeController;
@@ -37,20 +39,23 @@ Route::get("/car/get",[CarController::class,"index"]);
 Route::get("/examUser/show",[ExamUserController::class,"show"]);
 Route::get("/examUser/index",[ExamUserController::class,"index"]);
 Route::post("/examUser/store",[ExamUserController::class,"store"]);
-
 Route::post("/exams/store",[ExamsController::class,"store"]);
+//examType
+Route::get("/examType/index",[ExamTypeController::class,"index"]);
+
 //tools
 Route::post("/tools/store",[ToolsController::class,"store"]);
 Route::get("/tools/show/{id}",[ToolsController::class,"show"]);
 
 //cars
 Route::post("/car/store",[CarController::class,"store"]);
-
+//carplace
+Route::get("/carplace/index",[CarPlaceController::class,"index"]);
 
 
 //schedules
 Route::get("/schedule/index",[ScheduleController::class,"index"]);
-
+Route::post("/schedule/store",[ScheduleController::class,"store"]);
 //user
 Route::post('/user/logout', [UserController::class, 'logout']);
 //forum

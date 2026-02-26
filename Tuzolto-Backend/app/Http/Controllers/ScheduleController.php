@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\schedule;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Validator;
 class ScheduleController extends Controller
 {
     /**
@@ -28,7 +28,22 @@ class ScheduleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+                 $validator = Validator::make($request->all(), [
+                "scheduleTypeid"=> "required|exists:schedule_types,id",
+                "userId"=> "required|exists:users,id",
+                "date"=> "required|",
+        ]);
+        if($validator->fails())
+            {
+                return response()->json(["message"=>"hiba","hibák"=>$validator->errors()],402);
+            }
+        $newRecord = new Schedule();
+        $newRecord->scheduleTypeid=$request->scheduleTypeid;
+        $newRecord->date=$request->date;
+        $newRecord->userId=$request->userId;
+
+        $newRecord->save();
+        return response()->json(["message"=>"sikeres feltöltés"],201);
     }
 
     /**

@@ -12,7 +12,7 @@ class CarPlaceController extends Controller
      */
     public function index()
     {
-        //
+        return response()->json(carPlace::all());
     }
 
     /**
