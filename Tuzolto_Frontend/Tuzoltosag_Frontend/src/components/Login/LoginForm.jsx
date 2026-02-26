@@ -1,28 +1,40 @@
-import React, { useState } from 'react';
-import axios from './axios';
-import './login.css'
+import React, { useState } from "react";
 import { Container, Row, Col, Card, Form, Button } from "react-bootstrap";
+import api from "./api"; // a saját Axios példány
+import "./LoginForm.css"; // ide jön a CSS, amit megadtál
 
-function Login() {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [message, setMessage] = useState('');
+const LoginForm = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [success, setSuccess] = useState(null);
 
-    const handleSubmit = async () => {
-        try {
-            const response =
-                await axios.post('/api/user/login',
-                    { email, password });
-            setMessage(response.data.message);
-        } catch (error) {
-            console.error('Error logging in:', error);
-            setMessage('Hiba lépett fel a bejelntkezés során');
-        }
-    };
-//    <main className="main-bg min-vh-100 d-flex flex-column"></main>
-    return (
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setError(null);
+    setSuccess(null);
 
+    try {
+      const response = await api.post("user/login", { email, password });
 
+      setSuccess("Sikeres bejelentkezés!");
+      console.log("Válasz:", response.data);
+
+      if (response.data.token) {
+        localStorage.setItem("token", response.data.token);
+      }
+    } catch (err) {
+      setError(
+        err.response?.data?.message || "Hiba történt a bejelentkezés során"
+      );
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
         <Container className="main-bg flex-grow-1 d-flex align-items-start">
           <Row className="justify-content-center">
             <Col lg={10}>
@@ -35,7 +47,8 @@ function Login() {
 
                   <Col lg={6} md={12} sm= {12} className="right-side d-flex align-items-center">
                     <Card.Body className="w-100 px-5">
-
+                      {error && <p className="text-danger">{error}</p>}
+                      {success && <p className="text-success">{success}</p>}
                       <Form onSubmit={handleSubmit}>
 
                         <Form.Group className="mb-4">
@@ -61,15 +74,12 @@ function Login() {
                         </Form.Group>
 
                         <div className="text-center">
-                          <Button 
-                                type="submit" 
-                                className="login-button">
-                            Bejelentkezés
+                          <Button type="submit" className="login-button" disabled={loading}>
+                            {loading ? "Bejelentkezés..." : "Bejelentkezés"}
                           </Button>
                         </div>
 
                       </Form>
-
                     </Card.Body>
                   </Col>
 
@@ -79,6 +89,6 @@ function Login() {
           </Row>
         </Container>
   );
-}
+};
 
-export default Login;
+export default LoginForm;
