@@ -20,8 +20,8 @@ return new class extends Migration
             $table->unsignedBigInteger("reviewTypeId");
             $table->foreign("reviewTypeId")->references("id")->on("review_types");
             $table->string("whatIsIt");
-            $table->unsignedBigInteger("objectId");
-            $table->foreign("objectId")->references("id")->on("cars");
+            $table->unsignedBigInteger("toolId")->nullable();
+            $table->foreign("toolId")->references("id")->on("tools");
             //be kell valahogy tobb constraintet tenni
         });
     }
