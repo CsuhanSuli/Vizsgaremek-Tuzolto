@@ -11,21 +11,6 @@ import LoggedInLayout from "./components/LoggedIn/LoggedInLayout"
 function App() {
   return (
     <>    {/*
-      <Router>
-        <Routes>
-          <LoggedOutLayout>
-            <Route path="" element={<AllMission />} />
-            <Route path="/Cars" element={<AllCar />} />
-            <Route path="/Login" element={<LoginForm/>} />
-          </LoggedOutLayout>
-                
-          <LoggedInLayout>
-
-          </LoggedInLayout>
-        </Routes>
-      </Router>
-
-      <LoggedOutLayout>
             <Router>
               <Routes>
                 <Route path="" element={<AllMission />} />
@@ -33,8 +18,7 @@ function App() {
                 <Route path="/Login" element={<LoginForm/>} />
               </Routes>
             </Router>
-      </LoggedOutLayout>
-*/}
+          */}
       <LoggedInLayout>
         
       </LoggedInLayout>
