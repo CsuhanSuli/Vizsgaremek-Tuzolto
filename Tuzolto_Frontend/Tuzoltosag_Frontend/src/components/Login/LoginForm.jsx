@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Container, Row, Col, Card, Form, Button } from "react-bootstrap";
 import api from "./api"; // a saját Axios példány
 import "./LoginForm.css"; // ide jön a CSS, amit megadtál
+import LoggedOutLayout from "../LoggedOut/LoggedOutLayout";
 
 const LoginForm = () => {
   const [email, setEmail] = useState("");
@@ -35,6 +36,7 @@ const LoginForm = () => {
   };
 
   return (
+    <LoggedOutLayout>
         <Container className="main-bg flex-grow-1 d-flex align-items-start">
           <Row className="justify-content-center">
             <Col lg={10}>
@@ -88,6 +90,7 @@ const LoginForm = () => {
             </Col>
           </Row>
         </Container>
+        </LoggedOutLayout>
   );
 };
 

@@ -22,15 +22,15 @@ const LoggedOutLayout = ({children}) => {
 
       <Navbar collapseOnSelect expand="lg" className="navbar">
       <Container>
-        <Navbar.Brand  className='linkColor ' href="http://localhost:5173">Kezdőlap</Navbar.Brand>
+        <Navbar.Brand  className='linkColor ' href="/">Kezdőlap</Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link className='linkColor' href="http://localhost:5173/Cars">Autóink</Nav.Link>
+            <Nav.Link className='linkColor' href="/Cars">Autóink</Nav.Link>
             <Nav.Link className='linkColor' href="#contacts">Elérhetőségeink</Nav.Link>
           </Nav>
           <Nav>
-            <Nav.Link href="http://localhost:5173/Login">
+            <Nav.Link href="/Login">
               <button className='loginBtn'>Bejelentkezés</button>
             </Nav.Link>
             

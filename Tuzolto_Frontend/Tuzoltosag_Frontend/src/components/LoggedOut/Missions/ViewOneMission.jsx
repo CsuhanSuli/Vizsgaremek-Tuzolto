@@ -7,7 +7,7 @@ function ViewOneMission({ mission }) {
 
   return (
     <>
-      <LoggedOutLayout>
+
         <Col className="mission" lg={4} md={12} sm={12}>
           <img className="missionImg" src={imageName} alt={header} />
         </Col>
@@ -34,7 +34,7 @@ function ViewOneMission({ mission }) {
           </p>
         </Col>
         <hr />
-      </LoggedOutLayout>
+
     </>
   );
 }

@@ -10,7 +10,9 @@ import LoggedInLayout from "./components/LoggedIn/LoggedInLayout"
 
 function App() {
   return (
-    <>    {/*
+    <>    
+
+
             <Router>
               <Routes>
                 <Route path="" element={<AllMission />} />
@@ -18,11 +20,8 @@ function App() {
                 <Route path="/Login" element={<LoginForm/>} />
               </Routes>
             </Router>
-          */}
-      <LoggedInLayout>
-        
-      </LoggedInLayout>
-      
+   
+
 
     </>
   );

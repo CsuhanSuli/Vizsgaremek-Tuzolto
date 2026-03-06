@@ -1,12 +1,22 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Navbar, Nav, Offcanvas, Button, NavDropdown } from "react-bootstrap";
 import "./LoggedInLayout.css";
 
 function LoggedInLayout() {
   const [show, setShow] = useState(false);
+  const [car, setCar] = useState([]);
+
 
   const handleClose = () => setShow(false);
   const handleToggle = () => setShow(!show);
+
+  useEffect(() => {
+    fetch("http://127.0.0.1:8000/api/car/get")
+      .then((response) => response.json())
+        .then((json) => setCar(json))
+        .catch((error) => console.error(error));
+  }, []); 
+
 
   return (
     <>
@@ -20,7 +30,6 @@ function LoggedInLayout() {
         </Button>
       )}
 
-      {/* Desktop */}
       <div className="d-none d-lg-flex">
         <Navbar
           bg="danger"
@@ -28,7 +37,7 @@ function LoggedInLayout() {
           className="sidebar-desktop flex-column vh-100 start-0 top-0 p-3 shadow"
         >
           <Navbar.Brand className="mb-4 fw-bold text-center w-100">
-            Tűzoltóság
+            <img src="transparentLogo.png" alt="Tűzoltóság" className="NavImg"/>
           </Navbar.Brand>
 
           <Nav className="flex-column w-100">
@@ -36,15 +45,16 @@ function LoggedInLayout() {
               Beosztás
             </Nav.Link>
             <Nav.Link href="#" className="sidebar-link">
-              Naptár
-            </Nav.Link>
-            <Nav.Link href="#" className="sidebar-link">
               Dolgozók
             </Nav.Link>
             <Nav.Link href="#" className="sidebar-link">
               Beállítások
             </Nav.Link>
-            <NavDropdown></NavDropdown>
+            <NavDropdown title="Autók" id="basic-nav-dropdown" className="sidebar-dropdown">
+              {car.map((row) => (
+                <NavDropdown.Item key={row.id} id={row.id} href="#">{row.name}</NavDropdown.Item>
+              ))}
+            </NavDropdown>
           </Nav>
 
           <div className="mt-auto w-100">
@@ -59,7 +69,6 @@ function LoggedInLayout() {
         </Navbar>
       </div>
 
-      {/* Mobile */}
       <Offcanvas show={show} onHide={handleClose} placement="start">
         <div className="sidebar-header d-flex justify-content-between align-items-center">
           <h5 className="m-0">Tűzoltóság</h5>

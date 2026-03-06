@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import ViewOneMission from "./ViewOneMission";
+import LoggedOutLayout from "../LoggedOutLayout";
 
 function AllMission() {
   const [data, setData] = useState(null);
@@ -18,9 +19,11 @@ function AllMission() {
 
   return (
     <>
+    <LoggedOutLayout>
       {data.map((row) => (
         <ViewOneMission key={row.id} mission={row}/>
       ))}
+      </LoggedOutLayout>
     </>
   );
 }

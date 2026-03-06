@@ -1,13 +1,12 @@
 import Col from "react-bootstrap/esm/Col";
 import Card from "react-bootstrap/Card";
-import LoggedOutLayout from "../LoggedOutLayout";
+
 
 function ViewOneCar({ car }) {
   const { name, imageName } = car;
 
   return (
     <>
-      <LoggedOutLayout>
         <Col className="d-flex justify-content-center mb-4">
           <Card style={{ width: "25rem" }}>
             <Card.Img variant="top" src={imageName}/>
@@ -20,7 +19,6 @@ function ViewOneCar({ car }) {
             </Card.Body>
           </Card>
         </Col>
-      </LoggedOutLayout>
     </>
   );
 }
