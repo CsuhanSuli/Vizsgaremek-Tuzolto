@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Navbar, Nav, Offcanvas, Button } from "react-bootstrap";
+import { Navbar, Nav, Offcanvas, Button, NavDropdown } from "react-bootstrap";
 import "./LoggedInLayout.css";
 
 function LoggedInLayout() {
@@ -44,6 +44,7 @@ function LoggedInLayout() {
             <Nav.Link href="#" className="sidebar-link">
               Beállítások
             </Nav.Link>
+            <NavDropdown></NavDropdown>
           </Nav>
 
           <div className="mt-auto w-100">
