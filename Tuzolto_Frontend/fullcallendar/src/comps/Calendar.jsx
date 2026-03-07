@@ -3,7 +3,7 @@ import dayGridPlugin from '@fullcalendar/daygrid' // a plugin!
 import { useEffect } from 'react';
 import { useState } from 'react';
 
-
+import "./calendar.css"
 
 export default function Calendar() {
 const [data, setData] = useState([])
@@ -31,10 +31,12 @@ const [data, setData] = useState([])
   }
 
   return (
+    <aside>
     <FullCalendar
       plugins={[ dayGridPlugin ]}
       initialView="dayGridMonth"
       events={data}
     />
+    </aside>
   )
 }

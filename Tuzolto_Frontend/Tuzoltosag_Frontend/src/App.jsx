@@ -35,8 +35,23 @@ function App() {
             </Router>
       </LoggedOutLayout>
 */}
+
+      <LoggedOutLayout>
+            <Router>
+              <Routes>
+                <Route path="" element={<AllMission />} />
+                <Route path="/Cars" element={<AllCar />} />
+                <Route path="/Login" element={<LoginForm/>} />
+              </Routes>
+            </Router>
+      </LoggedOutLayout>
+
       <LoggedInLayout>
-        
+            <Router>
+              <Routes>
+                  {/*<Route path="" element={}/>*/}
+              </Routes>
+            </Router>
       </LoggedInLayout>
       
 
