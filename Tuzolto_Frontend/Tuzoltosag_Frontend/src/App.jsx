@@ -4,26 +4,20 @@ import AllCar from "./components/LoggedOut/Cars/AllCar";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import LoggedOutLayout from "./components/LoggedOut/LoggedOutLayout";
 import LoginForm from "./components/Login/LoginForm";
-import LoggedInLayout from "./components/LoggedIn/LoggedInLayout"
-
-
+import LoggedInLayout from "./components/LoggedIn/LoggedInLayout";
 
 function App() {
   return (
-    <>    {/*
-      <Router>
-        <Routes>
-          <LoggedOutLayout>
-            <Route path="" element={<AllMission />} />
-            <Route path="/Cars" element={<AllCar />} />
-            <Route path="/Login" element={<LoginForm/>} />
-          </LoggedOutLayout>
-                
-          <LoggedInLayout>
+    <>
+      {/*
 
-          </LoggedInLayout>
-        </Routes>
-      </Router>
+            <Router>
+              <Routes>
+                <Route path="" element={<AllMission />} />
+                <Route path="/Cars" element={<AllCar />} />
+                <Route path="/Login" element={<LoginForm/>} />
+              </Routes>
+            </Router>
 
       <LoggedOutLayout>
             <Router>
@@ -36,25 +30,11 @@ function App() {
       </LoggedOutLayout>
 */}
 
-      <LoggedOutLayout>
-            <Router>
-              <Routes>
-                <Route path="" element={<AllMission />} />
-                <Route path="/Cars" element={<AllCar />} />
-                <Route path="/Login" element={<LoginForm/>} />
-              </Routes>
-            </Router>
-      </LoggedOutLayout>
-
       <LoggedInLayout>
-            <Router>
-              <Routes>
-                  {/*<Route path="" element={}/>*/}
-              </Routes>
-            </Router>
+        <Router>
+          <Routes>{/*<Route path="" element={}/>*/}</Routes>
+        </Router>
       </LoggedInLayout>
-      
-
     </>
   );
 }

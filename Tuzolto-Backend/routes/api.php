@@ -49,6 +49,7 @@ Route::get("/tools/show/{id}",[ToolsController::class,"show"]);
 
 //cars
 Route::post("/car/store",[CarController::class,"store"]);
+Route::delete("/car/delete/{id}",[CarController::class,"destroy"]);
 //carplace
 Route::get("/carplace/index",[CarPlaceController::class,"index"]);
 
@@ -58,8 +59,10 @@ Route::get("/schedule/index",[ScheduleController::class,"index"]);
 Route::post("/schedule/store",[ScheduleController::class,"store"]);
 //user
 Route::post('/user/logout', [UserController::class, 'logout']);
+Route::delete("/user/delete/{id}",[UserController::class,"destroy"]);
 //forum
 Route::post("/forum/store",[ForumController::class,"store"])->middleware(isAdmin::class);
+Route::delete("/forum/delete/{id}",[ForumController::class,"destroy"]);
 Route::post("/forumType/store",[ForumTypeController::class,"store"])->middleware(isAdmin::class);
 
 

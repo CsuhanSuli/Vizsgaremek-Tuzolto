@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import ViewOneCar from "./ViewOneCar";
+import LoggedOutLayout from "../LoggedOutLayout";
 
 function AllCar() {
   const [data, setData] = useState(null);
@@ -17,11 +18,11 @@ function AllCar() {
   }
 
   return (
-    <>
+    <LoggedOutLayout>
       {data.map((row) => (
         <ViewOneCar key={row.id} car={row}/>
       ))}
-    </>
+    </LoggedOutLayout>
   );
 }
 
