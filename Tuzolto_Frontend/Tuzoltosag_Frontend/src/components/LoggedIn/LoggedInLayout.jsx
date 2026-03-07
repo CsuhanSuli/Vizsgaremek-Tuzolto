@@ -1,11 +1,10 @@
 import { useEffect, useState } from "react";
-import { Navbar, Nav, Offcanvas, Button, NavDropdown } from "react-bootstrap";
+import { Navbar, Nav, Offcanvas, Button, NavDropdown, Container, Row, Col } from "react-bootstrap";
 import "./LoggedInLayout.css";
 
-function LoggedInLayout() {
+function LoggedInLayout({children}) {
   const [show, setShow] = useState(false);
   const [car, setCar] = useState([]);
-
 
   const handleClose = () => setShow(false);
   const handleToggle = () => setShow(!show);
@@ -16,7 +15,6 @@ function LoggedInLayout() {
         .then((json) => setCar(json))
         .catch((error) => console.error(error));
   }, []); 
-
 
   return (
     <>
@@ -52,7 +50,7 @@ function LoggedInLayout() {
             </Nav.Link>
             <NavDropdown title="Autók" id="basic-nav-dropdown" className="sidebar-dropdown">
               {car.map((row) => (
-                <NavDropdown.Item key={row.id} id={row.id} href="#">{row.name}</NavDropdown.Item>
+                <NavDropdown.Item key={row.id} id={row.id} href={`/carTools/${row.id}`}>{row.name}</NavDropdown.Item>
               ))}
             </NavDropdown>
           </Nav>
@@ -108,6 +106,13 @@ function LoggedInLayout() {
           </div>
         </Offcanvas.Body>
       </Offcanvas>
+
+      <Container>
+        <Row>
+          {children}
+        </Row>
+      </Container>
+
     </>
   );
 }
