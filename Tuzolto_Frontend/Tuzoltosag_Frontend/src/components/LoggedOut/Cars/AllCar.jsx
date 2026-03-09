@@ -16,7 +16,6 @@ function AllCar() {
   if (data === null) {
     return <div>Loading...</div>;
   }
-
   return (
     <LoggedOutLayout>
       {data.map((row) => (
