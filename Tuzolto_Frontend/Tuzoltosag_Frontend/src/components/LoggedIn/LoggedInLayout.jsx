@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Navbar, Nav, Offcanvas, Button, NavDropdown, Container, Row, Col } from "react-bootstrap";
 import "./LoggedInLayout.css";
+import { useNavigate } from "react-router-dom"
 
 function LoggedInLayout({children}) {
   const [show, setShow] = useState(false);
@@ -16,8 +17,13 @@ function LoggedInLayout({children}) {
         .catch((error) => console.error(error));
   }, []); 
 
+    const navigate = useNavigate();
+
   return (
     <>
+    <Container>
+      <Row>
+        <Col lg={3} md={1} sm={1} xs={1}>
       {!show && (
         <Button
           variant="danger"
@@ -49,8 +55,15 @@ function LoggedInLayout({children}) {
               Beállítások
             </Nav.Link>
             <NavDropdown title="Autók" id="basic-nav-dropdown" className="sidebar-dropdown">
-              {car.map((row) => (
-                <NavDropdown.Item key={row.id} id={row.id} href={`/carTools/${row.id}`}>{row.name}</NavDropdown.Item>
+              {car.map((props) => (
+                <NavDropdown.Item 
+                  key={props.carId} 
+                  id={props.carId} 
+                  onClick={() => {
+                    navigate(`/carTools/${props.id}`, {state:props})
+                  }} 
+                  >{props.name}
+                </NavDropdown.Item>
               ))}
             </NavDropdown>
           </Nav>
@@ -106,10 +119,10 @@ function LoggedInLayout({children}) {
           </div>
         </Offcanvas.Body>
       </Offcanvas>
-
-      <Container>
-        <Row>
+      </Col>
+        <Col lg={9} md={11} sm={11} xs={11}>
           {children}
+          </Col>
         </Row>
       </Container>
 

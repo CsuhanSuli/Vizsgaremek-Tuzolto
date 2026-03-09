@@ -23,28 +23,25 @@ export default function ViewOneCarTool(props) {
     }*/
 
     return (
-        <>
-        <aside className="tableLeft">
-                <Col lg={3} md={3} sm={3}>
-                Neve
-                <p>{props.name}</p>
+        <> 
+            <Row className="row">
+                <Col lg={3} md={6} sm={12}>
+                    <p><strong>{props.name}</strong></p>
                 </Col>
-                <Col lg={3} md={3} sm={3}>
-                Helye
-                <p>{props.place}</p>
+                <Col lg={3} md={6} sm={12}>
+                    <p>{props.place}</p>
                 </Col>
-                <Col lg={2} md={2} sm={2}>
-                <p>2021.12.12.</p>
+                <Col lg={3} md={6} sm={12}>
+                    <p>Dátum</p>
                 </Col>
-                <Col lg={2} md={2} sm={2}>
-                    <p>Megjegyzés</p>
-                </Col>
-                <Col lg={2} md={2} sm={2}>
-                    <Button onClick={handleClick}>Módosítás</Button>
+                <Col lg={3} md={6} sm={12}>
+                    <Button variant="danger">Törlés</Button>
+                    <Button variant="primary" onClick={handleClick}>Módosítás</Button>
                     {/*<Button onClick={deleteClick}>Törlés</Button>*/}
                 </Col>
-                
-        </aside>
+                <hr />
+                </Row>
+
         </>
     )
 }

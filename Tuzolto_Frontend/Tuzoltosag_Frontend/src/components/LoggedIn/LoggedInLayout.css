@@ -40,7 +40,6 @@
   padding: 24px;
 }
 
-/* DROPDOWN TITLE */
 .sidebar-dropdown .dropdown-toggle {
   color: white !important;
   padding: 8px 12px;
@@ -48,12 +47,10 @@
   transition: background-color 0.2s ease;
 }
 
-/* DROPDOWN HOVER */
 .sidebar-dropdown .dropdown-toggle:hover {
   background-color: rgba(255,255,255,0.15);
 }
 
-/* DROPDOWN MENU */
 .sidebar-dropdown .dropdown-menu {
   background-color: #c82333;
   border: none;
@@ -61,20 +58,17 @@
   padding: 6px;
 }
 
-/* DROPDOWN ITEM */
 .sidebar-dropdown .dropdown-item {
   color: white;
   border-radius: 6px;
   padding: 8px 12px;
 }
 
-/* DROPDOWN ITEM HOVER */
 .sidebar-dropdown .dropdown-item:hover {
   background-color: rgba(255,255,255,0.2);
   color: white ;
 }
 
-/* DROPDOWN ARROW */
 .sidebar-dropdown .dropdown-toggle::after {
   margin-left: auto;
 }
