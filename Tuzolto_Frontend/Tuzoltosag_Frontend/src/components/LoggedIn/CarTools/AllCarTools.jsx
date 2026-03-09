@@ -30,7 +30,6 @@ export default function CarTools() {
         <LoggedInLayout>
             <h1>Autó szerszámai</h1>
             {carTools.map(item => {
-                console.log(item);
                 return (
                     <ViewOneCarTool
                         key={item.id}

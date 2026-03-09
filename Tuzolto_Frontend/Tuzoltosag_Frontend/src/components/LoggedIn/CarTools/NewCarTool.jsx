@@ -3,14 +3,13 @@ import { Button, Form } from "react-bootstrap";
 import { useLocation } from "react-router-dom";
 import LoggedInLayout from "../LoggedInLayout";
 function NewCarTool() {
+
     const location = useLocation();
     const props = location.state;
-
     const [formData, setFormData] = useState({
         name: "",
         placeId: "",
         carId: props.id,
-        toolTypeId: 1
     });
 
     const [answer, setAnswer] = useState("");
@@ -30,13 +29,14 @@ function NewCarTool() {
                 "Content-Type": "Application/json"
             },
             body: JSON.stringify(formData),
+
         })
         .then(() => {
+            console.log(formData),
             setFormData({
                 name: "",
                 placeId: "",
                 carId: props.id,
-                toolTypeId: 1
             })
             setAnswer("Sikeres mentés!")
         })
@@ -52,7 +52,7 @@ function NewCarTool() {
         .then((response) => response.json())
         .then((data) => setCarPlace(data))
         .catch((error) => console.error(error));
-    })
+    }, [])
 
     return(
         <>
@@ -71,9 +71,16 @@ function NewCarTool() {
                     </Form.Group>
                     <Form.Group className="mb-3">
                         <Form.Label>Helye:</Form.Label>
-                        <Form.Select>
+                        <Form.Select
+                            name="placeId"
+                            value={formData.placeId}
+                            onChange={handleChange}
+                        >
+
                             {carPlace.map((props) => (
-                                <option key={props.id} name="placeId" value={props.id}>{props.place}</option>
+                                <option key={props.id} value={props.id}>
+                                    {props.place}
+                                </option>
                             ))}
                         </Form.Select>
                     </Form.Group>
