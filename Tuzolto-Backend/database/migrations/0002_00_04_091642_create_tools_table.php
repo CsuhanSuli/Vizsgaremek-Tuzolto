@@ -15,8 +15,6 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->string("name");
-            $table->unsignedBigInteger("toolTypeId");
-            $table->foreign("toolTypeId")->references("id")->on("tool_types");
             $table->unsignedBigInteger("placeId");
             $table->foreign("placeId")->references("id")->on("car_places");
             $table->unsignedBigInteger("carId");

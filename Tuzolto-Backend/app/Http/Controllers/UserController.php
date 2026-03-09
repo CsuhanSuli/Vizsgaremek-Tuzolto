@@ -56,7 +56,7 @@ class UserController extends Controller
             ], 401);
         }
 
-        $user = User::where('email', $request->email)->first();
+        $user = User::where('email', $request->email)->first();;
         $token = $user->createToken('api-token')->plainTextToken;
 
         return response()->json([

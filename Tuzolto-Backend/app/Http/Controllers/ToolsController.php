@@ -30,7 +30,6 @@ class ToolsController extends Controller
     {
           $validator = Validator::make($request->all(), [
                 "name"=> "required",
-                "toolTypeId"=> "required|exists:tool_types,id",
                 "placeId"=> "required|exists:car_places,id",
                 "carId"=> "required|exists:cars,id",
         ]);
@@ -40,7 +39,6 @@ class ToolsController extends Controller
             }
         $newRecord = new tools();
         $newRecord->name=$request->name;
-        $newRecord->toolTypeId=$request->toolTypeId;
         $newRecord->placeId=$request->placeId;
         $newRecord->carId=$request->carId;
         $newRecord->save();
