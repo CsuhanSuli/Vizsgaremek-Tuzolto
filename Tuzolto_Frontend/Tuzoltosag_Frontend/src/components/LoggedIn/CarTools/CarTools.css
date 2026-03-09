@@ -4,9 +4,17 @@
 hr {
     padding: 1%;
 }*/
-button {
+.editButton {
+    margin-right: 2%;
+
+}
+.buttonsCol {
     margin-bottom: 1%;
 }
 h1 {
-    margin-bottom: 1%;
+    margin-bottom: 10%;
+    text-align: center;
+}
+.row {
+    margin-top: 2%;
 }

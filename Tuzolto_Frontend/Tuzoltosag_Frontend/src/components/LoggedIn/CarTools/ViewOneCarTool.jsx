@@ -1,15 +1,16 @@
-import { Container, Row, Col, Button } from "react-bootstrap";
+import { Row, Col, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-//import LoggedInLayout from "../LoggedInLayout";
 import "./CarTools.css"
+
 
 export default function ViewOneCarTool(props) {
 
     const navigate = useNavigate();
-
     const handleClick = () => {
         navigate(`/editCarTool/${props.id}`, {state:props})
     }
+
+
     /*
     const deleteClick = () => {
         const confirmDelete = window.confirm("Biztosan törli ezt az eszközt?");
@@ -28,17 +29,18 @@ export default function ViewOneCarTool(props) {
                 <Col lg={3} md={6} sm={12}>
                     <p><strong>{props.name}</strong></p>
                 </Col>
-                <Col lg={3} md={6} sm={12}>
+                <Col lg={2} md={6} sm={12}>
                     <p>{props.place}</p>
                 </Col>
-                <Col lg={3} md={6} sm={12}>
+                <Col lg={2} md={6} sm={12}>
                     <p>Dátum</p>
                 </Col>
-                <Col lg={3} md={6} sm={12}>
+                <Col lg={5} md={6} sm={12} className="buttonsCol">
+                    <Button  className="editButton" variant="secondary">Részletek</Button>
+                    <Button className="editButton" variant="primary" onClick={handleClick}>Módosítás</Button>
                     <Button variant="danger">Törlés</Button>
-                    <Button variant="primary" onClick={handleClick}>Módosítás</Button>
-                    {/*<Button onClick={deleteClick}>Törlés</Button>*/}
                 </Col>
+                <br />
                 <hr />
                 </Row>
 

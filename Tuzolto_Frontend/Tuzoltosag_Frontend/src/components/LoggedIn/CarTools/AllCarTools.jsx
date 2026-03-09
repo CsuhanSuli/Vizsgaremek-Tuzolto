@@ -3,6 +3,8 @@ import { useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import LoggedInLayout from "../LoggedInLayout";
 import "./CarTools.css"
+import { Button } from "react-bootstrap";
+import { useNavigate } from "react-router-dom"
 
 export default function CarTools() {
     const [carTools, setCarTools] = useState([]);
@@ -11,6 +13,10 @@ export default function CarTools() {
     const location = useLocation();
     const props = location.state;
 
+    const navigate = useNavigate();
+    const handleClick = () => {
+        navigate(`/newTool/${props.id}`, {state:props})
+    }
 
     useEffect(() => {
         fetch("http://127.0.0.1:8000/api/tools/show/" + props.id)
@@ -34,6 +40,7 @@ export default function CarTools() {
                     ></ViewOneCarTool>
                 )
             })}
+            <Button onClick={handleClick} variant="danger">Új eszköz hozzáadása</Button>
         </LoggedInLayout>
         </>
     )

@@ -13,7 +13,7 @@ const LoggedOutLayout = ({children}) => {
         <Container>
           <Row>
             <Col lg={3} md={3}><img className='headerImg' src="transparentLogo.png" alt="" /></Col>
-            <Col lg={9} md={9}><h1>Önkormányzati Tűzoltóság Balatonboglár-Balatonlelle Köztestülete</h1></Col>
+            <Col lg={9} md={9}><h1 className='headerH1'>Önkormányzati Tűzoltóság Balatonboglár-Balatonlelle Köztestülete</h1></Col>
           </Row>
         </Container>
       </header>

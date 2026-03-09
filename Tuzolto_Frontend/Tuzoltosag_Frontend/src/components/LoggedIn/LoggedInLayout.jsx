@@ -7,6 +7,8 @@ function LoggedInLayout({children}) {
   const [show, setShow] = useState(false);
   const [car, setCar] = useState([]);
 
+  const navigate = useNavigate();
+
   const handleClose = () => setShow(false);
   const handleToggle = () => setShow(!show);
 
@@ -17,7 +19,7 @@ function LoggedInLayout({children}) {
         .catch((error) => console.error(error));
   }, []); 
 
-    const navigate = useNavigate();
+
 
   return (
     <>
@@ -91,18 +93,28 @@ function LoggedInLayout({children}) {
 
         <Offcanvas.Body className="sidebar-mobile-body d-flex flex-column">
           <Nav className="flex-column gap-3">
-            <Nav.Link href="#" className="sidebar-link" onClick={handleClose}>
+            <Nav.Link href="#" className="sidebar-link" onClick={() => setShow(false)}>
               Beosztás
             </Nav.Link>
-            <Nav.Link href="#" className="sidebar-link" onClick={handleClose}>
-              Naptár
-            </Nav.Link>
-            <Nav.Link href="#" className="sidebar-link" onClick={handleClose}>
+            <Nav.Link href="#" className="sidebar-link" onClick={() => setShow(false)}>
               Dolgozók
             </Nav.Link>
-            <Nav.Link href="#" className="sidebar-link" onClick={handleClose}>
+            <Nav.Link href="#" className="sidebar-link" onClick={() => setShow(false)}>
               Beállítások
             </Nav.Link>
+            <NavDropdown title="Autók" id="basic-nav-dropdown" className="sidebar-dropdown">
+              {car.map((props) => (
+                <NavDropdown.Item 
+                  key={props.carId} 
+                  id={props.carId} 
+                  onClick={() => {
+                    navigate(`/carTools/${props.id}`, {state:props})
+                    setShow(false)
+                  }} 
+                  >{props.name}
+                </NavDropdown.Item>
+              ))}
+            </NavDropdown>
           </Nav>
 
           <div className="mt-auto">
