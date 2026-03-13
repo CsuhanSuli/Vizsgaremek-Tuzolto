@@ -20,7 +20,9 @@ Route::get('/user', function (Request $request) {
 
 
 //user
+Route::get('/user/index', [UserController::class, 'index']);
 Route::post('/user/register', [UserController::class, 'register']);
+
 Route::post('/user/login', [UserController::class, 'login']) ->name('login');
 
 
@@ -36,7 +38,7 @@ Route::get("/car/get",[CarController::class,"index"]);
 //thing that should be used with loging go here for testing
 
 //exam
-Route::get("/examUser/show",[ExamUserController::class,"show"]);
+Route::get("/examUser/show/{id}",[ExamUserController::class,"show"]);
 Route::get("/examUser/index",[ExamUserController::class,"index"]);
 Route::post("/examUser/store",[ExamUserController::class,"store"]);
 Route::post("/exams/store",[ExamsController::class,"store"]);

@@ -102,5 +102,9 @@ class UserController extends Controller
         $data->delete();
         return response()->json(["message"=>"sikeres törlés"],204);
     }
+    public function index()
+    {
+        return response(User::all());
+    }
 }
 
