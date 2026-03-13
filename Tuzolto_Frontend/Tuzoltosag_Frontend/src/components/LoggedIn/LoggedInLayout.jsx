@@ -54,7 +54,7 @@ function LoggedInLayout({children}) {
               Dolgozók
             </Nav.Link>
             <Nav.Link href="#" className="sidebar-link">
-              Beállítások
+              Vizsgáim
             </Nav.Link>
             <NavDropdown title="Autók" id="basic-nav-dropdown" className="sidebar-dropdown">
               {car.map((props) => (
@@ -100,7 +100,7 @@ function LoggedInLayout({children}) {
               Dolgozók
             </Nav.Link>
             <Nav.Link href="#" className="sidebar-link" onClick={() => setShow(false)}>
-              Beállítások
+              Vizsgáim
             </Nav.Link>
             <NavDropdown title="Autók" id="basic-nav-dropdown" className="sidebar-dropdown">
               {car.map((props) => (

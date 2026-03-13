@@ -6,6 +6,7 @@ import LoginForm from "./components/Login/LoginForm";
 import AllCarTools from "./components/LoggedIn/CarTools/AllCarTools";
 import LoggedInLayout from "./components/LoggedIn/LoggedInLayout";
 import NewCarTool from "./components/LoggedIn/CarTools/NewCarTool";
+import UpdateTool from "./components/LoggedIn/CarTools/UpdateTool";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
                 <Route path="/LoggedIn" element={<LoggedInLayout />} />
                 <Route path="/carTools/:id" element={<AllCarTools />} />
                 <Route path="/newTool/:id" element={<NewCarTool />} />
+                <Route path="/editCarTool/:id" element={<UpdateTool />} />
               </Routes>
             </Router>
 

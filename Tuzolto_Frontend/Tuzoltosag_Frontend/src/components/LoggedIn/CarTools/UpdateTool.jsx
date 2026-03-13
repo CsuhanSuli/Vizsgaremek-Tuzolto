@@ -1,15 +1,16 @@
 import { useEffect, useState } from "react";
 import { Button, Form } from "react-bootstrap";
-import { useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import LoggedInLayout from "../LoggedInLayout";
 
 function NewCarTool() {
-
+    const navigate = useNavigate();
     const location = useLocation();
     const props = location.state;
+    
     const [formData, setFormData] = useState({
-        name: "",
-        placeId: "",
+        name: props.name,
+        placeId: props.placeId,
         carId: props.id,
     });
 
@@ -33,12 +34,10 @@ function NewCarTool() {
 
         })
         .then(() => {
-            setFormData({
-                name: "",
-                placeId: "",
-                carId: props.id,
-            })
-            setAnswer("Sikeres mentés!")
+            props.name = formData.name
+            props.placeId = formData.placeId
+            props.carId = formData.carId
+            navigate(`/carTools/${props.carId}`, {state: props})
         })
         .catch(error => {
             console.error(error)
@@ -84,7 +83,7 @@ function NewCarTool() {
                             ))}
                         </Form.Select>
                     </Form.Group>
-                    <Button variant="danger" onClick={handleSubmit}>Hozzáadás</Button>
+                    <Button variant="danger" onClick={handleSubmit}>Módosítások mentése</Button>
                 </Form>
                 {answer && <div>{answer}</div>}
             </LoggedInLayout>
