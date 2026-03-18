@@ -55,7 +55,7 @@ Route::get('/carplace/index', [CarPlaceController::class, 'index']);
 Route::get('/schedule/index', [ScheduleController::class, 'index']);
 Route::post('/schedule/store', [ScheduleController::class, 'store']);
 // user
-Route::post('/user/logout', [UserController::class, 'logout']);
+
 Route::delete('/user/delete/{id}', [UserController::class, 'destroy']);
 // forum
 Route::post('/forum/store', [ForumController::class, 'store'])->middleware(isAdmin::class);
@@ -66,4 +66,6 @@ Route::get("/review/allDates/{toolId}",[ReviewController::class,"allDates"]);
 Route::get("/review/latestDate/{toolId}",[ReviewController::class,"latestDate"]);
 Route::get("/review/store/{toolId}",[ReviewController::class,"store"]);
 
-Route::middleware('auth:sanctum')->group(function () {});
+Route::middleware('auth:sanctum')->group(function () {
+    Route::post('/user/logout', [UserController::class, 'logout']);
+});
