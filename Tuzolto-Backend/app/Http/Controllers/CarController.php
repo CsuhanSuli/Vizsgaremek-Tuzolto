@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Car;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+
 class CarController extends Controller
 {
     /**
@@ -12,7 +13,7 @@ class CarController extends Controller
      */
     public function index()
     {
-        return response()->json(Car::with("cartypes")->get());
+        return response()->json(Car::with('cartypes')->get());
     }
 
     /**
@@ -28,21 +29,21 @@ class CarController extends Controller
      */
     public function store(Request $request)
     {
-            $validator = Validator::make($request->all(), [
-                "name"=> "required",
-                "typeId"=> "required|exists:cartypes,id",
-                "imageName"=> "required",
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+            'typeId' => 'required|exists:cartypes,id',
+            'imageName' => 'required',
         ]);
-        if($validator->fails())
-            {
-                return response()->json(["message"=>"hiba","hibák"=>$validator->errors()],402);
-            }
-        $newRecord = new Car();
-        $newRecord->name=$request->name;
-        $newRecord->typeId=$request->typeId;
-        $newRecord->imageName=$request->imageName;
+        if ($validator->fails()) {
+            return response()->json(['message' => 'hiba', 'hibák' => $validator->errors()], 402);
+        }
+        $newRecord = new Car;
+        $newRecord->name = $request->name;
+        $newRecord->typeId = $request->typeId;
+        $newRecord->imageName = $request->imageName;
         $newRecord->save();
-        return response()->json(["message"=>"sikeres feltöltés"],201);
+
+        return response()->json(['message' => 'sikeres feltöltés'], 201);
     }
 
     /**
@@ -75,11 +76,11 @@ class CarController extends Controller
     public function destroy(int $id)
     {
         $data = Car::find($id);
-        if(empty($id))
-            {
-                return response()->json(["message"=>"404 nincs ijen auto"],404);
-            }
+        if (empty($id)) {
+            return response()->json(['message' => '404 nincs ijen auto'], 404);
+        }
         $data->delete();
-        return response()->json(["message"=>"sikeres törlés"],204);
+
+        return response()->json(['message' => 'sikeres törlés'], 204);
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -12,14 +13,16 @@ class User extends Authenticatable
 {
     public function examUser()
     {
-        return $this->hasMany(examUser::class,"examId");
+        return $this->hasMany(examUser::class, 'examId');
     }
+
     public function scheduleTypeid()
     {
-        return $this->hasMany(schedule::class,"userId");
+        return $this->hasMany(schedule::class, 'userId');
     }
-    /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable, HasApiTokens;
+
+    /** @use HasFactory<UserFactory> */
+    use HasApiTokens, HasFactory, Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -30,7 +33,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'isAdmin'
+        'isAdmin',
     ];
 
     /**

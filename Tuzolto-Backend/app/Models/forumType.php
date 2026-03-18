@@ -8,6 +8,6 @@ class forumType extends Model
 {
     public function Forum()
     {
-        return $this->hasMany(Forum::class,"typeId");
+        return $this->hasMany(Forum::class, 'typeId');
     }
 }

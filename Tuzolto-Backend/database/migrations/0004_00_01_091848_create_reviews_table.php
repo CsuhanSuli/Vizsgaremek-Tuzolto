@@ -14,15 +14,12 @@ return new class extends Migration
         Schema::create('reviews', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->date("reviewDate");
-            $table->boolean("isHappend");
-            $table->boolean("isSuccesfull");
-            $table->unsignedBigInteger("reviewTypeId");
-            $table->foreign("reviewTypeId")->references("id")->on("review_types");
-            $table->string("whatIsIt");
-            $table->unsignedBigInteger("toolId")->nullable();
-            $table->foreign("toolId")->references("id")->on("tools");
-            //be kell valahogy tobb constraintet tenni
+            $table->date('reviewDate');
+            $table->boolean('isHappend');
+            $table->boolean('isSuccesfull');
+            $table->unsignedBigInteger('toolId')->nullable();
+            $table->foreign('toolId')->references('id')->on('tools');
+            // be kell valahogy tobb constraintet tenni
         });
     }
 

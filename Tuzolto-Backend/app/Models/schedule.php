@@ -9,10 +9,11 @@ class schedule extends Model
     public function schedule_types()
     {
 
-        return $this->belongsTo(scheduleType::class,"scheduleTypeid");
+        return $this->belongsTo(scheduleType::class, 'scheduleTypeid');
     }
+
     public function users()
     {
-        return $this->belongsTo(User::class,"userId");
+        return $this->belongsTo(User::class, 'userId');
     }
 }

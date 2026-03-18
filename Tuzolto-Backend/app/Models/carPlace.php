@@ -8,6 +8,6 @@ class carPlace extends Model
 {
     public function tools()
     {
-        return $this->hasMany(tools::class,"placeId");
+        return $this->hasMany(tools::class, 'placeId');
     }
 }

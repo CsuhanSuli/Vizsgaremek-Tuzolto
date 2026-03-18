@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\schedule;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+
 class ScheduleController extends Controller
 {
     /**
@@ -12,7 +13,7 @@ class ScheduleController extends Controller
      */
     public function index()
     {
-        return response()->json(schedule::with("users")->with("schedule_types")->get());
+        return response()->json(schedule::with('users')->with('schedule_types')->get());
     }
 
     /**
@@ -28,22 +29,22 @@ class ScheduleController extends Controller
      */
     public function store(Request $request)
     {
-                 $validator = Validator::make($request->all(), [
-                "scheduleTypeid"=> "required|exists:schedule_types,id",
-                "userId"=> "required|exists:users,id",
-                "date"=> "required|",
+        $validator = Validator::make($request->all(), [
+            'scheduleTypeid' => 'required|exists:schedule_types,id',
+            'userId' => 'required|exists:users,id',
+            'date' => 'required|',
         ]);
-        if($validator->fails())
-            {
-                return response()->json(["message"=>"hiba","hibák"=>$validator->errors()],402);
-            }
-        $newRecord = new Schedule();
-        $newRecord->scheduleTypeid=$request->scheduleTypeid;
-        $newRecord->date=$request->date;
-        $newRecord->userId=$request->userId;
+        if ($validator->fails()) {
+            return response()->json(['message' => 'hiba', 'hibák' => $validator->errors()], 402);
+        }
+        $newRecord = new schedule;
+        $newRecord->scheduleTypeid = $request->scheduleTypeid;
+        $newRecord->date = $request->date;
+        $newRecord->userId = $request->userId;
 
         $newRecord->save();
-        return response()->json(["message"=>"sikeres feltöltés"],201);
+
+        return response()->json(['message' => 'sikeres feltöltés'], 201);
     }
 
     /**
@@ -76,11 +77,11 @@ class ScheduleController extends Controller
     public function destroy(int $id)
     {
         $data = schedule::find($id);
-        if(empty($id))
-            {
-                return response()->json(["message"=>"404 nincs ijen auto"],404);
-            }
+        if (empty($id)) {
+            return response()->json(['message' => '404 nincs ijen auto'], 404);
+        }
         $data->delete();
-        return response()->json(["message"=>"sikeres törlés"],204);
+
+        return response()->json(['message' => 'sikeres törlés'], 204);
     }
 }

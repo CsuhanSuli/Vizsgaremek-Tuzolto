@@ -5,27 +5,27 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash; 
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
-    //felhasználói regisztráció
+    // felhasználói regisztráció
     public function register(Request $request)
     {
-        //Validálás
+        // Validálás
         $validated = $request->validate([
             'name' => 'required|string|max:255',
-            //e-mail egyedi legyen a user táblában
-            //e-mail formailag helyes
+            // e-mail egyedi legyen a user táblában
+            // e-mail formailag helyes
             'email' => 'required|email|unique:users',
-            //confirmed: a jelszót meg kell erősíteni
+            // confirmed: a jelszót meg kell erősíteni
             'password' => 'required|min:4|confirmed',
         ]);
-        //user létrehozása
+        // user létrehozása
         $user = User::create([
             'name' => $validated['name'],
             'email' => $validated['email'],
-            //Hash a jelszót titkosítja
+            // Hash a jelszót titkosítja
             'password' => Hash::make($validated['password']),
         ]);
 
@@ -37,26 +37,25 @@ class UserController extends Controller
         ], 201);
     }
 
-
     public function login(Request $request)
     {
         $credentials = $request->validate([
             'email' => 'required|email',
             'password' => 'required',
         ],
-        [
-            'email.required' => 'nincs email megadva',
-            'password.required'=>"nincs jelszó megadva"
-        ]
-    );
+            [
+                'email.required' => 'nincs email megadva',
+                'password.required' => 'nincs jelszó megadva',
+            ]
+        );
 
-        if (!Auth::attempt($credentials)) {
+        if (! Auth::attempt($credentials)) {
             return response()->json([
-                'message' => 'Hibás email vagy jelszó'
+                'message' => 'Hibás email vagy jelszó',
             ], 401);
         }
 
-        $user = User::where('email', $request->email)->first();;
+        $user = User::where('email', $request->email)->first();
         $token = $user->createToken('api-token')->plainTextToken;
 
         return response()->json([
@@ -70,41 +69,38 @@ class UserController extends Controller
         $request->user()->currentAccessToken()->delete();
 
         return response()->json([
-            'message' => 'Sikeres kijelentkezés'
+            'message' => 'Sikeres kijelentkezés',
         ]);
     }
+
     public function fortyHourUptdate(int $id)
     {
         $data = User::find($id);
-        if(empty($data))
-            {
-                return response()->json(["message"=>"404"], 404);
-            }
-        if($data->fortyHours == 0)
-            {
-                $data->fortyHours=1;
-                $data->save();
-            }
-        else
-            {
-                $data->fortyHours=0;
-                $data->save();
-            }
+        if (empty($data)) {
+            return response()->json(['message' => '404'], 404);
+        }
+        if ($data->fortyHours == 0) {
+            $data->fortyHours = 1;
+            $data->save();
+        } else {
+            $data->fortyHours = 0;
+            $data->save();
+        }
     }
 
     public function destroy(int $id)
     {
         $data = User::find($id);
-        if(empty($id))
-            {
-                return response()->json(["message"=>"404 nincs ijen auto"],404);
-            }
+        if (empty($id)) {
+            return response()->json(['message' => '404 nincs ijen auto'], 404);
+        }
         $data->delete();
-        return response()->json(["message"=>"sikeres törlés"],204);
+
+        return response()->json(['message' => 'sikeres törlés'], 204);
     }
+
     public function index()
     {
         return response(User::all());
     }
 }
-

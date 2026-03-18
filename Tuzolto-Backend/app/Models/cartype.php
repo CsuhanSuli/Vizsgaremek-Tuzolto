@@ -8,6 +8,6 @@ class cartype extends Model
 {
     public function Car()
     {
-        return $this->hasMany(Car::class,"typeId");
+        return $this->hasMany(Car::class, 'typeId');
     }
 }

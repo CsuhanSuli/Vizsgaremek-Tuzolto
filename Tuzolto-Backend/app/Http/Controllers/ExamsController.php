@@ -29,19 +29,19 @@ class ExamsController extends Controller
      */
     public function store(Request $request)
     {
-            $validator = Validator::make($request->all(), [
-                "name"=> "required",
-                "examType"=> "required|exists:exam_types,id",
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+            'examType' => 'required|exists:exam_types,id',
         ]);
-        if($validator->fails())
-            {
-                return response()->json(["message"=>"hiba","hibák"=>$validator->errors()],402);
-            }
-        $newRecord = new exams();
-        $newRecord->name=$request->name;
-        $newRecord->examType=$request->examType;
+        if ($validator->fails()) {
+            return response()->json(['message' => 'hiba', 'hibák' => $validator->errors()], 402);
+        }
+        $newRecord = new exams;
+        $newRecord->name = $request->name;
+        $newRecord->examType = $request->examType;
         $newRecord->save();
-        return response()->json(["message"=>"sikeres feltöltés"],201);
+
+        return response()->json(['message' => 'sikeres feltöltés'], 201);
     }
 
     /**
@@ -63,10 +63,7 @@ class ExamsController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, exams $exams)
-    {
-
-    }
+    public function update(Request $request, exams $exams) {}
 
     /**
      * Remove the specified resource from storage.

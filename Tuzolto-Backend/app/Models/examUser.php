@@ -8,10 +8,11 @@ class examUser extends Model
 {
     public function exams()
     {
-        return $this->belongsTo(exams::class,"examId");
+        return $this->belongsTo(exams::class, 'examId');
     }
+
     public function users()
     {
-        return $this->belongsTo(User::class,"examId");
+        return $this->belongsTo(User::class, 'examId');
     }
 }

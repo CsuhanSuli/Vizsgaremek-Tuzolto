@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\tools;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+
 class ToolsController extends Controller
 {
     /**
@@ -28,21 +29,21 @@ class ToolsController extends Controller
      */
     public function store(Request $request)
     {
-          $validator = Validator::make($request->all(), [
-                "name"=> "required",
-                "placeId"=> "required|exists:car_places,id",
-                "carId"=> "required|exists:cars,id",
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+            'placeId' => 'required|exists:car_places,id',
+            'carId' => 'required|exists:cars,id',
         ]);
-        if($validator->fails())
-            {
-                return response()->json(["message"=>"hiba","hibák"=>$validator->errors()],402);
-            }
-        $newRecord = new tools();
-        $newRecord->name=$request->name;
-        $newRecord->placeId=$request->placeId;
-        $newRecord->carId=$request->carId;
+        if ($validator->fails()) {
+            return response()->json(['message' => 'hiba', 'hibák' => $validator->errors()], 402);
+        }
+        $newRecord = new tools;
+        $newRecord->name = $request->name;
+        $newRecord->placeId = $request->placeId;
+        $newRecord->carId = $request->carId;
         $newRecord->save();
-        return response()->json(["message"=>"sikeres feltöltés"],201);
+
+        return response()->json(['message' => 'sikeres feltöltés'], 201);
     }
 
     /**
@@ -50,11 +51,11 @@ class ToolsController extends Controller
      */
     public function show(string $id)
     {
-        $data = tools::where("carId","=",$id)->with("carPlace")->get();
-        if(empty($data))
-        {
-            return response()->json(["message"=>"404 nincs ijen kocsi"],404);
+        $data = tools::where('carId', '=', $id)->with('carPlace')->get();
+        if (empty($data)) {
+            return response()->json(['message' => '404 nincs ilyen kocsi'], 404);
         }
+
         return response()->json($data);
     }
 
@@ -80,11 +81,11 @@ class ToolsController extends Controller
     public function destroy(int $id)
     {
         $data = tools::find($id);
-        if(empty($id))
-            {
-                return response()->json(["message"=>"404 nincs ijen auto"],404);
-            }
+        if (empty($id)) {
+            return response()->json(['message' => '404 nincs ilyen auto'], 404);
+        }
         $data->delete();
-        return response()->json(["message"=>"sikeres törlés"],204);
+
+        return response()->json(['message' => 'sikeres törlés'], 204);
     }
 }

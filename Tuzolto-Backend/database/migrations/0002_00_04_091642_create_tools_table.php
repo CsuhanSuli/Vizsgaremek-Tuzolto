@@ -14,11 +14,11 @@ return new class extends Migration
         Schema::create('tools', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->string("name");
-            $table->unsignedBigInteger("placeId");
-            $table->foreign("placeId")->references("id")->on("car_places");
-            $table->unsignedBigInteger("carId");
-            $table->foreign("carId")->references("id")->on("cars");
+            $table->string('name');
+            $table->unsignedBigInteger('placeId');
+            $table->foreign('placeId')->references('id')->on('car_places');
+            $table->unsignedBigInteger('carId');
+            $table->foreign('carId')->references('id')->on('cars');
         });
     }
 

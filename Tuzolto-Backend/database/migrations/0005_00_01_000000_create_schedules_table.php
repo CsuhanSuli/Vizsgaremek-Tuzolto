@@ -14,11 +14,11 @@ return new class extends Migration
         Schema::create('schedules', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->unsignedBigInteger("scheduleTypeid");
-            $table->foreign("scheduleTypeid")->references("id")->on("schedule_types");
-            $table->unsignedBigInteger("userId");
-            $table->foreign("userId")->references("id")->on("users");
-            $table->date("date");
+            $table->unsignedBigInteger('scheduleTypeid');
+            $table->foreign('scheduleTypeid')->references('id')->on('schedule_types');
+            $table->unsignedBigInteger('userId');
+            $table->foreign('userId')->references('id')->on('users');
+            $table->date('date');
         });
     }
 

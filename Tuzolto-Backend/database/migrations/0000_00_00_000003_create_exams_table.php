@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('exams', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->string("name");
-            $table->unsignedBigInteger("examType");
-            $table->foreign("examtype")->references("id")->on("exam_types");
+            $table->string('name');
+            $table->unsignedBigInteger('examType');
+            $table->foreign('examtype')->references('id')->on('exam_types');
         });
     }
 

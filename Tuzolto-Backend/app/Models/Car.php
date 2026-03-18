@@ -8,14 +8,16 @@ class Car extends Model
 {
     public function tools()
     {
-        return $this->hasMany(tools::class,"typeId");
+        return $this->hasMany(tools::class, 'typeId');
     }
+
     public function review()
     {
-        return $this->hasMany(review::class,"objectId");
+        return $this->hasMany(review::class, 'objectId');
     }
+
     public function cartypes()
     {
-        return $this->belongsTo(cartype::class,"carId");
+        return $this->belongsTo(cartype::class, 'carId');
     }
 }

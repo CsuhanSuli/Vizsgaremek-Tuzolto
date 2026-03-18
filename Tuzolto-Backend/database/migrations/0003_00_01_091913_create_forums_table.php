@@ -14,13 +14,13 @@ return new class extends Migration
         Schema::create('forums', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->string("header");
-            $table->date("date");
-            $table->unsignedBigInteger("typeId");
-            $table->foreign("typeId")->references("id")->on("forum_types");
-            $table->string("place");
-            $table->string("description");
-            $table->string("imageName");
+            $table->string('header');
+            $table->date('date');
+            $table->unsignedBigInteger('typeId');
+            $table->foreign('typeId')->references('id')->on('forum_types');
+            $table->string('place');
+            $table->string('description');
+            $table->string('imageName');
         });
     }
 

@@ -8,6 +8,6 @@ class Forum extends Model
 {
     public function forumType()
     {
-        return $this->belongsTo(forumType::class,"typeId");
+        return $this->belongsTo(forumType::class, 'typeId');
     }
 }

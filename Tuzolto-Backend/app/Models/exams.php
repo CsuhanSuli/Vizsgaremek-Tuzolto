@@ -8,6 +8,6 @@ class exams extends Model
 {
     public function examType()
     {
-        return $this->hasMany(examType::class,"examtype");
+        return $this->hasMany(examType::class, 'examtype');
     }
 }

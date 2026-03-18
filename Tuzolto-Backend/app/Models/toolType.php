@@ -8,6 +8,6 @@ class toolType extends Model
 {
     public function tools()
     {
-        return $this->hasMany(tools::class,"toolTypeId");
+        return $this->hasMany(tools::class, 'toolTypeId');
     }
 }

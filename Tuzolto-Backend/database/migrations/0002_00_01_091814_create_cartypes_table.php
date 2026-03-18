@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('cartypes', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->string("typename");
+            $table->string('typename');
         });
     }
 

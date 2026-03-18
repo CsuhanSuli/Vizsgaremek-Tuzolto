@@ -8,6 +8,6 @@ class scheduleType extends Model
 {
     public function schedules()
     {
-        return $this->hasMany(schedule::class,"scheduleTypeid");
+        return $this->hasMany(schedule::class, 'scheduleTypeid');
     }
 }

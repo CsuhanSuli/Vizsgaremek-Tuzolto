@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\forumType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+
 class ForumTypeController extends Controller
 {
     /**
@@ -28,18 +29,18 @@ class ForumTypeController extends Controller
      */
     public function store(Request $request)
     {
-                 $validator = Validator::make($request->all(), [
-                "typeName"=> "required",
+        $validator = Validator::make($request->all(), [
+            'typeName' => 'required',
 
         ]);
-        if($validator->fails())
-            {
-                return response()->json(["message"=>"hiba","hibák"=>$validator->errors()],402);
-            }
-        $newRecord = new forumType();
-        $newRecord->typeName=$request->typeName;
+        if ($validator->fails()) {
+            return response()->json(['message' => 'hiba', 'hibák' => $validator->errors()], 402);
+        }
+        $newRecord = new forumType;
+        $newRecord->typeName = $request->typeName;
         $newRecord->save();
-        return response()->json(["message"=>"sikeres feltöltés"],201);
+
+        return response()->json(['message' => 'sikeres feltöltés'], 201);
     }
 
     /**
