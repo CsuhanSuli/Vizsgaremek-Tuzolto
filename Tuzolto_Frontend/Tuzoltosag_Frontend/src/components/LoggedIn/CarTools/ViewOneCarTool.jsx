@@ -10,6 +10,9 @@ export default function ViewOneCarTool(props) {
         navigate(`/editCarTool/${props.id}`, {state:props})
     }
 
+    const detailNavigate = () => {
+        navigate(`/carToolDetails/${props.id}`, {state:props})
+    }
 
     /*
     const deleteClick = () => {
@@ -29,14 +32,14 @@ export default function ViewOneCarTool(props) {
                 <Col lg={3} md={6} sm={12}>
                     <p><strong>{props.name}</strong></p>
                 </Col>
-                <Col lg={2} md={6} sm={12}>
+                <Col lg={3} md={6} sm={12}>
                     <p>{props.place}</p>
                 </Col>
                 <Col lg={2} md={6} sm={12}>
-                    <p>Dátum</p>
+                    <p>2026.03.02.</p>
                 </Col>
-                <Col lg={5} md={6} sm={12} className="buttonsCol">
-                    <Button  className="editButton" variant="secondary">Részletek</Button>
+                <Col lg={4} md={6} sm={12} className="buttonsCol">
+                    <Button  className="editButton" variant="secondary" onClick={detailNavigate}>Részletek</Button>
                     <Button className="editButton" variant="primary" onClick={handleClick}>Módosítás</Button>
                     <Button variant="danger">Törlés</Button>
                 </Col>

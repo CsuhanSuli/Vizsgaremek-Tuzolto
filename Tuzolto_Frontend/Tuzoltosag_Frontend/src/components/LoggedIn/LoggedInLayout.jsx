@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Navbar, Nav, Offcanvas, Button, NavDropdown, Container, Row, Col } from "react-bootstrap";
 import "./LoggedInLayout.css";
 import { useNavigate } from "react-router-dom"
+import api from "../Login/api";
 
 function LoggedInLayout({children}) {
   const [show, setShow] = useState(false);
@@ -19,7 +20,20 @@ function LoggedInLayout({children}) {
         .catch((error) => console.error(error));
   }, []); 
 
+const handleLogout = async () => {
+  try {
+    await api.post("user/logout");
+  } catch (error) {
+    console.error("Logout hiba:", error);
+  } finally {
+    console.log("Token törlés előtt:", localStorage.getItem("token"));
+    localStorage.removeItem("token");
+    console.log("Token törlés után:", localStorage.getItem("token"));
 
+
+    navigate("/Login"); 
+  }
+};
 
   return (
     <>
@@ -63,6 +77,7 @@ function LoggedInLayout({children}) {
                   id={props.carId} 
                   onClick={() => {
                     navigate(`/carTools/${props.id}`, {state:props})
+                    window.location.reload();
                   }} 
                   >{props.name}
                 </NavDropdown.Item>
@@ -74,7 +89,7 @@ function LoggedInLayout({children}) {
             <hr className="border-light" />
             <button
               className="btn btn-outline-light w-100"
-              onClick={() => console.log("Kijelentkezés")}
+              onClick={handleLogout}
             >
               Kijelentkezés
             </button>
@@ -109,6 +124,7 @@ function LoggedInLayout({children}) {
                   id={props.carId} 
                   onClick={() => {
                     navigate(`/carTools/${props.id}`, {state:props})
+                    window.location.reload();
                     setShow(false)
                   }} 
                   >{props.name}
@@ -123,7 +139,7 @@ function LoggedInLayout({children}) {
               className="btn btn-outline-light w-100"
               onClick={() => {
                 handleClose();
-                console.log("Kijelentkezés");
+                handleLogout();
               }}
             >
               Kijelentkezés

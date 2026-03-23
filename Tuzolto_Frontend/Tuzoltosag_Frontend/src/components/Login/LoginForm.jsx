@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Container, Row, Col, Card, Form, Button } from "react-bootstrap";
 import api from "./api"; // a saját Axios példány
 import "./LoginForm.css"; // ide jön a CSS, amit megadtál
@@ -11,6 +12,8 @@ const LoginForm = () => {
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null);
 
+  const navigate = useNavigate();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -18,15 +21,19 @@ const LoginForm = () => {
     setSuccess(null);
 
     try {
-      const response = await api.post("user/login", { email, password });
+  const response = await api.post("user/login", { email, password });
 
-      setSuccess("Sikeres bejelentkezés!");
-      console.log("Válasz:", response.data);
+  setSuccess("Sikeres bejelentkezés!");
+  console.log("Válasz:", response.data);
 
-      if (response.data.token) {
-        localStorage.setItem("token", response.data.token);
-      }
-    } catch (err) {
+  if (response.data.token) {
+    console.log(response.data);
+    localStorage.setItem("token", response.data.token);
+
+    navigate("/LoggedIn");
+  }
+
+} catch (err) {
       setError(
         err.response?.data?.message || "Hiba történt a bejelentkezés során"
       );

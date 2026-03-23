@@ -39,6 +39,7 @@ function NewCarTool() {
                 carId: props.id,
             })
             setAnswer("Sikeres mentés!")
+            navigate(`/carTools/${props.carId}`, {state: props})
         })
         .catch(error => {
             console.error(error)
