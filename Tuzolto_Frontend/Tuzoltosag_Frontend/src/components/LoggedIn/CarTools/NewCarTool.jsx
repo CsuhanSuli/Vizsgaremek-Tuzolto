@@ -85,7 +85,7 @@ function NewCarTool() {
                             ))}
                         </Form.Select>
                     </Form.Group>
-                    <Button variant="danger" onClick={handleSubmit}>Hozzáadás</Button>
+                    <Button type="submit" variant="danger" onClick={handleSubmit}>Hozzáadás</Button>
                 </Form>
                 {answer && <div>{answer}</div>}
             </LoggedInLayout>

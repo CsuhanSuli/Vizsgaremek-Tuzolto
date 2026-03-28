@@ -7,7 +7,9 @@ import AllCarTools from "./components/LoggedIn/CarTools/AllCarTools";
 import LoggedInLayout from "./components/LoggedIn/LoggedInLayout";
 import NewCarTool from "./components/LoggedIn/CarTools/NewCarTool";
 import UpdateTool from "./components/LoggedIn/CarTools/UpdateTool";
-import ToolDetails from "./components/LoggedIn/Exams/AllExams";
+import ToolDetails from "./components/LoggedIn/CarTools/ToolDetails";
+import NewReviewDate from "./components/LoggedIn/CarTools/NewReviewDate";
+import UpdateReviewDate from "./components/LoggedIn/CarTools/UpdateReviewDate"
 
 function App() {
   return (
@@ -22,6 +24,8 @@ function App() {
                 <Route path="/newTool/:id" element={<NewCarTool />} />
                 <Route path="/editCarTool/:id" element={<UpdateTool />} />
                 <Route path="/carToolDetails/:id" element={<ToolDetails />} />
+                <Route path="/newReviewDate/:id" element={<NewReviewDate/>} />
+                <Route path="/updateReviewDate/:id" element={<UpdateReviewDate/>} />
               </Routes>
             </Router>
 

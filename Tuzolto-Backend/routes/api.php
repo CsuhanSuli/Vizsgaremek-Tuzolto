@@ -64,7 +64,7 @@ Route::post('/forumType/store', [ForumTypeController::class, 'store'])->middlewa
 //review
 Route::get("/review/allDates/{toolId}",[ReviewController::class,"allDates"]);
 Route::get("/review/latestDate/{toolId}",[ReviewController::class,"latestDate"]);
-Route::get("/review/store/{toolId}",[ReviewController::class,"store"]);
+Route::post("/review/store/{toolId}",[ReviewController::class,"store"]);
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/user/logout', [UserController::class, 'logout']);

@@ -9,10 +9,10 @@ export default function NewReviewDate() {
     const props = location.state;
 
     const [formData, setFormData] = useState({
-        reviewDate: "",
-        isHappend: 0,
-        isSuccesfull: 0,
-        toolId: props.id
+        reviewDate: props.reviewDate,
+        isHappend: props.isHappend,
+        isSuccesfull: props.isSuccesfull,
+        toolId: props.toolId
     })
 
     const [answer, setAnswer] = useState("")
@@ -56,7 +56,7 @@ export default function NewReviewDate() {
     return(
         <>
         <LoggedInLayout>
-            <h1>Új felülvizsgálati dátum</h1>
+            <h1>Legutóbbi dátum módosítása</h1>
             <Form onSubmit={handleSubmit} className="formCenter">
                 <Form.Group className="mb-3">
                     <Form.Label>Dátum</Form.Label>
@@ -74,6 +74,7 @@ export default function NewReviewDate() {
                         type="checkbox" 
                         label="Megtörtént"
                         name="isHappend"
+                        value={formData.reviewDate}
                         checked={formData.isHappend === 1}
                         onChange={handleChange}
                     />
@@ -84,6 +85,7 @@ export default function NewReviewDate() {
                         type="checkbox" 
                         label="Sikeres volt"
                         name="isSuccesfull"
+                        value={formData.reviewDate}
                         checked={formData.isSuccesfull === 1}
                         onChange={handleChange}
                     />

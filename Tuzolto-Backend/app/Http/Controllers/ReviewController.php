@@ -39,10 +39,10 @@ class ReviewController extends Controller
             return response()->json(['message' => 'hiba', 'hibák' => $validator->errors()], 402);
         }
         $newRecord = new review;
-        $newRecord->name = $request->name;
-        $newRecord->toolTypeId = $request->toolTypeId;
-        $newRecord->placeId = $request->placeId;
-        $newRecord->carId = $request->carId;
+        $newRecord->reviewDate = $request->reviewDate;
+        $newRecord->isHappend = $request->isHappend;
+        $newRecord->isSuccesfull = $request->isSuccesfull;
+        $newRecord->toolId = $request->toolId;
         $newRecord->save();
 
         return response()->json(['message' => 'sikeres feltöltés'], 201);
