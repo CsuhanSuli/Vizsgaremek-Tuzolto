@@ -22,7 +22,7 @@
 }
 
 .sidebar-header {
-  background-color: #dc3545;
+  background-color: rgb(151, 22, 15);
   color: white;
   padding: 16px;
 }
@@ -36,7 +36,7 @@
 }
 
 .sidebar-mobile-body {
-  background-color: #dc3545;
+  background-color: rgb(151, 22, 15);
   padding: 24px;
 }
 
@@ -52,7 +52,7 @@
 }
 
 .sidebar-dropdown .dropdown-menu {
-  background-color: #c82333;
+  background-color: rgb(151, 22, 15);
   border: none;
   border-radius: 8px;
   padding: 6px;

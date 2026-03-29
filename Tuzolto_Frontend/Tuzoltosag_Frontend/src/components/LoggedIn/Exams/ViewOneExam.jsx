@@ -1,13 +1,21 @@
-import { useLocation } from "react-router-dom";
-
+import { Row, Col, Button } from "react-bootstrap";
+import "./Exams.css"
 export default function ViewOneExam(props) {
     
-    const location = useLocation();
-    const loc = location.state;
-
     return(
         <>
-        <h2>{props.name}</h2>
+
+            <Row className="row">
+                <Col lg={6} md={6} sm={12}>
+                    <p><strong>Vizsga Neve</strong></p>
+                </Col>
+
+                <Col lg={6} md={6} sm={12}>
+                    <p>{props.examDate}</p>
+                </Col>
+                <br />
+                <hr />
+            </Row>
         </>
     )
 

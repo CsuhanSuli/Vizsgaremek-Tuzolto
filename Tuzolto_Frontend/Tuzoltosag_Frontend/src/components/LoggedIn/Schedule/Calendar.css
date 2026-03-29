@@ -1,0 +1,40 @@
+aside {
+    background-color: white;
+    color: rgba(44, 62, 80);
+    padding: 5%;
+    border-radius: 20px;
+    margin-bottom: 5%;
+}
+.fc-toolbar-title {
+    color: rgb(151, 22, 15);
+}
+.fc-event {
+  background-color: rgb(151, 22, 15) !important;
+  border: none !important;
+  border-radius: 8px;
+  padding: 2px;
+}
+.fc {
+  color: rgb(151, 22, 15);
+}
+.fc-button {
+  background-color: rgb(151, 22, 15) !important;
+  border: none !important;
+}
+.fc-button:hover {
+  background-color: red !important;
+}
+.fc a {
+  color: rgb(151, 22, 15) !important;
+  text-decoration: none !important;
+}
+
+.fc-daygrid-day-number {
+  color: rgb(151, 22, 15) !important;
+  text-decoration: none !important;
+}
+
+.fc-col-header-cell-cushion {
+  color: rgb(151, 22, 15) !important;
+  text-decoration: none !important;
+}

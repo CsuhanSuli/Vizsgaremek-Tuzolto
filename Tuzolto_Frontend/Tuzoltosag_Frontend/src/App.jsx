@@ -10,6 +10,8 @@ import UpdateTool from "./components/LoggedIn/CarTools/UpdateTool";
 import ToolDetails from "./components/LoggedIn/CarTools/ToolDetails";
 import NewReviewDate from "./components/LoggedIn/CarTools/NewReviewDate";
 import UpdateReviewDate from "./components/LoggedIn/CarTools/UpdateReviewDate"
+import Calendar from "./components/LoggedIn/Schedule/Calendar";
+import AllExams from "./components/LoggedIn/Exams/AllExams";
 
 function App() {
   return (
@@ -20,12 +22,14 @@ function App() {
                 <Route path="/Cars" element={<AllCar />} />
                 <Route path="/Login" element={<LoginForm/>} />
                 <Route path="/LoggedIn" element={<LoggedInLayout />} />
-                <Route path="/carTools/:id" element={<AllCarTools />} />
-                <Route path="/newTool/:id" element={<NewCarTool />} />
-                <Route path="/editCarTool/:id" element={<UpdateTool />} />
-                <Route path="/carToolDetails/:id" element={<ToolDetails />} />
-                <Route path="/newReviewDate/:id" element={<NewReviewDate/>} />
-                <Route path="/updateReviewDate/:id" element={<UpdateReviewDate/>} />
+                <Route path="/CarTools/:id" element={<AllCarTools />} />
+                <Route path="/NewTool/:id" element={<NewCarTool />} />
+                <Route path="/EditCarTool/:id" element={<UpdateTool />} />
+                <Route path="/CarToolDetails/:id" element={<ToolDetails />} />
+                <Route path="/NewReviewDate/:id" element={<NewReviewDate/>} />
+                <Route path="/UpdateReviewDate/:id" element={<UpdateReviewDate/>} />
+                <Route path="/Calendar" element={<Calendar/>} />
+                <Route path="/Exams/2" element={<AllExams/>} />
               </Routes>
             </Router>
 

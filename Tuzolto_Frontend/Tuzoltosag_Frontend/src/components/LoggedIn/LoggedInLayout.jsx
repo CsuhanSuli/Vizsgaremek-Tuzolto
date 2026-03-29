@@ -52,7 +52,7 @@ const handleLogout = async () => {
 
       <div className="d-none d-lg-flex">
         <Navbar
-          bg="danger"
+
           variant="dark"
           className="sidebar-desktop flex-column vh-100 start-0 top-0 p-3 shadow"
         >
@@ -61,13 +61,13 @@ const handleLogout = async () => {
           </Navbar.Brand>
 
           <Nav className="flex-column w-100">
-            <Nav.Link href="#" className="sidebar-link">
+            <Nav.Link href="/Calendar" className="sidebar-link">
               Beosztás
             </Nav.Link>
             <Nav.Link href="#" className="sidebar-link">
               Dolgozók
             </Nav.Link>
-            <Nav.Link href="#" className="sidebar-link">
+            <Nav.Link href="/Exams/2" className="sidebar-link">
               Vizsgáim
             </Nav.Link>
             <NavDropdown title="Autók" id="basic-nav-dropdown" className="sidebar-dropdown">
@@ -108,13 +108,13 @@ const handleLogout = async () => {
 
         <Offcanvas.Body className="sidebar-mobile-body d-flex flex-column">
           <Nav className="flex-column gap-3">
-            <Nav.Link href="#" className="sidebar-link" onClick={() => setShow(false)}>
+            <Nav.Link href="/Calendar" className="sidebar-link" onClick={() => setShow(false)}>
               Beosztás
             </Nav.Link>
             <Nav.Link href="#" className="sidebar-link" onClick={() => setShow(false)}>
               Dolgozók
             </Nav.Link>
-            <Nav.Link href="#" className="sidebar-link" onClick={() => setShow(false)}>
+            <Nav.Link href="/Exams/2" className="sidebar-link" onClick={() => setShow(false)}>
               Vizsgáim
             </Nav.Link>
             <NavDropdown title="Autók" id="basic-nav-dropdown" className="sidebar-dropdown">

@@ -45,7 +45,7 @@ export default function ViewOneCarTool(props) {
                 </Col>
                 <br />
                 <hr />
-                </Row>
+            </Row>
 
         </>
     )
