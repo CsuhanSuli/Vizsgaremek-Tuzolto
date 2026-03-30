@@ -24,14 +24,14 @@ function ToolDetails() {
     fetch(`http://127.0.0.1:8000/api/review/allDates/${props.id}`)
       .then((response) => response.json())
       .then((json) => {
-        setDeatils([json]);
+        setDeatils(json);
       })
       .catch((error) => console.error(error));
   }, []);
 
   const getClassName = (row) => {
     if (row.isHappend === 0) return "not-happened";
-    if (row.isSuccesfull === 0) return "not-successful";
+    if (row.isSuccesfull === 0 && row.isHappend === 1) return "not-successful";
     return "success";
   };
 
@@ -67,7 +67,7 @@ function ToolDetails() {
               </h6>
               <ul>
                 {details.map((row) => (
-                  <li className={getClassName(row)} key={row.id} id={row.id}>
+                  <li  className={getClassName(row)} key={row.id} id={row.id}>
                     {row.reviewDate}
                   </li>
                 ))}

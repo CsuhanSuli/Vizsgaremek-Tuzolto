@@ -57,7 +57,7 @@ const handleLogout = async () => {
           className="sidebar-desktop flex-column vh-100 start-0 top-0 p-3 shadow"
         >
           <Navbar.Brand className="mb-4 fw-bold text-center w-100">
-            <img src="transparentLogo.png" alt="Tűzoltóság" className="NavImg"/>
+            <img src="/transparentLogo.png" alt="Tűzoltóság" className="NavImg"/>
           </Navbar.Brand>
 
           <Nav className="flex-column w-100">

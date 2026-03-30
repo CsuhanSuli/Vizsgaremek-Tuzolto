@@ -10,20 +10,61 @@ export default function CarTools() {
     const [carTools, setCarTools] = useState([]);
 
 
-    const location = useLocation();
-    const props = location.state;
 
     const navigate = useNavigate();
     const handleClick = () => {
         navigate(`/newTool/${props.id}`, {state:props})
     }
 
+const location = useLocation();
+const props = location.state || {};
+
+useEffect(() => {
+  fetch(`http://127.0.0.1:8000/api/tools/show/${props.id}`)
+    .then(async (res) => {
+      console.log("STATUS:", res.status);
+
+      if (!res.ok) {
+        throw new Error("API hiba");
+      }
+
+      return res.json();
+    })
+    .then(async (tools) => {
+      console.log("TOOLS:", tools);
+
+      const enriched = await Promise.all(
+        tools.map(async (tool) => {
+          const res = await fetch(
+            `http://127.0.0.1:8000/api/review/latestDate/${tool.id}`
+          );
+
+          console.log("review status:", res.status, tool.id);
+
+          let review = null;
+          if (res.ok) {
+            review = await res.json();
+          }
+
+          return {
+            ...tool,
+            reviewDate: review?.reviewDate ?? "Nincs adat"
+          };
+        })
+      );
+
+      console.log("ENRICHED:", enriched);
+      setCarTools(enriched);
+    })
+    .catch(err => console.error("ERROR:", err));
+}, []);
+    /*
     useEffect(() => {
         fetch("http://127.0.0.1:8000/api/tools/show/" + props.id)
             .then(response => response.json())
             .then(data => setCarTools(data))
             .catch(error => console.error(error));
-    }, [])
+    }, [])*/
 
     return(
         <>  
@@ -36,6 +77,7 @@ export default function CarTools() {
                         id={item.id}
                         name={item.name}
                         place={item.car_place.place}
+                        reviewDate={item.reviewDate}
                     ></ViewOneCarTool>
                 )
             })}

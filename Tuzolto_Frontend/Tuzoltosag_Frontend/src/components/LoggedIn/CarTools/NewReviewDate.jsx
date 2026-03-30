@@ -18,13 +18,21 @@ export default function NewReviewDate() {
     const [answer, setAnswer] = useState("")
 
     const handleChange = (e) => {
-        const { name, type, checked, value } = e.target;
+    const { name, type, checked, value } = e.target;
 
-        setFormData({
-            ...formData,
-            [name]: type === "checkbox" ? (checked ? 1 : 0) : value
-        });
+    const newValue = type === "checkbox" ? (checked ? 1 : 0) : value;
+
+    let updatedData = {
+        ...formData,
+        [name]: newValue
+    };
+
+    if (name === "isHappend" && newValue === 0) {
+        updatedData.isSuccesfull = 0;
     }
+
+  setFormData(updatedData);
+};
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -86,6 +94,7 @@ export default function NewReviewDate() {
                         name="isSuccesfull"
                         checked={formData.isSuccesfull === 1}
                         onChange={handleChange}
+                        disabled={formData.isHappend === 0}
                     />
                 </Form.Group>
                 <Button type="submit" variant="danger">Hozzáadás</Button>

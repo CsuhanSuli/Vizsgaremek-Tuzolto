@@ -36,7 +36,7 @@ export default function ViewOneCarTool(props) {
                     <p>{props.place}</p>
                 </Col>
                 <Col lg={2} md={6} sm={12}>
-                    <p>2026.03.02.</p>
+                    <p>{props.reviewDate}</p>
                 </Col>
                 <Col lg={4} md={6} sm={12} className="buttonsCol">
                     <Button  className="editButton" variant="secondary" onClick={detailNavigate}>Részletek</Button>
