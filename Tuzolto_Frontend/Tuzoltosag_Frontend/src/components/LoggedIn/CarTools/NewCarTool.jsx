@@ -1,12 +1,15 @@
 import { useEffect, useState } from "react";
 import { Button, Form } from "react-bootstrap";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import LoggedInLayout from "../LoggedInLayout";
 
 function NewCarTool() {
 
     const location = useLocation();
     const props = location.state;
+
+    const navigate = useNavigate();
+
     const [formData, setFormData] = useState({
         name: "",
         placeId: "",
@@ -23,6 +26,7 @@ function NewCarTool() {
     }
 
     const handleSubmit = async (e) => {
+        console.log(formData)
         e.preventDefault();
         fetch("http://127.0.0.1:8000/api/tools/store",{
             method: "POST",
@@ -33,6 +37,7 @@ function NewCarTool() {
 
         })
         .then(() => {
+            console.log(formData)
             setFormData({
                 name: "",
                 placeId: "",
@@ -42,6 +47,7 @@ function NewCarTool() {
             navigate(`/carTools/${props.carId}`, {state: props})
         })
         .catch(error => {
+            console.log(formData)
             console.error(error)
             setAnswer("Hiba a mentés során!")
         })
@@ -77,7 +83,7 @@ function NewCarTool() {
                             value={formData.placeId}
                             onChange={handleChange}
                         >
-
+                            <option value="" disabled>---Válasszon!---</option>
                             {carPlace.map((props) => (
                                 <option key={props.id} value={props.id}>
                                     {props.place}
@@ -85,7 +91,7 @@ function NewCarTool() {
                             ))}
                         </Form.Select>
                     </Form.Group>
-                    <Button type="submit" variant="danger" onClick={handleSubmit}>Hozzáadás</Button>
+                    <Button disabled={!formData.placeId} type="submit" variant="danger" onClick={handleSubmit}>Hozzáadás</Button>
                 </Form>
                 {answer && <div>{answer}</div>}
             </LoggedInLayout>

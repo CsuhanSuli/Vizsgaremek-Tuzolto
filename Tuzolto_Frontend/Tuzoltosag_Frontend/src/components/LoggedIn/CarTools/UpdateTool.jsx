@@ -3,7 +3,7 @@ import { Button, Form } from "react-bootstrap";
 import { useNavigate, useLocation } from "react-router-dom";
 import LoggedInLayout from "../LoggedInLayout";
 
-function NewCarTool() {
+function UpdateTool() {
     const navigate = useNavigate();
     const location = useLocation();
     const props = location.state;
@@ -17,11 +17,21 @@ function NewCarTool() {
     const [answer, setAnswer] = useState("");
 
     const handleChange = (e) => {
-        setFormData({
+        const { name, type, checked, value } = e.target;
+
+        const newValue = type === "checkbox" ? (checked ? 1 : 0) : value;
+
+        let updatedData = {
             ...formData,
-            [e.target.name]: e.target.value
-        })
-    }
+            [name]: newValue
+        };
+
+        if (name === "isHappend" && newValue === 0) {
+            updatedData.isSuccesfull = 0;
+        }
+
+        setFormData(updatedData);
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -34,9 +44,6 @@ function NewCarTool() {
 
         })
         .then(() => {
-            props.name = formData.name
-            props.placeId = formData.placeId
-            props.carId = formData.carId
             navigate(`/carTools/${props.carId}`, {state: props})
         })
         .catch(error => {
@@ -46,6 +53,7 @@ function NewCarTool() {
 
     }
     const [carPlace, setCarPlace] = useState([]);
+
     useEffect(() => {
         fetch("http://127.0.0.1:8000/api/carplace/index")
         .then((response) => response.json())
@@ -53,10 +61,29 @@ function NewCarTool() {
         .catch((error) => console.error(error));
     }, [])
 
+        useEffect(() => {
+        if (carPlace.length > 0) {
+            let foundId = "";
+
+            for (let i = 0; i < carPlace.length; i++) {
+                if (carPlace[i].id === props?.placeId) {
+                    foundId = carPlace[i].id;
+                } else {
+                    // semmi
+                }
+            }
+
+            setFormData(prev => ({
+                ...prev,
+                placeId: foundId
+            }));
+        }
+    }, [carPlace, props]);
+
     return(
         <>
             <LoggedInLayout>
-                <h1>Új szerszám hozzáadása</h1>
+                <h1>Szerszám módosítása</h1>
                 <Form onSubmit={handleSubmit}>
                     <Form.Group className="mb-3">
                         <Form.Label>Szerszám neve:</Form.Label>
@@ -76,14 +103,15 @@ function NewCarTool() {
                             onChange={handleChange}
                         >
 
-                            {carPlace.map((props) => (
-                                <option key={props.id} value={props.id}>
-                                    {props.place}
+
+                            {carPlace.map((item) => (
+                                <option key={item.id} value={item.id}>
+                                    {item.place}
                                 </option>
                             ))}
                         </Form.Select>
                     </Form.Group>
-                    <Button variant="danger" onClick={handleSubmit}>Módosítások mentése</Button>
+                    <Button disabled={!formData.placeId} variant="danger" onClick={handleSubmit}>Módosítások mentése</Button>
                 </Form>
                 {answer && <div>{answer}</div>}
             </LoggedInLayout>
@@ -93,4 +121,4 @@ function NewCarTool() {
 
 }
 
-export default NewCarTool;
+export default UpdateTool;

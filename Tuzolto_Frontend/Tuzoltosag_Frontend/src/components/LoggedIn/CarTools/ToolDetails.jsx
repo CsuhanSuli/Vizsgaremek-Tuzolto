@@ -24,7 +24,7 @@ function ToolDetails() {
     fetch(`http://127.0.0.1:8000/api/review/allDates/${props.id}`)
       .then((response) => response.json())
       .then((json) => {
-        setDeatils(json);
+        setDeatils([json]);
       })
       .catch((error) => console.error(error));
   }, []);

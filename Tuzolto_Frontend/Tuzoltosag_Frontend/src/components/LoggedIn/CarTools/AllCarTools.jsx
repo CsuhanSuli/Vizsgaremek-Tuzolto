@@ -13,16 +13,17 @@ export default function CarTools() {
 
     const navigate = useNavigate();
     const handleClick = () => {
-        navigate(`/newTool/${props.id}`, {state:props})
+        navigate(`/NewTool/${props.id}`, {state:props})
     }
+    
 
 const location = useLocation();
-const props = location.state || {};
+const props = location.state;
 
 useEffect(() => {
   fetch(`http://127.0.0.1:8000/api/tools/show/${props.id}`)
     .then(async (res) => {
-      console.log("STATUS:", res.status);
+      //console.log("STATUS:", res.status);
 
       if (!res.ok) {
         throw new Error("API hiba");
@@ -31,7 +32,7 @@ useEffect(() => {
       return res.json();
     })
     .then(async (tools) => {
-      console.log("TOOLS:", tools);
+      //console.log("TOOLS:", tools);
 
       const enriched = await Promise.all(
         tools.map(async (tool) => {
@@ -39,7 +40,7 @@ useEffect(() => {
             `http://127.0.0.1:8000/api/review/latestDate/${tool.id}`
           );
 
-          console.log("review status:", res.status, tool.id);
+          // console.log("review status:", res.status, tool.id);
 
           let review = null;
           if (res.ok) {
@@ -78,6 +79,7 @@ useEffect(() => {
                         name={item.name}
                         place={item.car_place.place}
                         reviewDate={item.reviewDate}
+                        placeId = {item.placeId}
                     ></ViewOneCarTool>
                 )
             })}

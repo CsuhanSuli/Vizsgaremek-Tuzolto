@@ -1,18 +1,19 @@
 import { useState } from "react";
 import { Button, Form } from "react-bootstrap";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import LoggedInLayout from "../LoggedInLayout";
 import "./ReviewDate.css"
 
 export default function NewReviewDate() {
    const location = useLocation()
     const props = location.state;
+    const navigate = useNavigate()
 
     const [formData, setFormData] = useState({
         reviewDate: props.reviewDate,
-        isHappend: props.isHappend,
-        isSuccesfull: props.isSuccesfull,
-        toolId: props.toolId
+        isHappend: 0,
+        isSuccesfull: 0,
+        toolId: props.id
     })
 
     const [answer, setAnswer] = useState("")
@@ -20,11 +21,19 @@ export default function NewReviewDate() {
     const handleChange = (e) => {
         const { name, type, checked, value } = e.target;
 
-        setFormData({
+        const newValue = type === "checkbox" ? (checked ? 1 : 0) : value;
+
+        let updatedData = {
             ...formData,
-            [name]: type === "checkbox" ? (checked ? 1 : 0) : value
-        });
-    }
+            [name]: newValue
+        };
+
+        if (name === "isHappend" && newValue === 0) {
+            updatedData.isSuccesfull = 0;
+        }
+
+        setFormData(updatedData);
+    };
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -36,14 +45,7 @@ export default function NewReviewDate() {
             body: JSON.stringify(formData),
         })
         .then(() => {
-            console.log(setFormData)
-            setFormData({
-                reviewDate: "",
-                isHappend: 0,
-                isSuccesfull: 0,
-                toolId: props.id
-            })
-            setAnswer("Sikeres mentés!")
+            navigate(`/CarToolDetails/${props.id}`, {state:props})
             
         })
         .catch(error => {
@@ -74,9 +76,9 @@ export default function NewReviewDate() {
                         type="checkbox" 
                         label="Megtörtént"
                         name="isHappend"
-                        value={formData.reviewDate}
                         checked={formData.isHappend === 1}
                         onChange={handleChange}
+                        className="strong-checkbox"
                     />
                 </Form.Group>
 
@@ -85,12 +87,13 @@ export default function NewReviewDate() {
                         type="checkbox" 
                         label="Sikeres volt"
                         name="isSuccesfull"
-                        value={formData.reviewDate}
                         checked={formData.isSuccesfull === 1}
                         onChange={handleChange}
+                        disabled={formData.isHappend === 0}
+                        className="strong-checkbox"
                     />
                 </Form.Group>
-                <Button type="submit" variant="danger">Hozzáadás</Button>
+                <Button type="submit" variant="danger">Frissítés</Button>
             </Form>
             {answer && <div>{answer}</div>}
             </LoggedInLayout>  
