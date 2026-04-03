@@ -38,3 +38,33 @@ aside {
   color: rgb(151, 22, 15) !important;
   text-decoration: none !important;
 }
+
+.formCenter {
+  margin-top: 5%;
+  margin-right: 25%;
+  margin-left: 25%;
+}
+.checkMargin {
+  margin-left: 5%;
+}
+
+@media only screen and (max-width: 600px) {
+  .formCenter {
+    margin-top: 5%;
+    margin-right: 5%;
+    margin-left: 5%;
+  }
+}
+
+.strong-checkbox input {
+  width: 20px;
+  height: 20px;
+  border: 2px solid rgb(151, 22, 15); 
+  cursor: pointer;
+}
+
+.form-check-input:checked {
+  background-color: rgb(151, 22, 15) !important;
+  border-color: rgb(151, 22, 15) !important;
+
+}

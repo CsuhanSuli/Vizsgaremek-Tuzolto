@@ -6,9 +6,16 @@ import LoggedInLayout from '../LoggedInLayout';
 import "./Calendar.css"
 import huLocale from '@fullcalendar/core/locales/hu';
 import timeGridPlugin from '@fullcalendar/timegrid'
-
+import { useNavigate } from 'react-router-dom'
+import { Button } from 'react-bootstrap';
 
 export default function Calendar() {
+
+  const navigate = useNavigate();
+  
+  const handleClick = () => {
+    navigate(`/NewSchedule`)
+  }
   
 const [data, setData] = useState([])
  useEffect(() => {
@@ -42,6 +49,8 @@ const [data, setData] = useState([])
               locale={huLocale}
             />
         </aside>
+
+        <Button onClick={handleClick} variant="danger">Új eszköz hozzáadása</Button>
     </LoggedInLayout>
     </>
   )
