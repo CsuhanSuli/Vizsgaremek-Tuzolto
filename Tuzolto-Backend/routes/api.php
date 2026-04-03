@@ -78,8 +78,8 @@ Route::put('/forum/put/{id}', [ForumController::class, 'update']); // not done
 Route::get('/review/allDates/{toolId}', [ReviewController::class, 'allDates']);
 Route::get('/review/latestDate/{toolId}', [ReviewController::class, 'latestDate']);
 Route::post('/review/store/{toolId}', [ReviewController::class, 'store']);
-Route::put('/review/isHappend/{reviewId}', [ReviewController::class, '']); // not done
-Route::put('/review/isSuccesfull/{reviewId}', [ReviewController::class, '']); // not done
+Route::put('/review/isHappend/{reviewId}', [ReviewController::class, 'isHappend']);
+Route::put('/review/isSuccesfull/{reviewId}', [ReviewController::class, 'isSuccesfull']);
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/user/logout', [UserController::class, 'logout']);
 });

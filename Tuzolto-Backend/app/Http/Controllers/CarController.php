@@ -68,10 +68,9 @@ class CarController extends Controller
     public function update(Request $request, int $id)
     {
         $data = Car::find($id);
-        if(empty($data))
-            {
-                return response()->json(["message"=>"nincs kocsi ijen idével"],404);
-            }
+        if (empty($data)) {
+            return response()->json(['message' => 'nincs kocsi ijen idével'], 404);
+        }
         $validator = Validator::make($request->all(), [
             'name' => 'required',
             'typeId' => 'required|exists:cartypes,id',

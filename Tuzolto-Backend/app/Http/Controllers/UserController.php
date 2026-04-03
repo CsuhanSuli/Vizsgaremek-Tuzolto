@@ -83,11 +83,13 @@ class UserController extends Controller
         if ($data->fortyHours == 0) {
             $data->fortyHours = 1;
             $data->save();
-            return response()->json(["message"=>'sikeresen szerkeszteted a 40 órait true ra']);
+
+            return response()->json(['message' => 'sikeresen szerkeszteted a 40 órait true ra']);
         } else {
             $data->fortyHours = 0;
             $data->save();
-            return response()->json(["message"=>'sikeresen szerkeszteted a 40 órait falsera ra']);
+
+            return response()->json(['message' => 'sikeresen szerkeszteted a 40 órait falsera ra']);
         }
     }
 
