@@ -12,6 +12,7 @@ import NewReviewDate from "./components/LoggedIn/CarTools/NewReviewDate";
 import UpdateReviewDate from "./components/LoggedIn/CarTools/UpdateReviewDate"
 import Calendar from "./components/LoggedIn/Schedule/Calendar";
 import AllExams from "./components/LoggedIn/Exams/AllExams";
+import NewSchedule from "./components/LoggedIn/Schedule/NewSchedule";
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
                 <Route path="/UpdateReviewDate/:id" element={<UpdateReviewDate/>} />
                 <Route path="/Calendar" element={<Calendar/>} />
                 <Route path="/Exams/2" element={<AllExams/>} />
+                <Route path="/NewSchedule" element={<NewSchedule/>} />
               </Routes>
             </Router>
 
