@@ -12,7 +12,7 @@ class ScheduleTypeController extends Controller
      */
     public function index()
     {
-        //
+        return response()->json(scheduleType::all());
     }
 
     /**

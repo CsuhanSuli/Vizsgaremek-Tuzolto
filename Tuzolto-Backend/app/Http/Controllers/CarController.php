@@ -65,9 +65,27 @@ class CarController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Car $car)
+    public function update(Request $request, int $id)
     {
-        //
+        $data = Car::find($id);
+        if(empty($data))
+            {
+                return response()->json(["message"=>"nincs kocsi ijen idével"],404);
+            }
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+            'typeId' => 'required|exists:cartypes,id',
+            'imageName' => 'required',
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['message' => 'hiba', 'hibák' => $validator->errors()], 402);
+        }
+        $data->name = $request->name;
+        $data->typeId = $request->typeId;
+        $data->imageName = $request->imageName;
+        $data->save();
+
+        return response()->json(['message' => 'sikeres feltöltés'], 201);
     }
 
     /**

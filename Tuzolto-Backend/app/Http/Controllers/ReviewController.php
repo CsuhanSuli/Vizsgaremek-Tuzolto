@@ -53,7 +53,7 @@ class ReviewController extends Controller
      */
     public function allDates(int $toolId)
     {
-        $data = review::find($toolId);
+        $data = review::where('toolId', $toolId);
         if (empty($data)) {
             return response()->json(['message' => '404 nincs ijen vizsga'], 404);
         }
@@ -63,7 +63,7 @@ class ReviewController extends Controller
 
     public function latestDate(int $toolId)
     {
-        $data = review::find($toolId)->orderBy('reviewDate', 'desc')->limit(1);
+        $data = review::where('toolId', $toolId)->orderBy('reviewDate', 'desc')->limit(1);
         if (empty($data)) {
             return response()->json(['message' => '404 nincs ijen vizsga'], 404);
         }
@@ -77,6 +77,39 @@ class ReviewController extends Controller
     public function edit(review $review)
     {
         //
+    }
+    public function isHappend(int $id)
+    {
+        $data = review::find($id);
+        if (empty($data)) {
+            return response()->json(['message' => '404'], 404);
+        }
+        if ($data->isHappend == 0) {
+            $data->isHappend = 1;
+            $data->save();
+            return response()->json(["message"=>'sikeresen szerkeszteted a isHappendet true ra']);
+        } else {
+            $data->isHappend = 0;
+            $data->save();
+            return response()->json(["message"=>'sikeresen szerkeszteted a isHappendet flase ra']);
+        }
+    }
+
+    public function isSuccesfull(int $id)
+    {
+                $data = review::find($id);
+        if (empty($data)) {
+            return response()->json(['message' => '404'], 404);
+        }
+        if ($data->isSuccesfull == 0) {
+            $data->isSuccesfull = 1;
+            $data->save();
+             return response()->json(["message"=>'sikeresen szerkeszteted a isSuccesfult true ra']);
+        } else {
+            $data->isSuccesfull = 0;
+            $data->save();
+            return response()->json(["message"=>'sikeresen szerkeszteted a isSuccesfult flase ra']);
+        }
     }
 
     /**

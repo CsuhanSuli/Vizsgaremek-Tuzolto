@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
@@ -82,9 +83,11 @@ class UserController extends Controller
         if ($data->fortyHours == 0) {
             $data->fortyHours = 1;
             $data->save();
+            return response()->json(["message"=>'sikeresen szerkeszteted a 40 órait true ra']);
         } else {
             $data->fortyHours = 0;
             $data->save();
+            return response()->json(["message"=>'sikeresen szerkeszteted a 40 órait falsera ra']);
         }
     }
 
@@ -92,7 +95,7 @@ class UserController extends Controller
     {
         $data = User::find($id);
         if (empty($id)) {
-            return response()->json(['message' => '404 nincs ijen auto'], 404);
+            return response()->json(['message' => '404 nincs ijen felhasználó'], 404);
         }
         $data->delete();
 
@@ -102,5 +105,41 @@ class UserController extends Controller
     public function index()
     {
         return response(User::all());
+    }
+
+    public function nameChange(Request $request, int $id)
+    {
+        $data = User::find($id);
+        if (empty($data)) {
+            return response()->json(['message' => '404 nincs ijen auto'], 404);
+        }
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:255',
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['message' => 'hiba', 'hibák' => $validator->errors()], 402);
+        }
+        $data->name = $request->name;
+        $data->save();
+
+        return response()->json(['message' => 'sikeresen meg lett váltosztatva a név']);
+    }
+
+    public function passChange(Request $request, int $id)
+    {
+        $data = User::find($id);
+        if (empty($data)) {
+            return response()->json(['message' => '404 nincs ijen auto'], 404);
+        }
+        $validator = Validator::make($request->all(), [
+            'password' => 'required|min:4|confirmed',
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['message' => 'hiba', 'hibák' => $validator->errors()], 402);
+        }
+        $data->password = Hash::make($request->password);
+        $data->save();
+
+        return response()->json(['message' => 'sikeresen meg lett váltosztatva a név']);
     }
 }
