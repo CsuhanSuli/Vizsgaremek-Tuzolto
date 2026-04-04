@@ -66,9 +66,26 @@ class ScheduleController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, schedule $schedule)
+    public function update(Request $request, int $id)
     {
-        //
+        $data = schedule::find($id);
+        if (empty($data)) {
+            return response()->json(['message' => 'nincs kocsi ijen idével'], 404);
+        }
+        $validator = Validator::make($request->all(), [
+            'scheduleTypeid' => 'required|exists:schedule_types,id',
+            'userId' => 'required|exists:users,id',
+            'date' => 'required|',
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['message' => 'hiba', 'hibák' => $validator->errors()], 402);
+        }
+        $data->scheduleTypeid = $request->scheduleTypeid;
+        $data->date = $request->date;
+        $data->userId = $request->userId;
+        $data->save();
+
+        return response()->json(['message' => 'sikeres feltöltés'], 201);
     }
 
     /**

@@ -47,6 +47,7 @@ Route::get('/examType/index', [ExamTypeController::class, 'index']);
 // tools
 Route::post('/tools/store', [ToolsController::class, 'store']);
 Route::get('/tools/show/{id}', [ToolsController::class, 'show']);
+Route::put('/tools/put/{id}', [ToolsController::class, 'update']);
 
 // cars
 Route::post('/car/store', [CarController::class, 'store']);
@@ -61,7 +62,7 @@ Route::get('/carplace/index', [CarPlaceController::class, 'index']);
 // schedules
 Route::get('/schedule/index', [ScheduleController::class, 'index']);
 Route::post('/schedule/store', [ScheduleController::class, 'store']);
-//Route::put('/schedule/put/{id}', [ScheduleController::class, 'update']); // not done
+Route::put('/schedule/put/{id}', [ScheduleController::class, 'update']);
 // schedule_types
 Route::get('schedule_types', [ScheduleTypeController::class, 'index']);
 // user
@@ -73,7 +74,7 @@ Route::delete('/user/delete/{id}', [UserController::class, 'destroy']);
 Route::post('/forum/store', [ForumController::class, 'store'])->middleware(isAdmin::class);
 Route::delete('/forum/delete/{id}', [ForumController::class, 'destroy']);
 Route::post('/forumType/store', [ForumTypeController::class, 'store'])->middleware(isAdmin::class);
-//Route::put('/forum/put/{id}', [ForumController::class, 'update']); // not done
+Route::put('/forum/put/{id}', [ForumController::class, 'update']);
 // review
 Route::get('/review/allDates/{toolId}', [ReviewController::class, 'allDates']);
 Route::get('/review/latestDate/{toolId}', [ReviewController::class, 'latestDate']);

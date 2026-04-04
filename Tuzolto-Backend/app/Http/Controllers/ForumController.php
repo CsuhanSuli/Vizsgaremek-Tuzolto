@@ -71,9 +71,32 @@ class ForumController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Forum $forum)
+    public function update(Request $request, int $id)
     {
-        //
+        $data = Forum::find($id);
+        if (empty($data)) {
+            return response()->json(['message' => 'nincs kocsi ijen idével'], 404);
+        }
+        $validator = Validator::make($request->all(), [
+            'header' => 'required',
+            'date' => 'required',
+            'typeId' => 'required|exists:forum_Types,id',
+            'place' => 'required',
+            'description' => 'required',
+            'imageName' => 'required',
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['message' => 'hiba', 'hibák' => $validator->errors()], 402);
+        }
+        $data->header = $request->header;
+        $data->date = $request->date;
+        $data->typeId = $request->typeId;
+        $data->place = $request->place;
+        $data->description = $request->description;
+        $data->imageName = $request->imageName;
+        $data->save();
+
+        return response()->json(['message' => 'sikeres feltöltés'], 201);
     }
 
     /**

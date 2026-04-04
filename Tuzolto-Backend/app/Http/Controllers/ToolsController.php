@@ -70,9 +70,26 @@ class ToolsController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, tools $tools)
+    public function update(Request $request, int $id)
     {
-        //
+        $data = tools::find($id);
+        if (empty($data)) {
+            return response()->json(['message' => 'nincs kocsi ijen idével'], 404);
+        }
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+            'placeId' => 'required|exists:car_places,id',
+            'carId' => 'required|exists:cars,id',
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['message' => 'hiba', 'hibák' => $validator->errors()], 402);
+        }
+        $data->name = $request->name;
+        $data->placeId = $request->placeId;
+        $data->carId = $request->carId;
+        $data->save();
+
+        return response()->json(['message' => 'sikeres ujitás'], 200);
     }
 
     /**
