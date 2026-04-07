@@ -38,6 +38,7 @@ Route::get('/car/get', [CarController::class, 'index']);
 // exam
 Route::get('/examUser/show/{id}', [ExamUserController::class, 'show']);
 Route::get('/examUser/index', [ExamUserController::class, 'index']);
+Route::get('/exam/index', [ExamsController::class, 'index']);
 Route::post('/examUser/store', [ExamUserController::class, 'store']);
 Route::get('/exams/index', [ExamsController::class, 'index']);
 Route::post('/exams/store', [ExamsController::class, 'store']);

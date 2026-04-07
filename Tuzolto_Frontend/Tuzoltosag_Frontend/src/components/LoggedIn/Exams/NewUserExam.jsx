@@ -2,10 +2,9 @@ import { useState, useEffect } from "react";
 import { Button, Form } from "react-bootstrap";
 import { useLocation, useNavigate } from "react-router-dom";
 import LoggedInLayout from "../LoggedInLayout";
-import "./Calendar.css"
 
 
-export default function NewSchedule() {
+export default function NewUserExam() {
 
     const location = useLocation()
     const props = location.state;
@@ -20,19 +19,19 @@ export default function NewSchedule() {
             .catch((error) => console.error(error));
       }, []); 
 
-      const [scheduleType, setScheduleType] = useState([])
+      const [exams, setExams] = useState([])
 
     useEffect(() => {
-        fetch("http://127.0.0.1:8000/api/scheduleType/index")
+        fetch("http://127.0.0.1:8000/api/exam/index")
           .then((response) => response.json())
-            .then((json) => setScheduleType(json))
+            .then((json) => setExams(json))
             .catch((error) => console.error(error));
       }, []); 
 
     const [formData, setFormData] = useState({
-        scheduleTypeid: 0,
-        userId: 0,
-        date: "",
+        examId: "",
+        userId: "",
+        examDate: "",
     })
 
     const [answer, setAnswer] = useState("")
@@ -47,7 +46,7 @@ export default function NewSchedule() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        fetch(`http://127.0.0.1:8000/api/schedule/store`, {
+        fetch(`http://127.0.0.1:8000/api/examUser/store`, {
             method: "POST",
             headers: {
                 "Content-Type" : "application/json"
@@ -57,9 +56,9 @@ export default function NewSchedule() {
         .then(() => {
             console.log(formData)
             setFormData({
-                scheduleTypeid: 0,
-                userId: 0,
-                date: "",
+                examId: "",
+                userId: "",
+                examDate: "",
             })
             setAnswer("Sikeres mentés!")  
         })
@@ -69,20 +68,28 @@ export default function NewSchedule() {
         })
     }
 
+        const getYesterday = () => {
+        const today = new Date();
+        today.setDate(today.getDate() - 1);
+
+        return today.toISOString().split("T")[0];
+    };
+
 
     return(
         <>
         <LoggedInLayout>
-            <h1>Új beosztás dátum</h1>
+            <h1>Új vizsga</h1>
             <Form onSubmit={handleSubmit} className="formCenter">
                 <Form.Group className="mb-3">
                     <Form.Label>Dátum</Form.Label>
                     <Form.Control 
                         required 
                         type="date"
-                        name="date"
-                        value={formData.date}
+                        name="examDate"
+                        value={formData.examDate}
                         onChange={handleChange}
+                        max={getYesterday()}
                     />
                 </Form.Group>      
                 
@@ -92,7 +99,9 @@ export default function NewSchedule() {
                         name="userId"
                         value={formData.userId}
                         onChange={handleChange}
+                        required
                     >
+
                         {users.map((row) => (
                             <option key={row.id} value={row.id}>
                                 {row.name}
@@ -102,15 +111,15 @@ export default function NewSchedule() {
                 </Form.Group>
 
                 <Form.Group className="mb-3">
-                    <Form.Label>Beosztás típusa</Form.Label>
-                    {scheduleType.map((item) => (
+                    <Form.Label>Vizsga</Form.Label>
+                    {exams.map((item) => (
                         <Form.Check
                             type="radio"
                             key={item.id}
-                            name="scheduleTypeid"
+                            name="examId"
                             value={item.id}
                             label={item.name}
-                            checked={formData.scheduleTypeid == item.id}
+                            checked={formData.examId == item.id}
                             onChange={handleChange}
                             className="checkMargin"
                         />

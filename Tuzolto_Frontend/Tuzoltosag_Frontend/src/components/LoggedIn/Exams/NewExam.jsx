@@ -3,7 +3,7 @@ import { Button, Form } from "react-bootstrap";
 import { useLocation, useNavigate } from "react-router-dom";
 import LoggedInLayout from "../LoggedInLayout";
 
-function NewCarTool() {
+function NewExam() {
 
     const location = useLocation();
     const props = location.state;
@@ -12,8 +12,7 @@ function NewCarTool() {
 
     const [formData, setFormData] = useState({
         name: "",
-        placeId: "",
-        carId: props.id,
+        examType: "",
     });
 
     const [answer, setAnswer] = useState("");
@@ -28,11 +27,10 @@ function NewCarTool() {
     const handleSubmit = async (e) => {
         console.log(formData)
         e.preventDefault();
-        fetch("http://127.0.0.1:8000/api/tools/store",{
+        fetch("http://127.0.0.1:8000/api/exams/store",{
             method: "POST",
             headers: {
-                "Content-Type": "Application/json",
-                "Authorization": `Bearer ${token}`
+                "Content-Type": "Application/json"
             },
             body: JSON.stringify(formData),
 
@@ -41,11 +39,9 @@ function NewCarTool() {
             console.log(formData)
             setFormData({
                 name: "",
-                placeId: "",
-                carId: props.id,
+                examType: "",
             })
             setAnswer("Sikeres mentés!")
-            navigate(`/carTools/${props.carId}`, {state: props})
         })
         .catch(error => {
             console.log(formData)
@@ -54,23 +50,23 @@ function NewCarTool() {
         })
 
     }
-    const [carPlace, setCarPlace] = useState([]);
+    const [examTypes, setExamTypes] = useState([]);
     useEffect(() => {
-        fetch("http://127.0.0.1:8000/api/carplace/index")
+        fetch("http://127.0.0.1:8000/api/examType/index")
         .then((response) => response.json())
-        .then((data) => setCarPlace(data))
+        .then((data) => setExamTypes(data))
         .catch((error) => console.error(error));
     }, [])
 
     return(
         <>
             <LoggedInLayout>
-                <h1>Új szerszám hozzáadása</h1>
+                <h1>Új vizsga hozzáadása</h1>
                 <Form onSubmit={handleSubmit}>
                     <Form.Group className="mb-3">
-                        <Form.Label>Szerszám neve:</Form.Label>
+                        <Form.Label>Vizsga neve:</Form.Label>
                         <Form.Control
-                            required
+                            require
                             type="text"
                             name="name"
                             value={formData.name}
@@ -78,21 +74,21 @@ function NewCarTool() {
                         />
                     </Form.Group>
                     <Form.Group className="mb-3">
-                        <Form.Label>Helye:</Form.Label>
+                        <Form.Label>Vizsga típusa:</Form.Label>
                         <Form.Select
-                            name="placeId"
-                            value={formData.placeId}
+                            name="examType"
+                            value={formData.examType}
                             onChange={handleChange}
                         >
                             <option value="" disabled>---Válasszon!---</option>
-                            {carPlace.map((props) => (
+                            {examTypes.map((props) => (
                                 <option key={props.id} value={props.id}>
-                                    {props.place}
+                                    {props.typName}
                                 </option>
                             ))}
                         </Form.Select>
                     </Form.Group>
-                    <Button disabled={!formData.placeId} type="submit" variant="danger">Hozzáadás</Button>
+                    <Button disabled={!formData.examType} type="submit" variant="danger" onClick={handleSubmit}>Hozzáadás</Button>
                 </Form>
                 {answer && <div>{answer}</div>}
             </LoggedInLayout>
@@ -102,4 +98,4 @@ function NewCarTool() {
 
 }
 
-export default NewCarTool;
+export default NewExam;

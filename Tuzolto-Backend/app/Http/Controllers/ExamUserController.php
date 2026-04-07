@@ -38,10 +38,9 @@ class ExamUserController extends Controller
             return response()->json(['message' => 'hiba', 'hibák' => $validator->errors()], 402);
         }
         $newRecord = new examUser;
-        $newRecord->name = $request->name;
-        $newRecord->toolTypeId = $request->toolTypeId;
-        $newRecord->placeId = $request->placeId;
-        $newRecord->carId = $request->carId;
+        $newRecord->examDate = $request->examDate;
+        $newRecord->examId = $request->examId;
+        $newRecord->userId = $request->userId;
         $newRecord->save();
 
         return response()->json(['message' => 'sikeres feltöltés'], 201);

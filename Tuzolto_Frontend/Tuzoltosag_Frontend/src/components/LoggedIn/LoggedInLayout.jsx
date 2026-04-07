@@ -64,9 +64,6 @@ const handleLogout = async () => {
             <Nav.Link href="/Calendar" className="sidebar-link">
               Beosztás
             </Nav.Link>
-            <Nav.Link href="#" className="sidebar-link">
-              Dolgozók
-            </Nav.Link>
             <Nav.Link href="/Exams/2" className="sidebar-link">
               Vizsgáim
             </Nav.Link>
@@ -76,13 +73,32 @@ const handleLogout = async () => {
                   key={props.carId} 
                   id={props.carId} 
                   onClick={() => {
-                    navigate(`/carTools/${props.id}`, {state:props})
+                    navigate(`/carTools/${props.carId}`, {state:props})
                     window.location.reload();
                   }} 
                   >{props.name}
                 </NavDropdown.Item>
               ))}
             </NavDropdown>
+            <NavDropdown title="Vizsgák" id="basic-nav-dropdown" className="sidebar-dropdown">
+              <NavDropdown.Item
+                onClick={() => {
+                  navigate(`/NewExam`)
+                  window.location.reload();
+                }} >
+                Új vizsga
+              </NavDropdown.Item>
+              <NavDropdown.Item
+                onClick={() => {
+                  navigate(`/NewUserExam`)
+                  window.location.reload();
+                }} >
+                Új dolgzó vizsga
+              </NavDropdown.Item>
+            </NavDropdown>
+            <Nav.Link href="/Users" className="sidebar-link">
+              Dolgozók
+            </Nav.Link>
           </Nav>
 
           <div className="mt-auto w-100">

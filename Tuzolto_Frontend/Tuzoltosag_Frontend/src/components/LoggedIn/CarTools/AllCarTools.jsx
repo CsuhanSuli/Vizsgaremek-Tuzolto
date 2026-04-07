@@ -6,9 +6,13 @@ import "./CarTools.css"
 import { Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom"
 
-export default function CarTools() {
+
+
+export default function AllCarTools() {
     const [carTools, setCarTools] = useState([]);
 
+  const location = useLocation();
+  const props = location.state;
 
 
     const navigate = useNavigate();
@@ -16,10 +20,6 @@ export default function CarTools() {
         navigate(`/NewTool/${props.id}`, {state:props})
     }
     
-
-const location = useLocation();
-const props = location.state;
-
 useEffect(() => {
   fetch(`http://127.0.0.1:8000/api/tools/show/${props.id}`)
     .then(async (res) => {
@@ -54,7 +54,7 @@ useEffect(() => {
         })
       );
 
-      console.log("ENRICHED:", enriched);
+      //console.log("ENRICHED:", enriched);
       setCarTools(enriched);
     })
     .catch(err => console.error("ERROR:", err));
@@ -73,6 +73,7 @@ useEffect(() => {
             <h1>Autó szerszámai</h1>
             {carTools.map(item => {
                 return (
+                  console.log(item.carId),
                     <ViewOneCarTool
                         key={item.id}
                         id={item.id}
@@ -80,6 +81,7 @@ useEffect(() => {
                         place={item.car_place.place}
                         reviewDate={item.reviewDate}
                         placeId = {item.placeId}
+                        carId = {item.carId}
                     ></ViewOneCarTool>
                 )
             })}

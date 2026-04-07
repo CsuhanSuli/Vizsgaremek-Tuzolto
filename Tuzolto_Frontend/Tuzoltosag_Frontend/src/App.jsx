@@ -6,14 +6,16 @@ import LoginForm from "./components/Login/LoginForm";
 import AllCarTools from "./components/LoggedIn/CarTools/AllCarTools";
 import LoggedInLayout from "./components/LoggedIn/LoggedInLayout";
 import NewCarTool from "./components/LoggedIn/CarTools/NewCarTool";
-import UpdateTool from "./components/LoggedIn/CarTools/UpdateTool";
+import UpdateCarTool from "./components/LoggedIn/CarTools/UpdateCarTool";
 import ToolDetails from "./components/LoggedIn/CarTools/ToolDetails";
 import NewReviewDate from "./components/LoggedIn/CarTools/NewReviewDate";
 import UpdateReviewDate from "./components/LoggedIn/CarTools/UpdateReviewDate"
 import Calendar from "./components/LoggedIn/Schedule/Calendar";
 import AllExams from "./components/LoggedIn/Exams/AllExams";
 import NewSchedule from "./components/LoggedIn/Schedule/NewSchedule";
-
+import NewUserExam from "./components/LoggedIn/Exams/NewUserExam";
+import NewExam from "./components/LoggedIn/Exams/NewExam";
+import AllUsers from "./components/LoggedIn/Users/AllUsers";
 function App() {
   return (
     <>
@@ -25,13 +27,16 @@ function App() {
                 <Route path="/LoggedIn" element={<LoggedInLayout />} />
                 <Route path="/CarTools/:id" element={<AllCarTools />} />
                 <Route path="/NewTool/:id" element={<NewCarTool />} />
-                <Route path="/EditCarTool/:id" element={<UpdateTool />} />
+                <Route path="/EditCarTool/:id" element={<UpdateCarTool />} />
                 <Route path="/CarToolDetails/:id" element={<ToolDetails />} />
                 <Route path="/NewReviewDate/:id" element={<NewReviewDate/>} />
                 <Route path="/UpdateReviewDate/:id" element={<UpdateReviewDate/>} />
                 <Route path="/Calendar" element={<Calendar/>} />
-                <Route path="/Exams/2" element={<AllExams/>} />
+                <Route path="/Exams/:id" element={<AllExams/>} />
                 <Route path="/NewSchedule" element={<NewSchedule/>} />
+                <Route path="/NewUserExam" element={<NewUserExam/>}/>
+                <Route path="/NewExam" element={<NewExam/>}/>
+                <Route path="/Users" element={<AllUsers/>}/>
               </Routes>
             </Router>
 

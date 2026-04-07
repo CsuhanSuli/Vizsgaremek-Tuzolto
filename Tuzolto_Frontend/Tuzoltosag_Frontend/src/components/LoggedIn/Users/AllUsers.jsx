@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react"
 import { useLocation } from "react-router-dom";
 import LoggedInLayout from "../LoggedInLayout";
-import ViewOneExam from "./ViewOneExam";
+import ViewOneUser from "./ViewOneUser";
 
-export default function AllExams() {
+export default function AllUsers() {
     
     const locatipon = useLocation();
     const props = locatipon.state;
@@ -12,7 +12,7 @@ export default function AllExams() {
     const [exams, setExams] = useState([]);
 
     useEffect(() => {
-        fetch(`http://127.0.0.1:8000/api/examUser/show/${props.id}`)
+        fetch(`http://127.0.0.1:8000/api/user/index`)
             .then(response => response.json())
             .then(data => setExams(data))
             .catch(error => console.error(error));
@@ -22,14 +22,17 @@ export default function AllExams() {
     return(
         <>
             <LoggedInLayout>
-                <h1>{props.name} vizsgái</h1>
+                <h1>Dolgozók</h1>
                 {exams.map((row) => {
                     return(
-                        <ViewOneExam
+                        <ViewOneUser
                             key = {row.id}
                             id = {row.id}
-                            examDate = {row.examDate}
-                        ></ViewOneExam>
+                            name = {row.name}
+                            email = {row.email}
+                            fortyHours = {row.fortyHours}
+                            isAdmin = {row.isAdmin}
+                        ></ViewOneUser>
                     )
                 })}
             </LoggedInLayout>

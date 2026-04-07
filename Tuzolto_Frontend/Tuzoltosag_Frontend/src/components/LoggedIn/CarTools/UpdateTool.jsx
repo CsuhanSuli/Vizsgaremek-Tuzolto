@@ -11,7 +11,7 @@ function UpdateTool() {
     const [formData, setFormData] = useState({
         name: props.name,
         placeId: props.placeId,
-        carId: props.id,
+        carId: props.carId,
     });
 
     const [answer, setAnswer] = useState("");
@@ -35,8 +35,8 @@ function UpdateTool() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        fetch("http://127.0.0.1:8000/api/tools/store",{
-            method: "POST",
+        fetch(`http://127.0.0.1:8000/api/tools/put/${props.id}`,{
+            method: "PUT",
             headers: {
                 "Content-Type": "Application/json"
             },
@@ -44,7 +44,11 @@ function UpdateTool() {
 
         })
         .then(() => {
-            navigate(`/carTools/${props.carId}`, {state: props})
+            props.name = formData.name
+            props.placeId = formData.placeId
+            props.carId = formData.carId
+            setAnswer("Sikeres mentés!")
+            navigate(`/CarTools/${props.carId}`, {state:props})
         })
         .catch(error => {
             console.error(error)
@@ -80,6 +84,17 @@ function UpdateTool() {
         }
     }, [carPlace, props]);
 
+
+
+      const [data, setData] = useState(null);
+
+        useEffect(() => {
+            fetch("http://127.0.0.1:8000/api/car/get")
+            .then((response) => response.json())
+            .then((json) => setData(json))
+            .catch((error) => console.error(error));
+        }, []); 
+
     return(
         <>
             <LoggedInLayout>
@@ -102,8 +117,6 @@ function UpdateTool() {
                             value={formData.placeId}
                             onChange={handleChange}
                         >
-
-
                             {carPlace.map((item) => (
                                 <option key={item.id} value={item.id}>
                                     {item.place}
@@ -111,7 +124,7 @@ function UpdateTool() {
                             ))}
                         </Form.Select>
                     </Form.Group>
-                    <Button disabled={!formData.placeId} variant="danger" onClick={handleSubmit}>Módosítások mentése</Button>
+                    <Button disabled={!formData.placeId} variant="danger">Módosítások mentése</Button>
                 </Form>
                 {answer && <div>{answer}</div>}
             </LoggedInLayout>
