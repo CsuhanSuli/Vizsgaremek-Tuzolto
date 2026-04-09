@@ -73,7 +73,7 @@ const handleLogout = async () => {
                   key={item.id} 
                   id={item.id} 
                   onClick={() => {
-                    navigate(`/carTools/${item.id}`, {state:item})
+                    navigate(`/CarTools/${item.id}`, {state:item})
                     
                   }} 
                   >{item.name}
@@ -86,20 +86,30 @@ const handleLogout = async () => {
                   navigate(`/NewExam`)
                   
                 }} >
-                Új vizsga
-              </NavDropdown.Item>
+                Új vizsga</NavDropdown.Item>
               <NavDropdown.Item
                 onClick={() => {
                   navigate(`/NewUserExam`)
                 }} >
-                Új dolgzó vizsga
+                Új vizsga dolgozó
               </NavDropdown.Item>
+              <NavDropdown.Item
+                onClick={() => {
+                  navigate(`/ExamType`)
+                }} >
+                Vizsga típusok</NavDropdown.Item>
             </NavDropdown>
             <Nav.Link href="/Users" className="sidebar-link">
-                Dolgozók
+              Dolgozók
+            </Nav.Link>
+            <Nav.Link href="/Forum" className="sidebar-link">
+              Fórum
+            </Nav.Link>
+            <Nav.Link href="/ForumType" className="sidebar-link">
+              Fórum típusok
             </Nav.Link>
           </Nav>
-
+          
           <div className="mt-auto w-100">
             <hr className="border-light" />
             <button
@@ -126,9 +136,6 @@ const handleLogout = async () => {
             <Nav.Link href="/Calendar" className="sidebar-link" onClick={() => setShow(false)}>
               Beosztás
             </Nav.Link>
-            <Nav.Link href="#" className="sidebar-link" onClick={() => setShow(false)}>
-              Dolgozók
-            </Nav.Link>
             <Nav.Link href="/Exams/2" className="sidebar-link" onClick={() => setShow(false)}>
               Vizsgáim
             </Nav.Link>
@@ -139,15 +146,41 @@ const handleLogout = async () => {
                   id={item.id} 
                   onClick={() => {
                     navigate(`/carTools/${item.id}`, {state:item})
-                    
                     setShow(false)
                   }} 
                   >{item.name}
                 </NavDropdown.Item>
               ))}
             </NavDropdown>
+            <NavDropdown title="Vizsgák" id="basic-nav-dropdown" className="sidebar-dropdown">
+              <NavDropdown.Item
+                onClick={() => {
+                  navigate(`/NewExam`)
+                  setShow(false)
+                }} >
+                Új vizsga</NavDropdown.Item>
+              <NavDropdown.Item
+                onClick={() => {
+                  navigate(`/NewUserExam`)
+                  setShow(false)
+                }} >
+                Új vizsga dolgozó
+              </NavDropdown.Item>
+              <NavDropdown.Item
+                onClick={() => {
+                  navigate(`/ExamType`)
+                  setShow(false)
+                }} >
+                Vizsga típusok</NavDropdown.Item>
+            </NavDropdown>
             <Nav.Link href="/Users" className="sidebar-link" onClick={() => setShow(false)}>
                 Dolgozók
+            </Nav.Link>
+            <Nav.Link href="/Forum" className="sidebar-link" onClick={() => setShow(false)}>
+              Fórum
+            </Nav.Link>
+            <Nav.Link href="/ForumType" className="sidebar-link" onClick={() => setShow(false)}>
+              Fórum típusok
             </Nav.Link>
           </Nav>
 

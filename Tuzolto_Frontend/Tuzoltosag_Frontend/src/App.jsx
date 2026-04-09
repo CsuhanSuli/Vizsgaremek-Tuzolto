@@ -17,12 +17,21 @@ import NewUserExam from "./components/LoggedIn/Exams/NewUserExam";
 import NewExam from "./components/LoggedIn/Exams/NewExam";
 import AllUsers from "./components/LoggedIn/Users/AllUsers";
 import UpdateUser from "./components/LoggedIn/Users/UpdateUser";
+import AllForum from "./components/LoggedIn/Forum/AllForum.JSX";
+import UpdateForum from "./components/LoggedIn/Forum/UpdateForum";
+import ForumDetails from "./components/LoggedIn/Forum/ForumDetails";
+import NewForum from "./components/LoggedIn/Forum/NewForum";
+import NewForumType from "./components/LoggedIn/Forum/ForumType/NewForumType";
+import NewExamType from "./components/LoggedIn/Exams/ExamType/NewExamType";
+import AllForumType from "./components/LoggedIn/Forum/ForumType/AllForumTypes";
+import AllExamType from "./components/LoggedIn/Exams/ExamType/AllExamType";
+
 function App() {
   return (
     <>
             <Router>
               <Routes>
-                <Route path="" element={<AllMission />} />
+                <Route path="/" element={<AllMission />} />
                 <Route path="/Cars" element={<AllCar />} />
                 <Route path="/Login" element={<LoginForm/>} />
                 <Route path="/LoggedIn" element={<LoggedInLayout />} />
@@ -38,7 +47,15 @@ function App() {
                 <Route path="/NewUserExam" element={<NewUserExam/>}/>
                 <Route path="/NewExam" element={<NewExam/>}/>
                 <Route path="/Users" element={<AllUsers/>}/>
-                <Route path="/EditUser/:id" element={<UpdateUser/>}/> 
+                <Route path="/EditUser/:id" element={<UpdateUser/>}/>
+                <Route path="/Forum" element={<AllForum/>}/>
+                <Route path="/ForumDetails/:id" element={<ForumDetails/>}/>
+                <Route path="/EditForum/:id" element={<UpdateForum/>}/>
+                <Route path="/NewForum" element={<NewForum/>}/>
+                <Route path="/NewForumType" element={<NewForumType/>}/>
+                <Route path="/NewExamType" element={<NewExamType/>}/>
+                <Route path="/ForumType" element={<AllForumType/>}/>
+                <Route path="/ExamType" element={<AllExamType/>}/>
               </Routes>
             </Router>
 

@@ -1,0 +1,22 @@
+.formCenter {
+  margin-top: 5%;
+  margin-right: 25%;
+  margin-left: 25%;
+}
+.checkMargin {
+  margin-left: 5%;
+}
+
+@media only screen and (max-width: 600px) {
+  .formCenter {
+    margin-top: 5%;
+    margin-right: 5%;
+    margin-left: 5%;
+  }
+}
+
+.descriptionPadd {
+    min-height: 500px;
+    max-height: 700px;
+    resize: vertical;
+}
