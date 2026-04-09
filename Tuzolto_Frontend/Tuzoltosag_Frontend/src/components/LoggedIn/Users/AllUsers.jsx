@@ -1,13 +1,17 @@
 import { useEffect, useState } from "react"
-import { useLocation } from "react-router-dom";
 import LoggedInLayout from "../LoggedInLayout";
 import ViewOneUser from "./ViewOneUser";
+import { useNavigate } from "react-router-dom";
+import { Button } from "react-bootstrap";
 
 export default function AllUsers() {
-    
-    const locatipon = useLocation();
-    const props = locatipon.state;
 
+
+    const navigate = useNavigate()
+
+    const handleChange = () => {
+        navigate("/NewUserExam")
+    }
 
     const [exams, setExams] = useState([]);
 
@@ -35,6 +39,7 @@ export default function AllUsers() {
                         ></ViewOneUser>
                     )
                 })}
+                <Button variant="danger" onClick={handleChange}>Új vizsga kiírása</Button>
             </LoggedInLayout>
         </>
     )

@@ -4,7 +4,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import LoggedInLayout from "../LoggedInLayout";
 import "./ReviewDate.css"
 
-export default function NewReviewDate() {
+export default function UpdateReviewDate() {
    const location = useLocation()
     const props = location.state;
     const navigate = useNavigate()

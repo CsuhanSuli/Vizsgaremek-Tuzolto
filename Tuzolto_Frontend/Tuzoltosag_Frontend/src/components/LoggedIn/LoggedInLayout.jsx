@@ -68,15 +68,15 @@ const handleLogout = async () => {
               Vizsgáim
             </Nav.Link>
             <NavDropdown title="Autók" id="basic-nav-dropdown" className="sidebar-dropdown">
-              {car.map((props) => (
+              {car.map((item) => (
                 <NavDropdown.Item 
-                  key={props.carId} 
-                  id={props.carId} 
+                  key={item.id} 
+                  id={item.id} 
                   onClick={() => {
-                    navigate(`/carTools/${props.carId}`, {state:props})
-                    window.location.reload();
+                    navigate(`/carTools/${item.id}`, {state:item})
+                    
                   }} 
-                  >{props.name}
+                  >{item.name}
                 </NavDropdown.Item>
               ))}
             </NavDropdown>
@@ -84,20 +84,19 @@ const handleLogout = async () => {
               <NavDropdown.Item
                 onClick={() => {
                   navigate(`/NewExam`)
-                  window.location.reload();
+                  
                 }} >
                 Új vizsga
               </NavDropdown.Item>
               <NavDropdown.Item
                 onClick={() => {
                   navigate(`/NewUserExam`)
-                  window.location.reload();
                 }} >
                 Új dolgzó vizsga
               </NavDropdown.Item>
             </NavDropdown>
             <Nav.Link href="/Users" className="sidebar-link">
-              Dolgozók
+                Dolgozók
             </Nav.Link>
           </Nav>
 
@@ -134,19 +133,22 @@ const handleLogout = async () => {
               Vizsgáim
             </Nav.Link>
             <NavDropdown title="Autók" id="basic-nav-dropdown" className="sidebar-dropdown">
-              {car.map((props) => (
+              {car.map((item) => (
                 <NavDropdown.Item 
-                  key={props.carId} 
-                  id={props.carId} 
+                  key={item.id} 
+                  id={item.id} 
                   onClick={() => {
-                    navigate(`/carTools/${props.id}`, {state:props})
-                    window.location.reload();
+                    navigate(`/carTools/${item.id}`, {state:item})
+                    
                     setShow(false)
                   }} 
-                  >{props.name}
+                  >{item.name}
                 </NavDropdown.Item>
               ))}
             </NavDropdown>
+            <Nav.Link href="/Users" className="sidebar-link" onClick={() => setShow(false)}>
+                Dolgozók
+            </Nav.Link>
           </Nav>
 
           <div className="mt-auto">

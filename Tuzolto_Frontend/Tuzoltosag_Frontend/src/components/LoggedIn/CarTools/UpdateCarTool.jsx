@@ -39,7 +39,7 @@ function UpdateCarTool() {
         props.placeId = formData.placeId;
         props.carId = formData.carId;
         setAnswer("Sikeres mentés!");
-        navigate(`/CarTools/${props.carId}`, {state:props})
+        //navigate(`/CarTools/${props.carId}`, {state:props})
       })
       .catch((error) => {
         console.log(formData);
@@ -67,7 +67,7 @@ function UpdateCarTool() {
   return (
     <>
       <LoggedInLayout>
-        <h1>Új szerszám hozzáadása</h1>
+        <h1>Szerszám módosítása</h1>
         <Form onSubmit={handleSubmit}>
           <Form.Group className="mb-3">
             <Form.Label>Szerszám neve:</Form.Label>

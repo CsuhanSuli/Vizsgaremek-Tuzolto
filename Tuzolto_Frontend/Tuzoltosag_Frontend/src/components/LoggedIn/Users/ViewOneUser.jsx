@@ -3,11 +3,11 @@ import { useNavigate } from "react-router-dom";
 import "./Users.css"
 
 
-export default function ViewOneCarTool(props) {
+export default function ViewOneUser(props) {
 
     const navigate = useNavigate();
     const handleClick = () => {
-        navigate(`/editCarTool/${props.id}`, {state:props})
+        navigate(`/EditUser/${props.id}`, {state:props})
     }
 
     const examNavigate = () => {
@@ -21,8 +21,10 @@ export default function ViewOneCarTool(props) {
         if(!confirmDelete)            
             return;
     
-        fetch(`http://127.0.0.1:8000/api/user/delete/${props.id}`)
-            .then(navigate('/carTools'))
+        fetch(`http://127.0.0.1:8000/api/user/delete/${props.id}`, {
+            method: "DELETE"
+        })
+            .then(() => window.location.reload())
             .catch(error => {console.error(error)});
     }
 

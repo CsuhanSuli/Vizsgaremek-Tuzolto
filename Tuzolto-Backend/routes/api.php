@@ -69,11 +69,12 @@ Route::get('schedule_types', [ScheduleTypeController::class, 'index']);
 // user
 Route::put('/user/fortyHourUptdate/{id}', [UserController::class, 'fortyHourUptdate']);
 Route::put('/user/nameChange/{id}', [UserController::class, 'nameChange']);
-Route::put('/user/passChange/{id}', [UserController::class, 'passChanges']);
+Route::put('/user/passChange/{id}', [UserController::class, 'passChange']);
 Route::delete('/user/delete/{id}', [UserController::class, 'destroy']);
 // forum
 Route::post('/forum/store', [ForumController::class, 'store'])->middleware(isAdmin::class);
 Route::delete('/forum/delete/{id}', [ForumController::class, 'destroy']);
+Route::post('/forumType/store', [ForumTypeController::class, 'index']);
 Route::post('/forumType/store', [ForumTypeController::class, 'store'])->middleware(isAdmin::class);
 Route::put('/forum/put/{id}', [ForumController::class, 'update']);
 // review

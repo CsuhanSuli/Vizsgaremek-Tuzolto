@@ -1,13 +1,11 @@
 import { useState, useEffect } from "react";
 import { Button, Form } from "react-bootstrap";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import LoggedInLayout from "../LoggedInLayout";
 
 
 export default function NewUserExam() {
 
-    const location = useLocation()
-    const props = location.state;
     const navigate = useNavigate()
 
     const [users, setUsers] = useState([])

@@ -16,6 +16,7 @@ import NewSchedule from "./components/LoggedIn/Schedule/NewSchedule";
 import NewUserExam from "./components/LoggedIn/Exams/NewUserExam";
 import NewExam from "./components/LoggedIn/Exams/NewExam";
 import AllUsers from "./components/LoggedIn/Users/AllUsers";
+import UpdateUser from "./components/LoggedIn/Users/UpdateUser";
 function App() {
   return (
     <>
@@ -37,6 +38,7 @@ function App() {
                 <Route path="/NewUserExam" element={<NewUserExam/>}/>
                 <Route path="/NewExam" element={<NewExam/>}/>
                 <Route path="/Users" element={<AllUsers/>}/>
+                <Route path="/EditUser/:id" element={<UpdateUser/>}/> 
               </Routes>
             </Router>
 
