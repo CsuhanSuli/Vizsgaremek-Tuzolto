@@ -5,11 +5,13 @@ import LoggedInLayout from "../LoggedInLayout";
 import "./Calendar.css"
 
 
-export default function NewSchedule() {
+export default function UpdateSchedule() {
 
     const location = useLocation()
     const props = location.state;
     const navigate = useNavigate()
+
+    console.log(props)
 
     const [users, setUsers] = useState([])
 
@@ -20,7 +22,7 @@ export default function NewSchedule() {
             .catch((error) => console.error(error));
       }, []); 
 
-      const [scheduleType, setScheduleType] = useState([])
+    const [scheduleType, setScheduleType] = useState([])
 
     useEffect(() => {
         fetch("http://127.0.0.1:8000/api/schedule_types")
@@ -30,9 +32,9 @@ export default function NewSchedule() {
       }, []); 
 
     const [formData, setFormData] = useState({
-        scheduleTypeid: 0,
-        userId: 0,
-        date: "",
+        scheduleTypeid: props.scheduleTypeid,
+        userId: props.userId,
+        date: props.date,
     })
 
     const [answer, setAnswer] = useState("")
@@ -47,7 +49,8 @@ export default function NewSchedule() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        fetch(`http://127.0.0.1:8000/api/schedule/store`, {
+        console.log(props)
+        fetch(`http://127.0.0.1:8000/api/schedule/put/${props.id}`, {
             method: "POST",
             headers: {
                 "Content-Type" : "application/json"
@@ -55,12 +58,10 @@ export default function NewSchedule() {
             body: JSON.stringify(formData),
         })
         .then(() => {
-            console.log(formData)
-            setFormData({
-                scheduleTypeid: 0,
-                userId: 0,
-                date: "",
-            })
+            props.scheduleTypeid = formData.scheduleTypeid;
+            props.userId = formData.userId;
+            props.date = formData.date;
+
             setAnswer("Sikeres mentés!")  
         })
         .catch(error => {
@@ -73,7 +74,7 @@ export default function NewSchedule() {
     return(
         <>
         <LoggedInLayout>
-            <h1>Új beosztás dátum</h1>
+            <h1>Beosztás dátum módosítás</h1>
             <Form onSubmit={handleSubmit} className="formCenter">
                 <Form.Group className="mb-3">
                     <Form.Label>Dátum</Form.Label>
@@ -117,7 +118,7 @@ export default function NewSchedule() {
                     ))}
                     
                 </Form.Group>
-                <Button type="submit" variant="danger">Hozzáadás</Button>
+                <Button type="submit" variant="danger">Módosítás</Button>
             </Form>
             {answer && <div className="formCenter">{answer}</div>}
             </LoggedInLayout>  

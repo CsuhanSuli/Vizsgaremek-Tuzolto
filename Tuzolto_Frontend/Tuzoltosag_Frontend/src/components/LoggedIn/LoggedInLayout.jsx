@@ -102,11 +102,12 @@ const handleLogout = async () => {
             <Nav.Link href="/Users" className="sidebar-link">
               Dolgozók
             </Nav.Link>
-            <Nav.Link href="/Forum" className="sidebar-link">
-              Fórum
-            </Nav.Link>
-            <Nav.Link href="/ForumType" className="sidebar-link">
-              Fórum típusok
+            <NavDropdown title="Fórum" id="basic-nav-dropdown" className="sidebar-dropdown">
+              <NavDropdown.Item onClick={() => navigate(`/Forum`)}>Fórum bejegyzések</NavDropdown.Item>
+              <NavDropdown.Item onClick={() => navigate(`/ForumType`)}>Fórum típusok</NavDropdown.Item>
+            </NavDropdown>
+            <Nav.Link href="/CarsLoggedIn" className="sidebar-link">
+              Autók
             </Nav.Link>
           </Nav>
           
@@ -181,6 +182,9 @@ const handleLogout = async () => {
             </Nav.Link>
             <Nav.Link href="/ForumType" className="sidebar-link" onClick={() => setShow(false)}>
               Fórum típusok
+            </Nav.Link>
+            <Nav.Link href="/CarsLoggedIn" className="sidebar-link">
+              Autók
             </Nav.Link>
           </Nav>
 

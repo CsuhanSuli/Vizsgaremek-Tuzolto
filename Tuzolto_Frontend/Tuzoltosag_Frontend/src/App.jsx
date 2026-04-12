@@ -25,6 +25,10 @@ import NewForumType from "./components/LoggedIn/Forum/ForumType/NewForumType";
 import NewExamType from "./components/LoggedIn/Exams/ExamType/NewExamType";
 import AllForumType from "./components/LoggedIn/Forum/ForumType/AllForumTypes";
 import AllExamType from "./components/LoggedIn/Exams/ExamType/AllExamType";
+import AllCars from "./components/LoggedIn/Cars/AllCars";
+import NewCar from "./components/LoggedIn/Cars/NewCar";
+import UpdateCar from "./components/LoggedIn/Cars/UpdateCar";
+import UpdateSchedule from "./components/LoggedIn/Schedule/UpdateSchedule";
 
 function App() {
   return (
@@ -34,7 +38,9 @@ function App() {
                 <Route path="/" element={<AllMission />} />
                 <Route path="/Cars" element={<AllCar />} />
                 <Route path="/Login" element={<LoginForm/>} />
+
                 <Route path="/LoggedIn" element={<LoggedInLayout />} />
+
                 <Route path="/CarTools/:id" element={<AllCarTools />} />
                 <Route path="/NewTool/:id" element={<NewCarTool />} />
                 <Route path="/EditCarTool/:id" element={<UpdateCarTool />} />
@@ -56,6 +62,10 @@ function App() {
                 <Route path="/NewExamType" element={<NewExamType/>}/>
                 <Route path="/ForumType" element={<AllForumType/>}/>
                 <Route path="/ExamType" element={<AllExamType/>}/>
+                <Route path="/CarsLoggedIn" element={<AllCars/>}/>
+                <Route path="/NewCar" element={<NewCar/>}/>
+                <Route path="/UpdateCar/:id" element={<UpdateCar/>}/>
+                <Route path="/UpdateSchedule/:id" element={<UpdateSchedule/>}/>
               </Routes>
             </Router>
 

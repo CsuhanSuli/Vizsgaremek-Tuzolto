@@ -25,7 +25,7 @@ export default function AllForumType() {
     return(
         <>
             <LoggedInLayout>
-                <h1>Fórum bejegyzések</h1>
+                <h1>Fórum típusok</h1>
                 {forum.map((row) => (
                     <ViewOneForumType
                         key={row.id}

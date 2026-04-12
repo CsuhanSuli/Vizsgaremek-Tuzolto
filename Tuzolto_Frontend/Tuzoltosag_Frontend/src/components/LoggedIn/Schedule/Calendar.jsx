@@ -32,6 +32,7 @@ const [data, setData] = useState([])
     });
 }, [])
 
+
   return (
     <>
     <LoggedInLayout>
@@ -47,6 +48,15 @@ const [data, setData] = useState([])
               initialView="dayGridMonth"
               events={data}
               locale={huLocale}
+              eventClick={(info) => {
+                navigate(`/UpdateSchedule/${info.event.id}`, {
+                  state: {
+                    id: info.event.id,
+                    title: info.event.title,
+                    date: info.event.startStr
+                  }
+                });
+              }}
             />
         </aside>
 

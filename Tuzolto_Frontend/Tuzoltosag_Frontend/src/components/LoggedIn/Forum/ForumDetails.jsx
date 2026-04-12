@@ -2,7 +2,7 @@ import { useLocation, useNavigate } from "react-router-dom"
 import { Row, Col, Button } from "react-bootstrap";
 import LoggedInLayout from "../LoggedInLayout";
 
-export default function ViewOneForum() {
+export default function ForumDetails() {
 
     const location = useLocation()
     const props = location.state;

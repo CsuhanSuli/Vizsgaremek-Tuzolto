@@ -7,12 +7,12 @@ import LoggedInLayout from "../../LoggedInLayout";
 
 export default function AllExamType() {
 
-    const [forum, setForum] = useState([])
+    const [examType, setExamType] = useState([])
 
     useEffect(() => {
         fetch("http://127.0.0.1:8000/api/examType/index")
             .then(resp => resp.json())
-            .then(json => setForum(json))
+            .then(json => setExamType(json))
             .catch(error => console.error(error))
     }, [])
 
@@ -24,8 +24,8 @@ export default function AllExamType() {
     return(
         <>
             <LoggedInLayout>
-                <h1>Vizsga típusok bejegyzések</h1>
-                {forum.map((row) => (
+                <h1>Vizsga típusok</h1>
+                {examType.map((row) => (
                     <ViewOneExamType
                         key={row.id}
                         id={row.id}

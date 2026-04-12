@@ -5,8 +5,8 @@ import ViewOneExam from "./ViewOneExam";
 
 export default function AllExams() {
     
-    const locatipon = useLocation();
-    const props = locatipon.state;
+    const location = useLocation();
+    const props = location.state;
 
 
     const [exams, setExams] = useState([]);

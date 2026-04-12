@@ -31,7 +31,6 @@ export default function UpdateForum() {
         });
     };
 
-    // ✅ FILE kezelése külön
     const handleFileChange = (e) => {
         setFormData({
             ...formData,
@@ -73,11 +72,11 @@ export default function UpdateForum() {
                 imageName: null,
             });
 
-            setAnswer("Sikeres mentés! ✔️");
+            setAnswer("Sikeres mentés!");
         })
         .catch(error => {
             console.error(error);
-            setAnswer("Hiba a mentés során! ❌");
+            setAnswer("Hiba a mentés során!");
         });
     };
 
