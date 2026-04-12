@@ -65,7 +65,7 @@ Route::get('/schedule/index', [ScheduleController::class, 'index']);
 Route::post('/schedule/store', [ScheduleController::class, 'store']);
 Route::put('/schedule/put/{id}', [ScheduleController::class, 'update']);
 // schedule_types
-Route::get('schedule_types', [ScheduleTypeController::class, 'index']);
+Route::get('/schedule_types', [ScheduleTypeController::class, 'index']);
 // user
 Route::put('/user/fortyHourUptdate/{id}', [UserController::class, 'fortyHourUptdate']);
 Route::put('/user/nameChange/{id}', [UserController::class, 'nameChange']);
