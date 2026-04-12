@@ -53,7 +53,7 @@ class ReviewController extends Controller
      */
     public function allDates(int $toolId)
     {
-        $data = review::where('toolId', $toolId);
+        $data = review::where('toolId', $toolId)->get();
         if (empty($data)) {
             return response()->json(['message' => '404 nincs ijen vizsga'], 404);
         }
@@ -63,7 +63,7 @@ class ReviewController extends Controller
 
     public function latestDate(int $toolId)
     {
-        $data = review::where('toolId', $toolId)->orderBy('reviewDate', 'desc')->limit(1);
+        $data = review::where('toolId', $toolId)->orderBy('reviewDate', 'desc')->first();
         if (empty($data)) {
             return response()->json(['message' => '404 nincs ijen vizsga'], 404);
         }

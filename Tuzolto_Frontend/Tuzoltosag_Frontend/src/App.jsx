@@ -17,7 +17,7 @@ import NewUserExam from "./components/LoggedIn/Exams/NewUserExam";
 import NewExam from "./components/LoggedIn/Exams/NewExam";
 import AllUsers from "./components/LoggedIn/Users/AllUsers";
 import UpdateUser from "./components/LoggedIn/Users/UpdateUser";
-import AllForum from "./components/LoggedIn/Forum/AllForum.JSX";
+import AllForum from "./components/LoggedIn/Forum/AllForum";
 import UpdateForum from "./components/LoggedIn/Forum/UpdateForum";
 import ForumDetails from "./components/LoggedIn/Forum/ForumDetails";
 import NewForum from "./components/LoggedIn/Forum/NewForum";
