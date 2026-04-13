@@ -32,9 +32,6 @@ Route::get('/forum/get', [ForumController::class, 'index']);
 
 // cars
 Route::get('/car/get', [CarController::class, 'index']);
-
-// thing that should be used with loging go here for testing
-    
     
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/user/logout', [UserController::class, 'logout']);

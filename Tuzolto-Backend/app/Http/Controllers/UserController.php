@@ -14,7 +14,7 @@ class UserController extends Controller
     public function register(Request $request)
     {
         // Validálás
-        $validated = $request->validate([
+        $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             // e-mail egyedi legyen a user táblában
             // e-mail formailag helyes
@@ -24,15 +24,19 @@ class UserController extends Controller
             'fortyHours' => 'required',
             'isAdmin' => 'required'
         ]);
+        if($validator->fails())
+            {
+                return response()->json(["errors"=>$validator->errors()],400);
+            }
+        $user = new User();
+        $user->name=$request->name;
+        $user->email=$request->email;
+        $user->password=hash::make($request->password);
+        $user->fortyHours=$request->fortyHours;
+        $user->isAdmin=$request->isAdmin;
+        $user->save();
         // user létrehozása
-        $user = User::create([
-            'name' => $validated['name'],
-            'email' => $validated['email'],
-            // Hash a jelszót titkosítja
-            'password' => Hash::make($validated['password']),
-            'fortyHours' => $validated['fortyHours'],
-            'isAdmin' => $validated['isAdmin'],
-        ]);
+
 
         $token = $user->createToken('api-token')->plainTextToken;
 
