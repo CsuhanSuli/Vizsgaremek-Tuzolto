@@ -87,7 +87,8 @@ function UpdateCar() {
                     </Form.Group>
                     <Button disabled={!formData.typeId} type="submit" variant="danger">Mentés</Button>
                 </Form>
-                {answer && <div className="mt-3">{answer}</div>}
+                {answer && <div className="mt-3" >{answer}</div>}
+                
             </LoggedInLayout>
         </>
     );

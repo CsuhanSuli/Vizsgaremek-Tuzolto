@@ -68,7 +68,7 @@ export default function AllCarTools() {
           />
         ))
       ) : (
-        <p>Nincsenek szerszámok az autóhoz.</p>
+        <p style={{ textAlign: "center", fontWeight:"bold" }}>Nincsenek szerszámok az autóhoz.</p>
       )}
 
       {userIsAdmin && (

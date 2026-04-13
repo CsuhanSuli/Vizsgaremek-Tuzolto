@@ -73,7 +73,7 @@ const LoginForm = () => {
                           value={password}
                           onChange={(e) => setPassword(e.target.value)}
                           className="custom-input"
-                          placeholder="********"
+                          placeholder="••••••••••••"
                         />
                       </Form.Group>
                       

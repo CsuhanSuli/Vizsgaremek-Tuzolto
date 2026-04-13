@@ -38,7 +38,7 @@ export default function AllForum() {
                         />
                     ))
                 ) : (
-                    <p>Nincsenek megjeleníthető bejegyzések.</p>
+                    <p style={{ textAlign: "center", fontWeight:"bold" }}>Nincsenek megjeleníthető bejegyzések.</p>
                 )}
                 <Button onClick={handleNavigate} variant="danger" className="mt-3">
                     Új bejegyzés hozzáadása

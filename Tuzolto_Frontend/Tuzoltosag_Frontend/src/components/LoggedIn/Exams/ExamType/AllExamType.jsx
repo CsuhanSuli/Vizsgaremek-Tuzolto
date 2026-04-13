@@ -32,7 +32,7 @@ export default function AllExamType() {
                     />
                 ))
             ) : (
-                <p>Nincsenek rögzített vizsga típusok.</p>
+                <p style={{ textAlign: "center", fontWeight:"bold" }}>Nincsenek rögzített vizsga típusok.</p>
             )}
             
             {userIsAdmin && (

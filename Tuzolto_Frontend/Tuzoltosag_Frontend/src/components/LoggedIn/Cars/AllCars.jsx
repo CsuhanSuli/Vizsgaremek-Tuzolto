@@ -39,7 +39,7 @@ export default function AllCars() {
                         />
                     ))
                 ) : (
-                    <p>Betöltés...</p>
+                    <p style={{ textAlign: "center", fontWeight:"bold" }}>Betöltés...</p>
                 )}
                 
                 {userIsAdmin && (

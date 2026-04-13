@@ -39,7 +39,7 @@ export default function AllExams() {
                     />
                 ))
             ) : (
-                <p>Nincsenek megjeleníthető vizsgák.</p>
+                <p style={{ textAlign: "center", fontWeight:"bold" }}>Nincsenek megjeleníthető adatok.</p>
             )}
         </LoggedInLayout>
     );

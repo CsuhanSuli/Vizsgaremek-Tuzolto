@@ -32,7 +32,7 @@ export default function AllForumType() {
                     />
                 ))
             ) : (
-                <p>Nincsenek elérhető fórum típusok.</p>
+                <p style={{ textAlign: "center", fontWeight:"bold" }}>Nincsenek elérhető fórum típusok.</p>
             )}
 
             {userIsAdmin && (
