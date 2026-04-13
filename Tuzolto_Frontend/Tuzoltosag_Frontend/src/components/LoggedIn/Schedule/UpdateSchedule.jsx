@@ -1,35 +1,39 @@
 import { useState, useEffect } from "react";
 import { Button, Form, Container } from "react-bootstrap";
 import { useLocation, useNavigate } from "react-router-dom";
-import api from "../../Login/api"; // Az axios példányod
+import api from "../../Login/api"; 
 import LoggedInLayout from "../LoggedInLayout";
-import "./Calendar.css"
+import "./Calendar.css";
 
-export default function NewSchedule() {
+export default function UpdateSchedule() {
     const location = useLocation();
-    const props = location.state;
+    const props = location.state || {};
     const navigate = useNavigate();
 
     const [users, setUsers] = useState([]);
     const [scheduleType, setScheduleType] = useState([]);
     const [answer, setAnswer] = useState("");
-
+    
     const [formData, setFormData] = useState({
-        scheduleTypeid: "",
-        userId: "",
-        date: "",
+        scheduleTypeid: props.scheduleTypeid || props.schedule_type_id || "",
+        userId: props.userId || props.user_id || "",
+        date: props.date || "",
     });
 
-    // Adatok betöltése api.get-tel
     useEffect(() => {
-        api.get("user/index")
-            .then((response) => setUsers(response.data))
-            .catch((error) => console.error("Hiba a dolgozók betöltésekor:", error));
-
-        api.get("schedule_types")
-            .then((response) => setScheduleType(response.data))
-            .catch((error) => console.error("Hiba a típusok betöltésekor:", error));
+        api.get("user/index").then(res => setUsers(res.data));
+        api.get("schedule_types").then(res => setScheduleType(res.data));
     }, []);
+
+    useEffect(() => {
+        if (props) {
+            setFormData({
+                scheduleTypeid: props.scheduleTypeid || props.schedule_type_id || "",
+                userId: props.userId || props.user_id || "",
+                date: props.date || "",
+            });
+        }
+    }, [users, scheduleType, props]);
 
     const handleChange = (e) => {
         setFormData({
@@ -40,33 +44,32 @@ export default function NewSchedule() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        
-        // Használjuk az axios példányt (api.post) a fetch helyett
-        api.post("schedule/store", formData)
+        api.put(`schedule/put/${props.id}`, formData)
             .then(() => {
-                setFormData({
-                    scheduleTypeid: "",
-                    userId: "",
-                    date: "",
-                });
                 setAnswer("Sikeres mentés!");
+                setTimeout(() => {
+                    navigate("/Calendar");
+                }, 1000); 
             })
             .catch(error => {
-                console.error("Szerver hiba:", error.response);
-                if (error.response?.status === 405) {
-                    setAnswer("Hiba: A szerver nem engedélyezi ezt a műveletet (405)!");
-                } else {
-                    setAnswer("Hiba a mentés során!");
-                }
+                console.error(error);
+                setAnswer("Hiba a mentés során!");
             });
+    };
+
+    const handleDelete = () => {
+        if (!window.confirm("Biztosan törölni szeretnéd ezt a beosztást?")) return;
+        api.delete(`schedule/delete/${props.id}`)
+            .then(() => navigate("/Calendar"))
+            .catch(() => setAnswer("Hiba történt a törlés során!"));
     };
 
     return (
         <LoggedInLayout>
             <Container className="py-4">
-                <h1 className="text-center mb-4">Új beosztás dátum</h1>
+                <h1 className="text-center mb-4">Beosztás módosítása</h1>
+                
                 <Form onSubmit={handleSubmit} className="mx-auto" style={{ maxWidth: "400px" }}>
-                    
                     <Form.Group className="mb-3">
                         <Form.Label><strong>Dátum</strong></Form.Label>
                         <Form.Control 
@@ -103,21 +106,20 @@ export default function NewSchedule() {
                                     required
                                     type="radio"
                                     key={item.id}
-                                    id={`new-radio-${item.id}`}
+                                    id={`radio-${item.id}`}
                                     name="scheduleTypeid"
                                     value={item.id}
                                     label={item.name}
-                                    checked={String(formData.scheduleTypeid) === String(item.id)}
+                                    checked={formData.scheduleTypeid == item.id}
                                     onChange={handleChange}
                                 />
                             ))}
                         </div>
                     </Form.Group>
                     
-                    <div className="d-grid">
-                        <Button type="submit" variant="danger" size="lg">
-                            Hozzáadás
-                        </Button>
+                    <div className="d-grid gap-3">
+                        <Button type="submit" variant="danger" size="lg">Módosítás</Button>
+                        <Button type="button" variant="warning" size="lg" onClick={handleDelete}>Törlés</Button>
                     </div>
                 </Form>
 

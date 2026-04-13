@@ -2,20 +2,32 @@ import { useEffect, useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import { useLocation, useNavigate } from "react-router-dom";
 import LoggedInLayout from "../LoggedInLayout";
+import api from "../../Login/api";
 
 function UpdateCarTool() {
   const location = useLocation();
   const props = location.state;
-
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
-    name: props.name,
-    placeId: props.placeId,
-    carId: props.carId,
+    name: props?.name || "",
+    placeId: props?.placeId || "",
+    carId: props?.carId || "",
   });
 
   const [answer, setAnswer] = useState("");
+  const [carPlace, setCarPlace] = useState([]);
+  const [car, setCar] = useState([]);
+
+  useEffect(() => {
+    api.get("carplace/index")
+      .then((response) => setCarPlace(response.data))
+      .catch((error) => console.error(error));
+
+    api.get("car/get")
+      .then((response) => setCar(response.data))
+      .catch((error) => console.error(error));
+  }, []);
 
   const handleChange = (e) => {
     setFormData({
@@ -25,44 +37,17 @@ function UpdateCarTool() {
   };
 
   const handleSubmit = async (e) => {
-    console.log(formData);
     e.preventDefault();
-    fetch(`http://127.0.0.1:8000/api/tools/put/${props.id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formData),
-    })
+    api.put(`tools/put/${props.id}`, formData)
       .then(() => {
-        props.name = formData.name;
-        props.placeId = formData.placeId;
-        props.carId = formData.carId;
         setAnswer("Sikeres mentés!");
-        //navigate(`/CarTools/${props.carId}`, {state:props})
+        navigate(`/carTools/${formData.carId}`, { state: props });
       })
       .catch((error) => {
-        console.log(formData);
         console.error(error);
         setAnswer("Hiba a mentés során!");
       });
   };
-  const [carPlace, setCarPlace] = useState([]);
-  useEffect(() => {
-    fetch("http://127.0.0.1:8000/api/carplace/index")
-      .then((response) => response.json())
-      .then((data) => setCarPlace(data))
-      .catch((error) => console.error(error));
-  }, []);
-
-  const [car, setCar] = useState([]);
-
-  useEffect(() => {
-    fetch("http://127.0.0.1:8000/api/car/get")
-      .then((response) => response.json())
-      .then((json) => setCar(json))
-      .catch((error) => console.error(error));
-  }, []);
 
   return (
     <>
@@ -82,13 +67,12 @@ function UpdateCarTool() {
           <Form.Group className="mb-3">
             <Form.Label>Helye:</Form.Label>
             <Form.Select
+              required
               name="placeId"
               value={formData.placeId}
               onChange={handleChange}
             >
-              <option value="" disabled>
-                ---Válasszon!---
-              </option>
+              <option value="" disabled>---Válasszon!---</option>
               {carPlace.map((item) => (
                 <option key={item.id} value={item.id}>
                   {item.place}
@@ -99,13 +83,12 @@ function UpdateCarTool() {
           <Form.Group className="mb-3">
             <Form.Label>Autó:</Form.Label>
             <Form.Select
+              required
               name="carId"
               value={formData.carId}
               onChange={handleChange}
             >
-              <option value="" disabled>
-                ---Válasszon!---
-              </option>
+              <option value="" disabled>---Válasszon!---</option>
               {car.map((item) => (
                 <option key={item.id} value={item.id}>
                   {item.name}
@@ -117,7 +100,7 @@ function UpdateCarTool() {
             Módosítás
           </Button>
         </Form>
-        {answer && <div>{answer}</div>}
+        {answer && <div className="mt-3">{answer}</div>}
       </LoggedInLayout>
     </>
   );

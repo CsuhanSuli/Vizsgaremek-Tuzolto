@@ -2,132 +2,129 @@ import { useState, useEffect } from "react";
 import { Button, Form } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import LoggedInLayout from "../LoggedInLayout";
-
+import api from "../../Login/api";
 
 export default function NewUserExam() {
-
-    const navigate = useNavigate()
-
-    const [users, setUsers] = useState([])
-
-    useEffect(() => {
-        fetch("http://127.0.0.1:8000/api/user/index")
-          .then((response) => response.json())
-            .then((json) => setUsers(json))
-            .catch((error) => console.error(error));
-      }, []); 
-
-      const [exams, setExams] = useState([])
-
-    useEffect(() => {
-        fetch("http://127.0.0.1:8000/api/exam/index")
-          .then((response) => response.json())
-            .then((json) => setExams(json))
-            .catch((error) => console.error(error));
-      }, []); 
-
+    const navigate = useNavigate();
+    const [users, setUsers] = useState([]);
+    const [exams, setExams] = useState([]);
+    const [answer, setAnswer] = useState("");
     const [formData, setFormData] = useState({
         examId: "",
         userId: "",
         examDate: "",
-    })
+    });
 
-    const [answer, setAnswer] = useState("")
+    useEffect(() => {
+        api.get("user/index")
+            .then((response) => setUsers(response.data))
+            .catch((error) => console.error(error));
+
+        api.get("exam/index")
+            .then((response) => setExams(response.data))
+            .catch((error) => console.error(error));
+    }, []);
 
     const handleChange = (e) => {
         setFormData({
             ...formData,
             [e.target.name]: e.target.value
-        })
-    }
-
+        });
+    };
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        fetch(`http://127.0.0.1:8000/api/examUser/store`, {
-            method: "POST",
-            headers: {
-                "Content-Type" : "application/json"
-            },
-            body: JSON.stringify(formData),
-        })
-        .then(() => {
-            console.log(formData)
-            setFormData({
-                examId: "",
-                userId: "",
-                examDate: "",
+        api.post("examUser/store", formData)
+            .then(() => {
+                setFormData({
+                    examId: "",
+                    userId: "",
+                    examDate: "",
+                });
+                setAnswer("Sikeres mentés!");
             })
-            setAnswer("Sikeres mentés!")  
-        })
-        .catch(error => {
-            console.error(error)
-            setAnswer("Hiba a mentés során!")
-        })
-    }
+            .catch(error => {
+                console.error(error);
+                setAnswer("Hiba a mentés során!");
+            });
+    };
 
-        const getYesterday = () => {
+    const getYesterday = () => {
         const today = new Date();
         today.setDate(today.getDate() - 1);
-
         return today.toISOString().split("T")[0];
     };
 
-
-    return(
+    return (
         <>
-        <LoggedInLayout>
-            <h1>Új vizsga</h1>
-            <Form onSubmit={handleSubmit} className="formCenter">
-                <Form.Group className="mb-3">
-                    <Form.Label>Dátum</Form.Label>
-                    <Form.Control 
-                        required 
-                        type="date"
-                        name="examDate"
-                        value={formData.examDate}
-                        onChange={handleChange}
-                        max={getYesterday()}
-                    />
-                </Form.Group>      
-                
-                <Form.Group className="mb-3">
-                    <Form.Label>Dolgozó</Form.Label>
-                    <Form.Select 
-                        name="userId"
-                        value={formData.userId}
-                        onChange={handleChange}
-                        required
-                    >
-
-                        {users.map((row) => (
-                            <option key={row.id} value={row.id}>
-                                {row.name}
-                            </option>
-                        ))}
-                    </Form.Select>
-                </Form.Group>
-
-                <Form.Group className="mb-3">
-                    <Form.Label>Vizsga</Form.Label>
-                    {exams.map((item) => (
-                        <Form.Check
-                            type="radio"
-                            key={item.id}
-                            name="examId"
-                            value={item.id}
-                            label={item.name}
-                            checked={formData.examId == item.id}
+            <LoggedInLayout>
+                <h1>Új vizsga hozzárendelése</h1>
+                <Form onSubmit={handleSubmit} className="formCenter">
+                    <Form.Group className="mb-3">
+                        <Form.Label>Dátum</Form.Label>
+                        <Form.Control
+                            required
+                            type="date"
+                            name="examDate"
+                            value={formData.examDate}
                             onChange={handleChange}
-                            className="checkMargin"
+                            max={getYesterday()}
                         />
-                    ))}
-                    
-                </Form.Group>
-                <Button type="submit" variant="danger">Hozzáadás</Button>
-            </Form>
-            {answer && <div className="formCenter">{answer}</div>}
-            </LoggedInLayout>  
+                    </Form.Group>
+
+                    <Form.Group className="mb-3">
+                        <Form.Label>Dolgozó</Form.Label>
+                        <Form.Select
+                            name="userId"
+                            value={formData.userId}
+                            onChange={handleChange}
+                            required
+                        >
+                            <option value="" disabled>--- Válasszon dolgozót ---</option>
+                            {users.map((row) => (
+                                <option key={row.id} value={row.id}>
+                                    {row.name}
+                                </option>
+                            ))}
+                        </Form.Select>
+                    </Form.Group>
+
+                    <Form.Group className="mb-3">
+                        <Form.Label className="d-block">Vizsga</Form.Label>
+                        {exams.length > 0 ? (
+                            exams.map((item) => (
+                                <Form.Check
+                                    type="radio"
+                                    key={item.id}
+                                    name="examId"
+                                    id={`exam-${item.id}`}
+                                    value={item.id}
+                                    label={item.name}
+                                    checked={String(formData.examId) === String(item.id)}
+                                    onChange={handleChange}
+                                    className="checkMargin"
+                                    required
+                                />
+                            ))
+                        ) : (
+                            <p className="text-muted">Nincsenek elérhető vizsgák.</p>
+                        )}
+                    </Form.Group>
+
+                    <Button 
+                        type="submit" 
+                        variant="danger" 
+                        disabled={!formData.examId || !formData.userId || !formData.examDate}
+                    >
+                        Hozzáadás
+                    </Button>
+                </Form>
+                {answer && (
+                    <div className="mt-4 alert alert-danger text-center">
+                        {answer}
+                    </div>
+                )}
+            </LoggedInLayout>
         </>
-    )
+    );
 }

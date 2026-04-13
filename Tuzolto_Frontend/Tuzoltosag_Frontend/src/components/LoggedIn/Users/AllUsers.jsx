@@ -3,9 +3,9 @@ import LoggedInLayout from "../LoggedInLayout";
 import ViewOneUser from "./ViewOneUser";
 import { useNavigate } from "react-router-dom";
 import { Button } from "react-bootstrap";
+import api from "../../Login/api"; // Axios példány importálása
 
 export default function AllUsers() {
-
 
     const navigate = useNavigate()
 
@@ -16,12 +16,16 @@ export default function AllUsers() {
     const [exams, setExams] = useState([]);
 
     useEffect(() => {
-        fetch(`http://127.0.0.1:8000/api/user/index`)
-            .then(response => response.json())
-            .then(data => setExams(data))
-            .catch(error => console.error(error));
+        // Átírva axios-ra (api példány használatával)
+        api.get("user/index")
+            .then(response => {
+                // Axiosnál az adatok a response.data-ban vannak
+                setExams(response.data);
+            })
+            .catch(error => {
+                console.error("Hiba a dolgozók lekérésekor:", error);
+            });
     }, [])
-
 
     return(
         <>

@@ -2,100 +2,55 @@ import { useEffect, useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import { useNavigate, useLocation } from "react-router-dom";
 import LoggedInLayout from "../LoggedInLayout";
+import api from "../../Login/api";
 
 function UpdateTool() {
     const navigate = useNavigate();
     const location = useLocation();
     const props = location.state;
-    
+
     const [formData, setFormData] = useState({
-        name: props.name,
-        placeId: props.placeId,
-        carId: props.carId,
+        name: props?.name || "",
+        placeId: props?.placeId || "",
+        carId: props?.carId || "",
     });
 
     const [answer, setAnswer] = useState("");
+    const [carPlace, setCarPlace] = useState([]);
+    const [cars, setCars] = useState([]);
+
+    useEffect(() => {
+        api.get("carplace/index")
+            .then((response) => setCarPlace(response.data))
+            .catch((error) => console.error(error));
+
+        api.get("car/get")
+            .then((response) => setCars(response.data))
+            .catch((error) => console.error(error));
+    }, []);
 
     const handleChange = (e) => {
-        const { name, type, checked, value } = e.target;
-
-        const newValue = type === "checkbox" ? (checked ? 1 : 0) : value;
-
-        let updatedData = {
-            ...formData,
-            [name]: newValue
-        };
-
-        if (name === "isHappend" && newValue === 0) {
-            updatedData.isSuccesfull = 0;
-        }
-
-        setFormData(updatedData);
+        const { name, value } = e.target;
+        setFormData((prev) => ({
+            ...prev,
+            [name]: value,
+        }));
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        fetch(`http://127.0.0.1:8000/api/tools/put/${props.id}`,{
-            method: "PUT",
-            headers: {
-                "Content-Type": "Application/json"
-            },
-            body: JSON.stringify(formData),
+        api.put(`tools/put/${props.id}`, formData)
+            .then(() => {
+                setAnswer("Sikeres mentés!");
+                navigate(`/carTools/${formData.carId}`, { state: props });
+            })
+            .catch((error) => {
+                console.error(error);
+                setAnswer("Hiba a mentés során!");
+            });
+    };
 
-        })
-        .then(() => {
-            props.name = formData.name
-            props.placeId = formData.placeId
-            props.carId = formData.carId
-            setAnswer("Sikeres mentés!")
-            navigate(`/CarTools/${props.carId}`, {state:props})
-        })
-        .catch(error => {
-            console.error(error)
-            setAnswer("Hiba a mentés során!")
-        })
-
-    }
-    const [carPlace, setCarPlace] = useState([]);
-
-    useEffect(() => {
-        fetch("http://127.0.0.1:8000/api/carplace/index")
-        .then((response) => response.json())
-        .then((data) => setCarPlace(data))
-        .catch((error) => console.error(error));
-    }, [])
-
-        useEffect(() => {
-        if (carPlace.length > 0) {
-            let foundId = "";
-
-            for (let i = 0; i < carPlace.length; i++) {
-                if (carPlace[i].id === props?.placeId) {
-                    foundId = carPlace[i].id;
-                } else {
-                    // semmi
-                }
-            }
-
-            setFormData(prev => ({
-                ...prev,
-                placeId: foundId
-            }));
-        }
-    }, [carPlace, props]);
-
-
-
-      const [data, setData] = useState(null);
-
-        useEffect(() => {
-            fetch("http://127.0.0.1:8000/api/car/get")
-            .then((response) => response.json())
-            .then((json) => setData(json))
-            .catch((error) => console.error(error));
-        }, []); 
-
-    return(
+    return (
         <>
             <LoggedInLayout>
                 <h1>Szerszám módosítása</h1>
@@ -110,13 +65,16 @@ function UpdateTool() {
                             onChange={handleChange}
                         />
                     </Form.Group>
+
                     <Form.Group className="mb-3">
                         <Form.Label>Helye:</Form.Label>
                         <Form.Select
+                            required
                             name="placeId"
                             value={formData.placeId}
                             onChange={handleChange}
                         >
+                            <option value="" disabled>---Válasszon!---</option>
                             {carPlace.map((item) => (
                                 <option key={item.id} value={item.id}>
                                     {item.place}
@@ -124,14 +82,32 @@ function UpdateTool() {
                             ))}
                         </Form.Select>
                     </Form.Group>
-                    <Button disabled={!formData.placeId} variant="danger">Módosítások mentése</Button>
+
+                    <Form.Group className="mb-3">
+                        <Form.Label>Autó:</Form.Label>
+                        <Form.Select
+                            required
+                            name="carId"
+                            value={formData.carId}
+                            onChange={handleChange}
+                        >
+                            <option value="" disabled>---Válasszon!---</option>
+                            {cars.map((car) => (
+                                <option key={car.id} value={car.id}>
+                                    {car.name}
+                                </option>
+                            ))}
+                        </Form.Select>
+                    </Form.Group>
+
+                    <Button type="submit" disabled={!formData.placeId} variant="danger">
+                        Módosítások mentése
+                    </Button>
                 </Form>
-                {answer && <div>{answer}</div>}
+                {answer && <div className="mt-3">{answer}</div>}
             </LoggedInLayout>
         </>
-    )
-
-
+    );
 }
 
 export default UpdateTool;

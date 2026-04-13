@@ -1,38 +1,46 @@
-import { useEffect, useState } from "react"
-import { useLocation } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useLocation, useParams } from "react-router-dom";
 import LoggedInLayout from "../LoggedInLayout";
 import ViewOneExam from "./ViewOneExam";
+import api, { getUser } from "../../Login/api";
 
 export default function AllExams() {
-    
-    const locatipon = useLocation();
-    const props = locatipon.state;
-
-
+    const location = useLocation();
+    const { id: urlId } = useParams();
     const [exams, setExams] = useState([]);
+    
+    const currentUser = getUser();
+    const targetId = urlId || location.state?.id || currentUser?.id;
+
+    const displayName = location.state?.name || (targetId === currentUser?.id ? "Saját" : "Felhasználó");
 
     useEffect(() => {
-        fetch(`http://127.0.0.1:8000/api/examUser/show/${props.id}`)
-            .then(response => response.json())
-            .then(data => setExams(data))
-            .catch(error => console.error(error));
-    }, [])
+        if (!targetId) return;
 
+        api.get(`examUser/show/${targetId}`)
+            .then(response => {
+                setExams(response.data);
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    }, [targetId]);
 
-    return(
-        <>
-            <LoggedInLayout>
-                <h1>{props.name} vizsgái</h1>
-                {exams.map((row) => {
-                    return(
-                        <ViewOneExam
-                            key = {row.id}
-                            id = {row.id}
-                            examDate = {row.examDate}
-                        ></ViewOneExam>
-                    )
-                })}
-            </LoggedInLayout>
-        </>
-    )
+    return (
+        <LoggedInLayout>
+            <h1>{displayName} vizsgái</h1>
+            {exams.length > 0 ? (
+                exams.map((row) => (
+                    <ViewOneExam
+                        key={row.id}
+                        id={row.id}
+                        examDate={row.examDate}
+                        exam_type={row.exam_type}
+                    />
+                ))
+            ) : (
+                <p>Nincsenek megjeleníthető vizsgák.</p>
+            )}
+        </LoggedInLayout>
+    );
 }

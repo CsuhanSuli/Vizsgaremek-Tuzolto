@@ -97,12 +97,18 @@ class ToolsController extends Controller
      */
     public function destroy(int $id)
     {
-        $data = tools::find($id);
-        if (empty($id)) {
-            return response()->json(['message' => '404 nincs ilyen auto'], 404);
-        }
-        $data->delete();
+        $tool = tools::find($id);
 
-        return response()->json(['message' => 'sikeres törlés'], 204);
+        if (!$tool) {
+            return response()->json(['message' => 'Eszköz nem található'], 404);
+        }
+
+        // Előbb a kapcsolódó dátumokat töröljük, ha nincs cascade delete a migrációban
+        $tool->reviews()->delete(); 
+        
+        // Ezután törölhető az eszköz
+        $tool->delete();
+
+        return response()->json(['message' => 'Sikeres törlés'], 200);
     }
 }

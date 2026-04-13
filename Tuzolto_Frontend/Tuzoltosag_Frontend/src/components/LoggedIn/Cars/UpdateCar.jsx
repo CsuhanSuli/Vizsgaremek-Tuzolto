@@ -4,19 +4,19 @@ import { useLocation, useNavigate } from "react-router-dom";
 import LoggedInLayout from "../LoggedInLayout";
 import api from "../../Login/api";
 
-function NewCarTool() {
+function UpdateCar() {
     const location = useLocation();
     const props = location.state;
     const navigate = useNavigate();
 
     const [formData, setFormData] = useState({
-        name: "",
-        placeId: "",
-        carId: props?.id || props?.carId,
+        name: props?.name || "",
+        typeId: props?.typeId || "",
+        imageName: props?.imageName || "",
     });
 
     const [answer, setAnswer] = useState("");
-    const [carPlace, setCarPlace] = useState([]);
+    const [carType, setCarType] = useState([]);
 
     const handleChange = (e) => {
         setFormData({
@@ -27,10 +27,9 @@ function NewCarTool() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        api.post("tools/store", formData)
+        api.put(`car/put/${props.id}`, formData)
             .then(() => {
-                setAnswer("Sikeres mentés!");
-                navigate(`/carTools/${formData.carId}`, { state: props });
+                navigate(`/CarsLoggedIn`);
             })
             .catch(error => {
                 console.error(error);
@@ -39,18 +38,18 @@ function NewCarTool() {
     };
 
     useEffect(() => {
-        api.get("carplace/index")
-            .then((response) => setCarPlace(response.data))
+        api.get("cartype/index")
+            .then((response) => setCarType(response.data))
             .catch((error) => console.error(error));
     }, []);
 
     return (
         <>
             <LoggedInLayout>
-                <h1>Új szerszám hozzáadása</h1>
+                <h1>Autó módosítása</h1>
                 <Form onSubmit={handleSubmit}>
                     <Form.Group className="mb-3">
-                        <Form.Label>Szerszám neve:</Form.Label>
+                        <Form.Label>Autó neve:</Form.Label>
                         <Form.Control
                             required
                             type="text"
@@ -60,22 +59,33 @@ function NewCarTool() {
                         />
                     </Form.Group>
                     <Form.Group className="mb-3">
-                        <Form.Label>Helye:</Form.Label>
+                        <Form.Label>Típusa:</Form.Label>
                         <Form.Select
                             required
-                            name="placeId"
-                            value={formData.placeId}
+                            name="typeId"
+                            value={formData.typeId}
                             onChange={handleChange}
                         >
                             <option value="" disabled>---Válasszon!---</option>
-                            {carPlace.map((item) => (
-                                <option key={item.id} value={item.id}>
-                                    {item.place}
+                            {carType.map((type) => (
+                                <option key={type.id} value={type.id}>
+                                    {type.typename}
                                 </option>
                             ))}
                         </Form.Select>
                     </Form.Group>
-                    <Button disabled={!formData.placeId} type="submit" variant="danger">Hozzáadás</Button>
+
+                    <Form.Group className="mb-3">
+                        <Form.Label>Kép neve:</Form.Label>
+                        <Form.Control
+                            required
+                            type="text"
+                            name="imageName"
+                            value={formData.imageName}
+                            onChange={handleChange}
+                        />
+                    </Form.Group>
+                    <Button disabled={!formData.typeId} type="submit" variant="danger">Mentés</Button>
                 </Form>
                 {answer && <div className="mt-3">{answer}</div>}
             </LoggedInLayout>
@@ -83,4 +93,4 @@ function NewCarTool() {
     );
 }
 
-export default NewCarTool;
+export default UpdateCar;

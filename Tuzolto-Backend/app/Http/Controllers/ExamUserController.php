@@ -78,8 +78,14 @@ class ExamUserController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(examUser $examUser)
+    public function destroy(int $id)
     {
-        //
+        $data = examUser::find($id);
+        if (empty($id)) {
+            return response()->json(['message' => '404 nincs ijen auto'], 404);
+        }
+        $data->delete();
+
+        return response()->json(['message' => 'sikeres törlés'], 204);
     }
 }
