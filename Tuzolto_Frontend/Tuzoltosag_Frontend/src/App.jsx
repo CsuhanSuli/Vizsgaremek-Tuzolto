@@ -29,6 +29,7 @@ import AllCars from "./components/LoggedIn/Cars/AllCars";
 import NewCar from "./components/LoggedIn/Cars/NewCar";
 import UpdateCar from "./components/LoggedIn/Cars/UpdateCar";
 import UpdateSchedule from "./components/LoggedIn/Schedule/UpdateSchedule";
+import Registration from "./components/LoggedIn/Registration/Registration";
 
 function App() {
   return (
@@ -66,6 +67,7 @@ function App() {
                 <Route path="/NewCar" element={<NewCar/>}/>
                 <Route path="/UpdateCar/:id" element={<UpdateCar/>}/>
                 <Route path="/UpdateSchedule/:id" element={<UpdateSchedule/>}/>
+                <Route path="/Registration" element={<Registration/>}/>
               </Routes>
             </Router>
 

@@ -109,6 +109,9 @@ const handleLogout = async () => {
             <Nav.Link href="/CarsLoggedIn" className="sidebar-link">
               Autók
             </Nav.Link>
+            <Nav.Link href="/Registration" className="sidebar-link">
+              Regisztáció
+            </Nav.Link>
           </Nav>
           
           <div className="mt-auto w-100">
@@ -185,6 +188,9 @@ const handleLogout = async () => {
             </Nav.Link>
             <Nav.Link href="/CarsLoggedIn" className="sidebar-link">
               Autók
+            </Nav.Link>
+            <Nav.Link href="/Registration" className="sidebar-link">
+              Regisztáció
             </Nav.Link>
           </Nav>
 

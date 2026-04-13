@@ -22,3 +22,16 @@ h1 {
 button {
     margin-bottom: 2%;
 }
+
+.strong-checkbox input {
+  width: 20px;
+  height: 20px;
+  border: 2px solid rgb(151, 22, 15); 
+  cursor: pointer;
+}
+
+.form-check-input:checked {
+  background-color: rgb(151, 22, 15) !important;
+  border-color: rgb(151, 22, 15) !important;
+
+}

@@ -31,7 +31,6 @@ export default function UpdateUser() {
     e.preventDefault();
     setAnswer("");
 
-    // 🔹 Frontend validáció
     if (formData.password) {
       if (formData.password.length < 4) {
         setAnswer("A jelszónak legalább 4 karakter hosszúnak kell lennie!");
@@ -44,7 +43,6 @@ export default function UpdateUser() {
     }
 
     try {
-      // 1️⃣ Név módosítás
       const resName = await fetch(`http://127.0.0.1:8000/api/user/nameChange/${props.id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
@@ -52,7 +50,6 @@ export default function UpdateUser() {
       });
       if (!resName.ok) throw new Error("Név módosítás sikertelen");
 
-      // 2️⃣ Jelszó módosítás – csak ha van érték
       if (formData.password) {
         const resPass = await fetch(`http://127.0.0.1:8000/api/user/passChange/${props.id}`, {
           method: "PUT",
@@ -65,15 +62,14 @@ export default function UpdateUser() {
         if (!resPass.ok) throw new Error("Jelszó módosítás sikertelen");
       }
 
-      // 3️⃣ Admin státusz módosítás
       const resForty = await fetch(`http://127.0.0.1:8000/api/user/fortyHourUptdate/${props.id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" }
-        // body nem kell, a backend váltja 0 ↔ 1
+
       });
       if (!resForty.ok) throw new Error("Admin státusz módosítás sikertelen");
 
-      // Navigálás ha minden OK
+
       navigate(`/Users`);
     } catch (error) {
       console.error(error);

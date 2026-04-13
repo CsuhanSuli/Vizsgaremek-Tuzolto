@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Container, Row, Col, Card, Form, Button } from "react-bootstrap";
-import api from "./api"; // a saját Axios példány
-import "./LoginForm.css"; // ide jön a CSS, amit megadtál
+import api from "./api";
+import "./LoginForm.css";
 import LoggedOutLayout from "../LoggedOut/LoggedOutLayout";
 
 const LoginForm = () => {
