@@ -1,6 +1,7 @@
 import LoggedInLayout from "../LoggedInLayout";
 import { useState } from "react";
 import { Form, Button, Alert, Row, Col } from "react-bootstrap";
+import api from "../../Login/api";
 
 export default function Registration() {
     const [formData, setFormData] = useState({
@@ -32,39 +33,23 @@ export default function Registration() {
             return;
         }
 
-        setAnswer({ message: "Küldés...", variant: "info" });
-
-        try {
-            const response = await fetch("http://127.0.0.1:8000/api/user/register", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Accept": "application/json",
-                },
-
-                body: JSON.stringify(formData), 
+        api.post("user/register", formData)
+            .then(() => {
+                setFormData({ 
+                    name: "", 
+                    email: "", 
+                    password: "", 
+                    password_confirmation: "",
+                    isAdmin: 0,
+                    fortyHours: 0
+                });
+                setAnswer({ message: "Sikeres regisztráció!", variant: "success" });
+            })
+            .catch((error) => {
+                console.error("Hiba:", error);
+                const errorMsg = error.response?.data?.message || "Szerver hiba történt.";
+                setAnswer({ message: errorMsg, variant: "danger" });
             });
-
-            const data = await response.json();
-
-            if (!response.ok) {
-                throw new Error(data.message || "Szerver hiba történt.");
-            }
-
-            setFormData({ 
-                name: "", 
-                email: "", 
-                password: "", 
-                password_confirmation: "",
-                isAdmin: 0,
-                fortyHours: 0
-            });
-            setAnswer({ message: "Sikeres regisztráció!", variant: "success" });
-
-        } catch (error) {
-            console.error("Hiba:", error);
-            setAnswer({ message: error.message, variant: "danger" });
-        }
     };
 
     return (
@@ -135,7 +120,6 @@ export default function Registration() {
                         label="Admin"
                         checked={formData.isAdmin === 1} 
                         onChange={handleChange}
-                        className="strong-checkbox"
                     />
                 </Form.Group>
 
@@ -147,11 +131,10 @@ export default function Registration() {
                         label="40 óra"
                         checked={formData.fortyHours === 1} 
                         onChange={handleChange}
-                        className="strong-checkbox"
                     />
                 </Form.Group>
 
-                <Button type="submit" variant="danger" className="w-100">
+                <Button type="submit" variant="danger" className="w-100 mt-2">
                     Regisztráció
                 </Button>
             </Form>

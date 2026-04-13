@@ -5,25 +5,31 @@ aside {
   border-radius: 20px;
   margin-bottom: 5%;
 }
+
 .fc-toolbar-title {
-    color: rgb(151, 22, 15);
+  color: rgb(151, 22, 15);
 }
+
 .fc-event {
   background-color: rgb(151, 22, 15) !important;
   border: none !important;
   border-radius: 8px;
   padding: 2px;
 }
+
 .fc {
   color: rgb(151, 22, 15);
 }
+
 .fc-button {
   background-color: rgb(151, 22, 15) !important;
   border: none !important;
 }
+
 .fc-button:hover {
   background-color: red !important;
 }
+
 .fc a {
   color: rgb(151, 22, 15) !important;
   text-decoration: none !important;
@@ -44,6 +50,7 @@ aside {
   margin-right: 25%;
   margin-left: 25%;
 }
+
 .checkMargin {
   margin-left: 5%;
 }
@@ -66,5 +73,58 @@ aside {
 .form-check-input:checked {
   background-color: rgb(151, 22, 15) !important;
   border-color: rgb(151, 22, 15) !important;
+}
 
+
+@media only screen and (max-width: 600px) {
+
+  aside {
+    padding: 10px;
+    border-radius: 15px;
+    overflow-x: auto;
+  }
+
+  .fc {
+    min-width: 600px;
+  }
+
+  .fc-header-toolbar {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .fc-toolbar-chunk {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 5px;
+  }
+
+  .fc-toolbar-title {
+    font-size: 18px;
+    text-align: center;
+  }
+
+  .fc-button {
+    padding: 4px 8px !important;
+    font-size: 12px !important;
+  }
+
+  .fc-daygrid-day {
+    min-height: 60px;
+  }
+}
+
+
+@media only screen and (max-width: 400px) {
+
+  .fc-toolbar-title {
+    font-size: 16px;
+  }
+
+  .fc-button {
+    font-size: 11px !important;
+    padding: 3px 6px !important;
+  }
 }

@@ -1,47 +1,59 @@
-import { useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom";
 import { Row, Col, Button } from "react-bootstrap";
+import api, { isAdmin } from "../../Login/api";
 
 export default function ViewOneForum(props) {
-
     const navigate = useNavigate();
+    const userIsAdmin = isAdmin();
+
     const detailNavigate = () => {
-        navigate(`/ForumDetails/${props.id}`, {state:props})
-    }
+        navigate(`/ForumDetails/${props.id}`, { state: props });
+    };
 
     const deleteClick = () => {
         const confirmDelete = window.confirm("Biztosan törli ezt a bejegyzést?");
-    
-        if(!confirmDelete)            
-            return;
-    
-        fetch(`http://127.0.0.1:8000/api/forum/delete/${props.id}`, {
-            method: "DELETE"
-        })
-            .then(() => window.location.reload())
-            .catch(error => {console.error(error)});
-    }
+        if (!confirmDelete) return;
 
+        api.delete(`forum/delete/${props.id}`)
+            .then(() => {
+                window.location.reload();
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    };
 
-    return(
+    return (
         <>
-            <Row className="row">
+            <Row className="mb-3 align-items-center">
                 <Col lg={3} md={6} sm={12}>
-                    <p><strong>{props.header}</strong></p>
+                    <p className="mb-0"><strong>{props.header}</strong></p>
                 </Col>
                 <Col lg={3} md={6} sm={12}>
-                    <p>{props.typeName}</p>
+                    <p className="mb-0">{props.typeName}</p>
                 </Col>
                 <Col lg={2} md={6} sm={12}>
-                    <p>{props.date}</p>
+                    <p className="mb-0">{props.date}</p>
                 </Col>
-                <Col lg={4} md={6} sm={12} className="buttonsCol">
-                    <Button  className="editButton" variant="secondary" onClick={detailNavigate}>Részletek</Button>
-                    <Button variant="danger" onClick={deleteClick}>Törlés</Button>
+                <Col lg={4} md={6} sm={12} className="text-end">
+                    <Button 
+                        className="me-2" 
+                        variant="secondary"
+                        onClick={detailNavigate}
+                    >
+                        Részletek
+                    </Button>
+                    {userIsAdmin && (
+                        <Button 
+                            variant="danger"
+                            onClick={deleteClick}
+                        >
+                            Törlés
+                        </Button>
+                    )}
                 </Col>
-                <br />
-                <hr />
             </Row>
-
+            <hr />
         </>
-    )
+    );
 }

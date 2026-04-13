@@ -1,27 +1,30 @@
 import { useState, useEffect } from "react";
-import { Button } from "react-bootstrap";
-import Form from "react-bootstrap/Form";
-import "./Forum.css";
+import { Button, Form } from "react-bootstrap";
+import { useLocation, useNavigate } from "react-router-dom";
 import LoggedInLayout from "../LoggedInLayout";
+import api from "../../Login/api";
+import "./Forum.css";
 
 export default function UpdateForum() {
+    const location = useLocation();
+    const navigate = useNavigate();
+    const props = location.state;
+
     const [type, setType] = useState([]);
     const [answer, setAnswer] = useState("");
-
     const [formData, setFormData] = useState({
-        header: "",
-        date: "",
-        typeId: "",
-        place: "",
-        description: "",
-        imageName: null,
+        header: props?.header || "",
+        date: props?.date || "",
+        typeId: props?.typeId || "",
+        place: props?.place || "",
+        description: props?.description || "",
+        imageName: props?.imageName || "",
     });
 
     useEffect(() => {
-        fetch("http://127.0.0.1:8000/api/forumType/index")
-            .then((response) => response.json())
-            .then((json) => setType(json))
-            .catch((error) => console.error("Hiba:", error));
+        api.get("forumType/index")
+            .then((response) => setType(response.data))
+            .catch((error) => console.error(error));
     }, []);
 
     const handleChange = (e) => {
@@ -31,61 +34,25 @@ export default function UpdateForum() {
         });
     };
 
-    const handleFileChange = (e) => {
-        setFormData({
-            ...formData,
-            imageName: e.target.files[0]
-        });
-    };
-
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        console.log("Küldött adat:", formData);
-
-        const data = new FormData();
-        data.append("header", formData.header);
-        data.append("date", formData.date);
-        data.append("typeId", formData.typeId);
-        data.append("place", formData.place);
-        data.append("description", formData.description);
-
-        if (formData.imageName) {
-            data.append("imageName", formData.imageName);
-        }
-
-        fetch("http://127.0.0.1:8000/api/forum/store", {
-            method: "POST",
-            body: data
-        })
-        .then(async (res) => {
-            if (!res.ok) {
-                throw new Error("Hiba a mentés során");
-            }
-
-            setFormData({
-                header: "",
-                date: "",
-                typeId: "",
-                place: "",
-                description: "",
-                imageName: null,
+        api.put(`forum/update/${props.id}`, formData)
+            .then(() => {
+                setAnswer("Sikeres módosítás!");
+                setTimeout(() => navigate("/Forum"), 2000);
+            })
+            .catch(error => {
+                console.error(error);
+                setAnswer("Hiba a módosítás során!");
             });
-
-            setAnswer("Sikeres mentés!");
-        })
-        .catch(error => {
-            console.error(error);
-            setAnswer("Hiba a mentés során!");
-        });
     };
 
     return (
         <LoggedInLayout>
-            <h1>Fórum bejegyzés módosítás</h1>
+            <h1>Fórum bejegyzés módosítása</h1>
 
             <Form onSubmit={handleSubmit} className="formCenter">
-
                 <Form.Group className="mb-3">
                     <Form.Label>Cím:</Form.Label>
                     <Form.Control
@@ -149,19 +116,25 @@ export default function UpdateForum() {
                 </Form.Group>
 
                 <Form.Group className="mb-3">
-                    <Form.Label>Kép feltöltés:</Form.Label>
+                    <Form.Label>Kép neve / elérési útja:</Form.Label>
                     <Form.Control
-                        type="file"
+                        type="text"
                         name="imageName"
-                        onChange={handleFileChange}
+                        value={formData.imageName}
+                        onChange={handleChange}
                     />
                 </Form.Group>
 
-                <Button type="submit" variant="danger">
-                    Mentés
-                </Button>
+                <div className="d-flex gap-2">
+                    <Button type="submit" variant="primary">
+                        Módosítás mentése
+                    </Button>
+                    <Button variant="secondary" onClick={() => navigate(-1)}>
+                        Mégse
+                    </Button>
+                </div>
 
-                {answer && <p>{answer}</p>}
+                {answer && <p className="mt-3">{answer}</p>}
             </Form>
         </LoggedInLayout>
     );

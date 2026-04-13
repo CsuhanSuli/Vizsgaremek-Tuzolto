@@ -21,6 +21,8 @@ class UserController extends Controller
             'email' => 'required|email|unique:users',
             // confirmed: a jelszót meg kell erősíteni
             'password' => 'required|min:4|confirmed',
+            'fortyHours' => 'required',
+            'isAdmin' => 'required'
         ]);
         // user létrehozása
         $user = User::create([
@@ -28,6 +30,8 @@ class UserController extends Controller
             'email' => $validated['email'],
             // Hash a jelszót titkosítja
             'password' => Hash::make($validated['password']),
+            'fortyHours' => $validated['fortyHours'],
+            'isAdmin' => $validated['isAdmin'],
         ]);
 
         $token = $user->createToken('api-token')->plainTextToken;
@@ -74,7 +78,7 @@ class UserController extends Controller
         ]);
     }
 
-    public function fortyHourUptdate(int $id)
+    public function fortyHourUpdate(int $id)
     {
         $data = User::find($id);
         if (empty($data)) {

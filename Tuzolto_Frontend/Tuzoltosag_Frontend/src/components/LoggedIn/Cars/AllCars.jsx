@@ -3,39 +3,51 @@ import { Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import ViewOneCar from "./ViewOneCar";
 import LoggedInLayout from "../LoggedInLayout";
-
+import api, { isAdmin } from "../../Login/api";
 
 export default function AllCars() {
-
-    const [cars, setCars] = useState([])
+    const [cars, setCars] = useState([]);
+    const navigate = useNavigate();
+    const userIsAdmin = isAdmin();
 
     useEffect(() => {
-        fetch("http://127.0.0.1:8000/api/car/get")
-            .then(resp => resp.json())
-            .then(json => setCars(json))
-            .catch(error => console.error(error))
-    }, [])
+        api.get("car/get")
+            .then(resp => {
+                setCars(resp.data);
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    }, []);
 
-    const navigate = useNavigate()
     const handleChange = () => {
-        navigate("/NewCar")
-    }
+        navigate("/NewCar");
+    };
 
-    return(
+    return (
         <>
             <LoggedInLayout>
                 <h1>Autók</h1>
-                {cars.map((row) => (
-                    <ViewOneCar
-                        key={row.id}
-                        id={row.id}
-                        name={row.name}
-                        imageName = {row.imageName}
-                        typename = {row.cartypes.typename}
-                    />
-                ))}
-                <Button onClick={handleChange} variant="danger">Új autó hozzáadása</Button>
+                {cars.length > 0 ? (
+                    cars.map((row) => (
+                        <ViewOneCar
+                            key={row.id}
+                            id={row.id}
+                            name={row.name}
+                            imageName={row.imageName}
+                            typename={row.cartypes?.typename || "Ismeretlen típus"}
+                        />
+                    ))
+                ) : (
+                    <p>Betöltés...</p>
+                )}
+                
+                {userIsAdmin && (
+                    <Button onClick={handleChange} variant="danger" className="mt-3">
+                        Új autó hozzáadása
+                    </Button>
+                )}
             </LoggedInLayout>
         </>
-    )
+    );
 }

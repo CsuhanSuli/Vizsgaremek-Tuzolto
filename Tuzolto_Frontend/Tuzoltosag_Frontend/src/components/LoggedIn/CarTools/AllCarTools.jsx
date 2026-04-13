@@ -1,74 +1,81 @@
 import ViewOneCarTool from "./ViewOneCarTool";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import LoggedInLayout from "../LoggedInLayout";
 import "./CarTools.css";
 import { Button } from "react-bootstrap";
+import api, { isAdmin } from "../../Login/api";
 
 export default function AllCarTools() {
   const [carTools, setCarTools] = useState([]);
+  const userIsAdmin = isAdmin();
+  const { id } = useParams();
 
   const location = useLocation();
   const props = location.state;
-
   const navigate = useNavigate();
 
+  const targetId = id || props?.id;
+
   const handleClick = () => {
-    if (!props.id) return;
-    navigate(`/NewTool/${props.id}`, { state: props });
+    if (!targetId) return;
+    navigate(`/NewTool/${targetId}`, { state: props });
   };
 
   useEffect(() => {
-    if (!props.id) return;
+    if (!targetId) return;
 
-    fetch(`http://127.0.0.1:8000/api/tools/show/${props.id}`)
-      .then(async (res) => {
-        if (!res.ok) throw new Error("API hiba");
-        return res.json();
-      })
-      .then(async (tools) => {
+    api.get(`tools/show/${targetId}`)
+      .then(async (response) => {
+        const tools = response.data;
+        
         const enriched = await Promise.all(
           tools.map(async (tool) => {
-            const res = await fetch(
-              `http://127.0.0.1:8000/api/review/latestDate/${tool.id}`
-            );
-
-            let review = null;
-            if (res.ok) {
-              review = await res.json();
+            try {
+              const res = await api.get(`review/latestDate/${tool.id}`);
+              return {
+                ...tool,
+                reviewDate: res.data?.reviewDate ?? "Nincs adat",
+              };
+            } catch (err) {
+              return {
+                ...tool,
+                reviewDate: "Nincs adat",
+              };
             }
-
-            return {
-              ...tool,
-              reviewDate: review?.reviewDate ?? "Nincs adat",
-            };
           })
         );
 
         setCarTools(enriched);
       })
-      .catch((err) => console.error("ERROR:", err));
-  }, [props.id]);
+      .catch((err) => console.error(err));
+  }, [targetId]);
 
   return (
     <LoggedInLayout>
-      <h1>Autó szerszámai</h1>
+      <h1>{props?.name ? `${props.name} szerszámai` : "Autó szerszámai"}</h1>
 
-      {carTools.map((item) => (
-        <ViewOneCarTool
-          key={item.id}
-          id={item.id}
-          name={item.name}
-          place={item.car_place?.place}
-          reviewDate={item.reviewDate}
-          placeId={item.placeId}
-          carId={item.carId}
-        />
-      ))}
+      {carTools.length > 0 ? (
+        carTools.map((item) => (
+          <ViewOneCarTool
+            key={item.id}
+            id={item.id}
+            name={item.name}
+            place={item.car_place?.place}
+            reviewDate={item.reviewDate}
+            placeId={item.placeId}
+            carId={item.carId}
+          />
+        ))
+      ) : (
+        <p>Nincsenek szerszámok az autóhoz.</p>
+      )}
 
-      <Button onClick={handleClick} variant="danger">
-        Új eszköz hozzáadása
-      </Button>
+      {userIsAdmin && (
+        <Button onClick={handleClick} variant="danger">
+          Új eszköz hozzáadása
+        </Button>
+      )}
     </LoggedInLayout>
   );
 }

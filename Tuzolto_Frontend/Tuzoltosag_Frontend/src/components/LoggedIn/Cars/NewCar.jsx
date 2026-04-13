@@ -2,125 +2,105 @@ import { useEffect, useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import LoggedInLayout from "../LoggedInLayout";
+import api from "../../Login/api";
 
 function NewCar() {
+  const navigate = useNavigate();
 
+  const [formData, setFormData] = useState({
+    name: "",
+    typeId: "",
+    imageName: "",
+  });
 
-    const navigate = useNavigate();
+  const [answer, setAnswer] = useState("");
+  const [carType, setCarType] = useState([]);
 
-    const [formData, setFormData] = useState({
-        name: "",
-        typeId: "",
-        imageName: ""
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
     });
+  };
 
-    const [answer, setAnswer] = useState("");
-
-    const handleChange = (e) => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    api
+      .post("car/store", formData)
+      .then(() => {
         setFormData({
-            ...formData,
-            [e.target.name]: e.target.value
-        })
-    }
-
-    const handleFileChange = (e) => {
-        setFormData({
-            ...formData,
-            imageName: e.target.files[0]
+          name: "",
+          typeId: "",
+          imageName: "",
         });
-    };
+        setAnswer("Sikeres mentés!");
+        navigate(`/CarsLoggedIn`);
+      })
+      .catch((error) => {
+        console.error(error);
+        setAnswer("Hiba a mentés során!");
+      });
+  };
 
-    const handleSubmit = async (e) => {
-        console.log(formData)
-        e.preventDefault();
-        fetch("http://127.0.0.1:8000/api/car/store",{
-            method: "POST",
-            headers: {
-                "Content-Type": "Application/json",
-            },
-            body: JSON.stringify(formData),
+  useEffect(() => {
+    api
+      .get("cartype/index")
+      .then((response) => setCarType(response.data))
+      .catch((error) => console.error(error));
+  }, []);
 
-        })
-        .then(() => {
-            console.log(formData)
-            setFormData({
-                name: "",
-                typeId: "",
-                imageName: ""
-            })
-            setAnswer("Sikeres mentés!")
-            navigate(`/CarsLoggedIn`)
-        })
-        .catch(error => {
-            console.log(formData)
-            console.error(error)
-            setAnswer("Hiba a mentés során!")
-        })
+  return (
+    <>
+      <LoggedInLayout>
+        <h1>Új autó hozzáadása</h1>
+        <Form onSubmit={handleSubmit}>
+          <Form.Group className="mb-3">
+            <Form.Label>Autó neve:</Form.Label>
+            <Form.Control
+              required
+              type="text"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+            />
+          </Form.Group>
+          <Form.Group className="mb-3">
+            <Form.Label>Típusa:</Form.Label>
+            <Form.Select
+              required
+              name="typeId"
+              value={formData.typeId}
+              onChange={handleChange}
+            >
+              <option value="" disabled>
+                ---Válasszon!---
+              </option>
+              {carType.map((type) => (
+                <option key={type.id} value={type.id}>
+                  {type.typename}
+                </option>
+              ))}
+            </Form.Select>
+          </Form.Group>
 
-    }
-    const [carType, setCarType] = useState([]);
-    useEffect(() => {
-        fetch("http://127.0.0.1:8000/api/cartype/index")
-        .then((response) => response.json())
-        .then((data) => setCarType(data))
-        .catch((error) => console.error(error));
-    }, [])
-
-    return(
-        <>
-            <LoggedInLayout>
-                <h1>Új autó hozzáadása</h1>
-                <Form onSubmit={handleSubmit}>
-                    <Form.Group className="mb-3">
-                        <Form.Label>Autó neve:</Form.Label>
-                        <Form.Control
-                            required
-                            type="text"
-                            name="name"
-                            value={formData.name}
-                            onChange={handleChange}
-                        />
-                    </Form.Group>
-                    <Form.Group className="mb-3">
-                        <Form.Label>Típusa:</Form.Label>
-                        <Form.Select
-                            name="typeId"
-                            value={formData.typeId}
-                            onChange={handleChange}
-                        >
-                            <option value="" disabled>---Válasszon!---</option>
-                            {carType.map((props) => (
-                                <option key={props.id} value={props.id}>
-                                    {props.typename}
-                                </option>
-                            ))}
-                        </Form.Select>
-                    </Form.Group>
-
-
-                    <Form.Group className="mb-3">
-                    <Form.Label>Kép feltöltés:</Form.Label>
-                    <Form.Control
-                            required
-                            type="text"
-                            name="imageName"
-                            value={formData.imageName}
-                            onChange={handleChange}
-                        />
-                    {/*<Form.Control
-                        type="file"
-                        name="imageName"
-                        onChange={handleFileChange}
-                    />*/}
-                    </Form.Group>
-                    <Button disabled={!formData.typeId} type="submit" variant="danger">Hozzáadás</Button>
-                </Form>
-                {answer && <div>{answer}</div>}
-            </LoggedInLayout>
-        </>
-    )
-
-
+          <Form.Group className="mb-3">
+            <Form.Label>Kép neve:</Form.Label>
+            <Form.Control
+              required
+              type="text"
+              name="imageName"
+              value={formData.imageName}
+              onChange={handleChange}
+            />
+          </Form.Group>
+          <Button disabled={!formData.typeId} type="submit" variant="danger">
+            Hozzáadás
+          </Button>
+        </Form>
+        {answer && <div className="mt-3">{answer}</div>}
+      </LoggedInLayout>
+    </>
+  );
 }
 
 export default NewCar;

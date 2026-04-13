@@ -1,45 +1,59 @@
 import { Row, Col, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import api, { isAdmin } from "../../Login/api";
 
 export default function ViewOneCar(props) {
+    const navigate = useNavigate();
+    const userIsAdmin = isAdmin();
 
-    
     const deleteClick = () => {
         const confirmDelete = window.confirm("Biztosan törli ezt az autót?");
-    
-        if(!confirmDelete)            
-            return;
-    
-        fetch(`http://127.0.0.1:8000/api/car/delete/${props.id}`, {
-            method: "DELETE"
-        })
-            .then(() => window.location.reload())
-            .catch(error => {console.error(error)});
+        if (!confirmDelete) return;
+
+        api.delete(`car/delete/${props.id}`)
+            .then(() => {
+                window.location.reload();
+            })
+            .catch(error => {
+                console.error(error);
+            });
     }
 
-    const navigate = useNavigate();
     const handleNavigate = () => {
-        navigate(`/UpdateCar/${props.id}`, {state: props})
+        navigate(`/UpdateCar/${props.id}`, { state: props });
     }
 
-    return(
+    return (
         <>
-
-            <Row className="row">
-                <Col lg={4} md={6} sm={12}>
+            <Row className="row mb-3 align-items-center">
+                <Col lg={4} md={4} sm={12}>
                     <p><strong>{props.name}</strong></p>
                 </Col>
-                <Col lg={4} md={6} sm={12}>
-                    <p><strong>{props.typemame}</strong></p>
+                <Col lg={4} md={4} sm={12}>
+                    <p>{props.typename}</p>
                 </Col> 
-                <Col lg={4} md={6} sm={12}>
-                    <Button onClick={handleNavigate} variant="secondary">Módosítás</Button>
-                    <Button style={{ marginLeft: "2%" }} onClick={deleteClick} variant="danger">Törlés</Button>
+                
+                <Col lg={4} md={4} sm={12} className="text-end">
+                    {userIsAdmin && (
+                        <>
+                            <Button 
+                                onClick={handleNavigate} 
+                                variant="secondary" 
+                            >
+                                Módosítás
+                            </Button>
+                            <Button 
+                                style={{ marginLeft: "2%" }} 
+                                onClick={deleteClick} 
+                                variant="danger" 
+                            >
+                                Törlés
+                            </Button>
+                        </>
+                    )}
                 </Col>
-                <br />
-                <hr />
             </Row>
+            <hr />
         </>
-    )
-
+    );
 }

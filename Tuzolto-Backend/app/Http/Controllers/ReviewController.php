@@ -63,9 +63,12 @@ class ReviewController extends Controller
 
     public function latestDate(int $toolId)
     {
-        $data = review::where('toolId', $toolId)->orderBy('reviewDate', 'desc')->first();
-        if (empty($data)) {
-            return response()->json(['message' => '404 nincs ijen vizsga'], 404);
+        $data = Review::where('toolId', $toolId)
+            ->orderBy('reviewDate', 'desc')
+            ->first();
+
+        if (!$data) {
+            return response()->json(['message' => 'Nincs ilyen vizsga'], 404);
         }
 
         return response()->json($data);
@@ -120,16 +123,38 @@ class ReviewController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, review $review)
+    public function update(Request $request, int $id)
     {
-        //
+        $data = review::find($id);
+        if (empty($data)) {
+            return response()->json(['message' => '404'], 404);
+        }
+        $validator = Validator::make($request->all(), [
+            'reviewDate' => 'required',
+            'isHappend' => 'required',
+            'isSuccesfull' => 'required',
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['message' => 'hiba', 'hibák' => $validator->errors()], 402);
+        }
+        $data->reviewDate = $request->reviewDate;
+        $data->isHappend = $request->isHappend;
+        $data->isSuccesfull = $request->isSuccesfull;
+        $data->save();
+
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(review $review)
+    public function destroy(int $id)
     {
-        //
+        $data = review::find($id);
+        if (empty($id)) {
+            return response()->json(['message' => '404 nincs ijen auto'], 404);
+        }
+        $data->delete();
+
+        return response()->json(['message' => 'sikeres törlés'], 204);
     }
 }

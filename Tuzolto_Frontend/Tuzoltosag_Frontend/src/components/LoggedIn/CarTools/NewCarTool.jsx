@@ -2,66 +2,49 @@ import { useEffect, useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import { useLocation, useNavigate } from "react-router-dom";
 import LoggedInLayout from "../LoggedInLayout";
+import api from "../../Login/api";
 
 function NewCarTool() {
-
     const location = useLocation();
     const props = location.state;
-
     const navigate = useNavigate();
 
     const [formData, setFormData] = useState({
         name: "",
         placeId: "",
-        carId: props.id,
+        carId: props?.id || props?.carId,
     });
 
     const [answer, setAnswer] = useState("");
+    const [carPlace, setCarPlace] = useState([]);
 
     const handleChange = (e) => {
         setFormData({
             ...formData,
             [e.target.name]: e.target.value
-        })
-    }
+        });
+    };
 
     const handleSubmit = async (e) => {
-        console.log(formData)
         e.preventDefault();
-        fetch("http://127.0.0.1:8000/api/tools/store",{
-            method: "POST",
-            headers: {
-                "Content-Type": "Application/json",
-            },
-            body: JSON.stringify(formData),
-
-        })
-        .then(() => {
-            console.log(formData)
-            setFormData({
-                name: "",
-                placeId: "",
-                carId: props.id,
+        api.post("tools/store", formData)
+            .then(() => {
+                setAnswer("Sikeres mentés!");
+                navigate(`/carTools/${formData.carId}`, { state: props });
             })
-            setAnswer("Sikeres mentés!")
-            navigate(`/carTools/${props.carId}`, {state: props})
-        })
-        .catch(error => {
-            console.log(formData)
-            console.error(error)
-            setAnswer("Hiba a mentés során!")
-        })
+            .catch(error => {
+                console.error(error);
+                setAnswer("Hiba a mentés során!");
+            });
+    };
 
-    }
-    const [carPlace, setCarPlace] = useState([]);
     useEffect(() => {
-        fetch("http://127.0.0.1:8000/api/carplace/index")
-        .then((response) => response.json())
-        .then((data) => setCarPlace(data))
-        .catch((error) => console.error(error));
-    }, [])
+        api.get("carplace/index")
+            .then((response) => setCarPlace(response.data))
+            .catch((error) => console.error(error));
+    }, []);
 
-    return(
+    return (
         <>
             <LoggedInLayout>
                 <h1>Új szerszám hozzáadása</h1>
@@ -79,26 +62,25 @@ function NewCarTool() {
                     <Form.Group className="mb-3">
                         <Form.Label>Helye:</Form.Label>
                         <Form.Select
+                            required
                             name="placeId"
                             value={formData.placeId}
                             onChange={handleChange}
                         >
                             <option value="" disabled>---Válasszon!---</option>
-                            {carPlace.map((props) => (
-                                <option key={props.id} value={props.id}>
-                                    {props.place}
+                            {carPlace.map((item) => (
+                                <option key={item.id} value={item.id}>
+                                    {item.place}
                                 </option>
                             ))}
                         </Form.Select>
                     </Form.Group>
                     <Button disabled={!formData.placeId} type="submit" variant="danger">Hozzáadás</Button>
                 </Form>
-                {answer && <div>{answer}</div>}
+                {answer && <div className="mt-3">{answer}</div>}
             </LoggedInLayout>
         </>
-    )
-
-
+    );
 }
 
 export default NewCarTool;

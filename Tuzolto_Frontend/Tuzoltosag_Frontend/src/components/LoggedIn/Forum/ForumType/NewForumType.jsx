@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import LoggedInLayout from "../../LoggedInLayout";
+import api from "../../../Login/api";
 
 function NewForumType() {
   const [formData, setFormData] = useState({
@@ -17,24 +18,16 @@ function NewForumType() {
   };
 
   const handleSubmit = async (e) => {
-    console.log(formData);
     e.preventDefault();
-    fetch("http://127.0.0.1:8000/api/forumType/store", {
-      method: "POST",
-      headers: {
-        "Content-Type": "Application/json",
-      },
-      body: JSON.stringify(formData),
-    })
+    
+    api.post("forumType/store", formData)
       .then(() => {
-        console.log(formData);
         setFormData({
           typeName: "",
         });
         setAnswer("Sikeres mentés!");
       })
       .catch((error) => {
-        console.log(formData);
         console.error(error);
         setAnswer("Hiba a mentés során!");
       });
@@ -55,11 +48,11 @@ function NewForumType() {
               onChange={handleChange}
             />
           </Form.Group>
-          <Button type="submit" variant="danger" onClick={handleSubmit}>
+          <Button type="submit" variant="danger">
             Hozzáadás
           </Button>
         </Form>
-        {answer && <div>{answer}</div>}
+        {answer && <div className="mt-3">{answer}</div>}
       </LoggedInLayout>
     </>
   );

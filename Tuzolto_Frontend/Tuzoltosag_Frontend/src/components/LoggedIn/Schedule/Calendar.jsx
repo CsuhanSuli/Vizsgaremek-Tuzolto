@@ -1,5 +1,5 @@
 import FullCalendar from '@fullcalendar/react'
-import dayGridPlugin from '@fullcalendar/daygrid' // a plugin!
+import dayGridPlugin from '@fullcalendar/daygrid'
 import { useEffect } from 'react';
 import { useState } from 'react';
 import LoggedInLayout from '../LoggedInLayout';
@@ -8,30 +8,33 @@ import huLocale from '@fullcalendar/core/locales/hu';
 import timeGridPlugin from '@fullcalendar/timegrid'
 import { useNavigate } from 'react-router-dom'
 import { Button } from 'react-bootstrap';
+import api, { isAdmin } from '../../Login/api';
 
 export default function Calendar() {
 
   const navigate = useNavigate();
+  const userIsAdmin = isAdmin();
   
   const handleClick = () => {
     navigate(`/NewSchedule`)
   }
   
-const [data, setData] = useState([])
- useEffect(() => {
-  fetch("http://127.0.0.1:8000/api/schedule/index")
-    .then(res => res.json())
-    .then(res => {
-      const event = res.map(element => ({
-        id: element.id,
-        title: element.schedule_types.name + " " + element.users.name,
-        date: element.date,
-      }));
+  const [data, setData] = useState([])
 
-      setData(event);
-    });
-}, [])
-
+  useEffect(() => {
+    api.get("schedule/index")
+      .then(res => {
+        const events = res.data.map(element => ({
+          id: element.id,
+          title: (element.schedule_types?.name || "") + " " + (element.users?.name || ""),
+          date: element.date,
+        }));
+        setData(events);
+      })
+      .catch(err => {
+        console.error("Hiba a naptár adatok lekérésekor:", err);
+      });
+  }, [])
 
   return (
     <>
@@ -49,18 +52,22 @@ const [data, setData] = useState([])
               events={data}
               locale={huLocale}
               eventClick={(info) => {
-                navigate(`/UpdateSchedule/${info.event.id}`, {
-                  state: {
-                    id: info.event.id,
-                    title: info.event.title,
-                    date: info.event.startStr
-                  }
-                });
+                if (userIsAdmin) {
+                  navigate(`/UpdateSchedule/${info.event.id}`, {
+                    state: {
+                      id: info.event.id,
+                      title: info.event.title,
+                      date: info.event.startStr
+                    }
+                  });
+                }
               }}
             />
         </aside>
 
-        <Button onClick={handleClick} variant="danger">Új eszköz hozzáadása</Button>
+        {userIsAdmin && (
+          <Button onClick={handleClick} variant="danger">Új beosztás hozzáadása</Button>
+        )}
     </LoggedInLayout>
     </>
   )
