@@ -34,7 +34,8 @@ Route::get('/forum/get', [ForumController::class, 'index']);
 Route::get('/car/get', [CarController::class, 'index']);
 
 // thing that should be used with loging go here for testing
-    Route::get('/schedule_types', [ScheduleTypeController::class, 'index']);
+    
+    
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/user/logout', [UserController::class, 'logout']);
 
@@ -50,6 +51,7 @@ Route::middleware('auth:sanctum')->group(function () {
     // examType
     Route::get('/examType/index', [ExamTypeController::class, 'index']);
     Route::delete('/examType/delete/{id}', [ExamTypeController::class, 'destroy']);
+    Route::post('/examType/store', [ExamTypeController::class, 'store']);
 
     // tools
     Route::post('/tools/store', [ToolsController::class, 'store']);
@@ -72,17 +74,19 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::put('/schedule/put/{id}', [ScheduleController::class, 'update']);
     Route::delete('/schedule/delete/{id}', [ScheduleController::class, 'destroy']);
     // schedule_types
-
+    Route::get('/schedule_types', [ScheduleTypeController::class, 'index']);
     // user
     Route::put('/user/fortyHourUpdate/{id}', [UserController::class, 'fortyHourUpdate']);
     Route::put('/user/nameChange/{id}', [UserController::class, 'nameChange']);
     Route::put('/user/passChange/{id}', [UserController::class, 'passChange']);
+    Route::put('/user/isAdminUpdate/{id}', [UserController::class, 'isAdminUpdate']);
     Route::delete('/user/delete/{id}', [UserController::class, 'destroy']); 
     // forum
     Route::post('/forum/store', [ForumController::class, 'store']);//->middleware(isAdmin::class);
     Route::delete('/forum/delete/{id}', [ForumController::class, 'destroy']);
     Route::get('/forumType/index', [ForumTypeController::class, 'index']);
     Route::post('/forumType/store', [ForumTypeController::class, 'store']);//->middleware(isAdmin::class);
+    Route::delete('/forumType/delete/{id}', [ForumTypeController::class, 'destroy']);
     Route::put('/forum/put/{id}', [ForumController::class, 'update']);
     // review
     

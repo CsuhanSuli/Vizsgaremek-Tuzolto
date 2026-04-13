@@ -43,7 +43,7 @@ export default function AllUsers() {
                         ></ViewOneUser>
                     )
                 })}
-                <Button variant="danger" onClick={handleChange}>Új vizsga kiírása</Button>
+                <Button variant="danger" onClick={handleChange}>Új vizsga bejegyzése</Button>
             </LoggedInLayout>
         </>
     )

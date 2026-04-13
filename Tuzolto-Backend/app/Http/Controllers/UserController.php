@@ -78,24 +78,39 @@ class UserController extends Controller
         ]);
     }
 
-    public function fortyHourUpdate(int $id)
-    {
-        $data = User::find($id);
-        if (empty($data)) {
-            return response()->json(['message' => '404'], 404);
-        }
-        if ($data->fortyHours == 0) {
-            $data->fortyHours = 1;
-            $data->save();
+public function fortyHourUpdate(Request $request, int $id)
+{
+    $request->validate([
+        'fortyHours' => 'required|in:0,1'
+    ]);
 
-            return response()->json(['message' => 'sikeresen szerkeszteted a 40 órait true ra']);
-        } else {
-            $data->fortyHours = 0;
-            $data->save();
-
-            return response()->json(['message' => 'sikeresen szerkeszteted a 40 órait falsera ra']);
-        }
+    $data = User::find($id);
+    if (empty($data)) {
+        return response()->json(['message' => '404'], 404);
     }
+
+    $data->fortyHours = $request->input('fortyHours');
+    $data->save();
+
+    return response()->json(['message' => 'Sikeres módosítás']);
+}
+
+public function isAdminUpdate(Request $request, int $id)
+{
+    $request->validate([
+        'isAdmin' => 'required|in:0,1'
+    ]);
+
+    $data = User::find($id);
+    if (empty($data)) {
+        return response()->json(['message' => '404'], 404);
+    }
+
+    $data->isAdmin = $request->input('isAdmin');
+    $data->save();
+
+    return response()->json(['message' => 'Sikeres módosítás']);
+}
 
     public function destroy(int $id)
     {

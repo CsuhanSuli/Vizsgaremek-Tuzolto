@@ -13,7 +13,8 @@ class CarController extends Controller
      */
     public function index()
     {
-        return response()->json(Car::with('cartypes')->get());
+        $cars = Car::with('cartypes')->get();
+        return response()->json($cars);
     }
 
     /**

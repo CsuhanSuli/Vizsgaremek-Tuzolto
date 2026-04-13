@@ -13,18 +13,18 @@ export default function UpdateUser() {
     name: props.name || "",
     password: "",
     passwordConfirmation: "",
-    fortyHours: props.fortyHours || 0
+    fortyHours: props.fortyHours || 0,
+    isAdmin: props.isAdmin || 0
   });
 
   const [answer, setAnswer] = useState("");
 
   const handleChange = (e) => {
     const { name, type, checked, value } = e.target;
-    const newValue = type === "checkbox" ? (checked ? 1 : 0) : value;
-
+    
     setFormData(prev => ({
       ...prev,
-      [name]: newValue
+      [name]: type === "checkbox" ? (checked ? 1 : 0) : value
     }));
   };
 
@@ -64,10 +64,14 @@ export default function UpdateUser() {
         fortyHours: formData.fortyHours 
       });
 
+      await api.put(`user/isAdminUpdate/${props.id}`, { 
+        isAdmin: formData.isAdmin 
+      });
+
       navigate("/Users");
     } catch (error) {
-      console.error("Hiba részletei:", error.response || error);
-      const errorMsg = error.response?.data?.message || "Hiba történt a mentés során! Ellenőrizd az útvonalakat.";
+      console.error(error);
+      const errorMsg = error.response?.data?.message || "Hiba történt a mentés során!";
       setAnswer(errorMsg);
     }
   };
@@ -115,9 +119,20 @@ export default function UpdateUser() {
               type="checkbox"
               label="40 óra"
               name="fortyHours"
-              checked={formData.fortyHours === 1}
+              checked={Boolean(formData.fortyHours)}
               onChange={handleChange}
               id="fortyHoursCheck"
+            />
+          </Form.Group>
+
+          <Form.Group className="mb-4">
+            <Form.Check
+              type="checkbox"
+              label="Admin"
+              name="isAdmin"
+              checked={Boolean(formData.isAdmin)}
+              onChange={handleChange}
+              id="isAdminCheck"
             />
           </Form.Group>
 

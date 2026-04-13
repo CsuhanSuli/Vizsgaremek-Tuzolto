@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('exam_types', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->string('typName');
+            $table->string('typeName');
         });
     }
 
