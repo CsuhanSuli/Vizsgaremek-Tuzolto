@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@android:drawable/ic_menu_today"
+            android:title="Beosztás" />
+        <item
+            android:id="@+id/nav_forum"
+            android:icon="@android:drawable/ic_menu_agenda"
+            android:title="Fórum" />
+        <item
+            android:id="@+id/nav_my_exams"
+            android:icon="@android:drawable/ic_menu_edit"
+            android:title="Vizsgáim" />
+        <item
+            android:id="@+id/nav_car_tools"
+            android:icon="@android:drawable/ic_menu_manage"
+            android:title="Autók szerszámai" />
+        <item
+            android:id="@+id/nav_exams"
+            android:icon="@android:drawable/ic_menu_agenda"
+            android:title="Vizsgák" />
+        <item
+            android:id="@+id/nav_employees"
+            android:icon="@android:drawable/ic_menu_mylocation"
+            android:title="Dolgozók" />
+        <item
+            android:id="@+id/nav_cars"
+            android:icon="@android:drawable/ic_menu_directions"
+            android:title="Autók" />
+    </group>
+
+    <item android:title="Beállítások / Típusok">
+        <menu>
+            <item
+                android:id="@+id/nav_car_types"
+                android:icon="@android:drawable/ic_menu_preferences"
+                android:title="Autó típusok" />
+            <item
+                android:id="@+id/nav_exam_types"
+                android:icon="@android:drawable/ic_menu_preferences"
+                android:title="Vizsga típusok" />
+            <item
+                android:id="@+id/nav_forum_types"
+                android:icon="@android:drawable/ic_menu_preferences"
+                android:title="Fórum típusok" />
+        </menu>
+    </item>
+
+    <item android:title="Fiók">
+        <menu>
+            <item
+                android:id="@+id/nav_register"
+                android:icon="@android:drawable/ic_menu_add"
+                android:title="Regisztráció" />
+            <item
+                android:id="@+id/nav_logout"
+                android:icon="@android:drawable/ic_lock_power_off"
+                android:title="Kijelentkezés" />
+        </menu>
+    </item>
+</menu>
