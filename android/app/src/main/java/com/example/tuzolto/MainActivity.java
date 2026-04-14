@@ -38,7 +38,8 @@ public class MainActivity extends AppCompatActivity {
             String email = emailInput.getText().toString();
             String password = passwordInput.getText().toString();
 
-            ApiService api = RetrofitClient.getClient().create(ApiService.class);
+            RetrofitClient.clearClient();
+            ApiService api = RetrofitClient.getClient(MainActivity.this).create(ApiService.class);
             LoginRequest request = new LoginRequest(email, password);
 
             api.login(request).enqueue(new Callback<LoginResponse>() {
@@ -48,9 +49,11 @@ public class MainActivity extends AppCompatActivity {
                         String token = response.body().token;
 
                         if (token != null) {
-                            // token mentés
                             SharedPreferences prefs = getSharedPreferences("app", MODE_PRIVATE);
-                            prefs.edit().putString("token", token).apply();
+                            prefs.edit()
+                                .putString("token", token)
+                                .putBoolean("isAdmin", response.body().user.isAdmin == 1)
+                                .apply();
 
                             Toast.makeText(MainActivity.this, "Sikeres bejelentkezés!", Toast.LENGTH_SHORT).show();
 
