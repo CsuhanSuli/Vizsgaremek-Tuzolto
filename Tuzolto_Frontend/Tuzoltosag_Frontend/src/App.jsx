@@ -4,7 +4,6 @@ import AllMission from "./components/LoggedOut/Missions/AllMission";
 import AllCar from "./components/LoggedOut/Cars/AllCar";
 import LoginForm from "./components/Login/LoginForm";
 import AllCarTools from "./components/LoggedIn/CarTools/AllCarTools";
-import LoggedInLayout from "./components/LoggedIn/LoggedInLayout";
 import NewCarTool from "./components/LoggedIn/CarTools/NewCarTool";
 import UpdateCarTool from "./components/LoggedIn/CarTools/UpdateCarTool";
 import ToolDetails from "./components/LoggedIn/CarTools/ToolDetails";
@@ -45,7 +44,6 @@ function App() {
         <Route path="/Cars" element={<AllCar />} />
         <Route path="/Login" element={<LoginForm />} />
 
-        <Route path="/LoggedIn" element={<LoggedInLayout />} />
         <Route path="/Calendar" element={<Calendar />} />
         <Route path="/Forum" element={<AllForum />} />
         <Route path="/ForumDetails/:id" element={<ForumDetails />} />

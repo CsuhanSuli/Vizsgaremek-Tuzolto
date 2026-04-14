@@ -1,24 +1,23 @@
 import { useState, useEffect } from "react";
 import { Button, Form } from "react-bootstrap";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import LoggedInLayout from "../LoggedInLayout";
 import api from "../../Login/api";
 import "./Forum.css";
 
 export default function UpdateForum() {
-    const location = useLocation();
     const navigate = useNavigate();
-    const props = location.state;
+
 
     const [type, setType] = useState([]);
     const [answer, setAnswer] = useState("");
     const [formData, setFormData] = useState({
-        header: props?.header || "",
-        date: props?.date || "",
-        typeId: props?.typeId || "",
-        place: props?.place || "",
-        description: props?.description || "",
-        imageName: props?.imageName || "",
+        header: "",
+        date:  "",
+        typeId:  "",
+        place:  "",
+        description: "",
+        imageName: "",
     });
 
     useEffect(() => {
@@ -37,7 +36,7 @@ export default function UpdateForum() {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        api.put(`forum/update/${props.id}`, formData)
+        api.post(`forum/store`, formData)
             .then(() => {
                 setAnswer("Sikeres módosítás!");
                 setTimeout(() => navigate("/Forum"), 2000);

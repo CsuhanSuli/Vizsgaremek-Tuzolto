@@ -31,7 +31,6 @@ api.interceptors.response.use(
         if (error.response) {
             if (error.response.status === 401) {
                 localStorage.clear();
-                window.location.href = "/";
             } else if (error.response.status === 403) {
                 alert("Nincs jogosultságod ehhez a művelethez!");
             }
