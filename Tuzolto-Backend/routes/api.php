@@ -32,13 +32,12 @@ Route::get('/forum/get', [ForumController::class, 'index']);
 
 // cars
 Route::get('/car/get', [CarController::class, 'index']);
-        Route::get('/examUser/show/{id}', [ExamUserController::class, 'show']);
+
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/user/logout', [UserController::class, 'logout']);
 
-
     // exam
-
+    Route::get('/examUser/show/{id}', [ExamUserController::class, 'show']);
     Route::get('/examUser/index', [ExamUserController::class, 'index']);
     Route::get('/exam/index', [ExamsController::class, 'index']);
     Route::post('/examUser/store', [ExamUserController::class, 'store'])->middleware(isAdmin::class);
@@ -87,7 +86,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::delete('/forumType/delete/{id}', [ForumTypeController::class, 'destroy'])->middleware(isAdmin::class);
     Route::put('/forum/put/{id}', [ForumController::class, 'update'])->middleware(isAdmin::class);
     // review
-    
+
     Route::get('/review/latestDate/{toolId}', [ReviewController::class, 'latestDate']);
     Route::post('/review/store/{toolId}', [ReviewController::class, 'store'])->middleware(isAdmin::class);
     Route::put('/review/isHappend/{reviewId}', [ReviewController::class, 'isHappend'])->middleware(isAdmin::class);

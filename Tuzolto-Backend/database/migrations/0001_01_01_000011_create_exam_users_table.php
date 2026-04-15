@@ -19,7 +19,7 @@ return new class extends Migration
             $table->foreign('examId')->references('id')->on('exams');
             $table->unsignedBigInteger('userId');
             $table->foreign('userId')->references('id')->on('users');
-            $table->boolean("wasSuccesful");
+            $table->boolean('wasSuccesful');
         });
     }
 

@@ -42,7 +42,7 @@ class ExamUserController extends Controller
         $newRecord->examDate = $request->examDate;
         $newRecord->examId = $request->examId;
         $newRecord->userId = $request->userId;
-        $newRecord ->wasSuccesful = $request->wasSuccesful;
+        $newRecord->wasSuccesful = $request->wasSuccesful;
         $newRecord->save();
 
         return response()->json(['message' => 'sikeres feltöltés'], 201);
@@ -51,16 +51,16 @@ class ExamUserController extends Controller
     /**
      * Display the specified resource.
      */
-public function show(int $UserId)
-{
-    $data = examUser::with('exams')->where('userId', $UserId)->get();
+    public function show(int $UserId)
+    {
+        $data = examUser::with('exams')->where('userId', $UserId)->get();
 
-    if ($data->isEmpty()) {
-        return response()->json(['message' => '404 nincs ijen vizsga'], 404);
+        if ($data->isEmpty()) {
+            return response()->json(['message' => '404 nincs ijen vizsga'], 404);
+        }
+
+        return response()->json($data);
     }
-
-    return response()->json($data);
-}
 
     /**
      * Show the form for editing the specified resource.
@@ -73,7 +73,7 @@ public function show(int $UserId)
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request,string $id)
+    public function update(Request $request, string $id)
     {
         $data = examUser::find($id);
         if (empty($data)) {
@@ -87,10 +87,10 @@ public function show(int $UserId)
         if ($validator->fails()) {
             return response()->json(['message' => 'hiba', 'hibák' => $validator->errors()], 422);
         }
-        $data ->examDate = $request->examDate;
-        $data ->examId = $request->examId;
-        $data ->wasSuccesful = $request->wasSuccesful;
-        $data ->save();
+        $data->examDate = $request->examDate;
+        $data->examId = $request->examId;
+        $data->wasSuccesful = $request->wasSuccesful;
+        $data->save();
 
         return response()->json(['message' => 'sikeres feltöltés'], 200);
     }

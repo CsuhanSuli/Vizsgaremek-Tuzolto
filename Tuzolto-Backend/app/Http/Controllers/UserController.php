@@ -22,21 +22,19 @@ class UserController extends Controller
             // confirmed: a jelszót meg kell erősíteni
             'password' => 'required|min:4|confirmed',
             'fortyHours' => 'required',
-            'isAdmin' => 'required'
+            'isAdmin' => 'required',
         ]);
-        if($validator->fails())
-            {
-                return response()->json(["errors"=>$validator->errors()],400);
-            }
-        $user = new User();
-        $user->name=$request->name;
-        $user->email=$request->email;
-        $user->password=hash::make($request->password);
-        $user->fortyHours=$request->fortyHours;
-        $user->isAdmin=$request->isAdmin;
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 400);
+        }
+        $user = new User;
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->password = Hash::make($request->password);
+        $user->fortyHours = $request->fortyHours;
+        $user->isAdmin = $request->isAdmin;
         $user->save();
         // user létrehozása
-
 
         $token = $user->createToken('api-token')->plainTextToken;
 
@@ -82,39 +80,39 @@ class UserController extends Controller
         ]);
     }
 
-public function fortyHourUpdate(Request $request, int $id)
-{
-    $request->validate([
-        'fortyHours' => 'required|in:0,1'
-    ]);
+    public function fortyHourUpdate(Request $request, int $id)
+    {
+        $request->validate([
+            'fortyHours' => 'required|in:0,1',
+        ]);
 
-    $data = User::find($id);
-    if (empty($data)) {
-        return response()->json(['message' => '404'], 404);
+        $data = User::find($id);
+        if (empty($data)) {
+            return response()->json(['message' => '404'], 404);
+        }
+
+        $data->fortyHours = $request->input('fortyHours');
+        $data->save();
+
+        return response()->json(['message' => 'Sikeres módosítás']);
     }
 
-    $data->fortyHours = $request->input('fortyHours');
-    $data->save();
+    public function isAdminUpdate(Request $request, int $id)
+    {
+        $request->validate([
+            'isAdmin' => 'required|in:0,1',
+        ]);
 
-    return response()->json(['message' => 'Sikeres módosítás']);
-}
+        $data = User::find($id);
+        if (empty($data)) {
+            return response()->json(['message' => '404'], 404);
+        }
 
-public function isAdminUpdate(Request $request, int $id)
-{
-    $request->validate([
-        'isAdmin' => 'required|in:0,1'
-    ]);
+        $data->isAdmin = $request->input('isAdmin');
+        $data->save();
 
-    $data = User::find($id);
-    if (empty($data)) {
-        return response()->json(['message' => '404'], 404);
+        return response()->json(['message' => 'Sikeres módosítás']);
     }
-
-    $data->isAdmin = $request->input('isAdmin');
-    $data->save();
-
-    return response()->json(['message' => 'Sikeres módosítás']);
-}
 
     public function destroy(int $id)
     {

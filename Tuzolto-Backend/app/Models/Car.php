@@ -20,5 +20,4 @@ class Car extends Model
     {
         return $this->belongsTo(cartype::class, 'typeId', 'id');
     }
-    
 }

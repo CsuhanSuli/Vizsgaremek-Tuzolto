@@ -63,11 +63,11 @@ class ReviewController extends Controller
 
     public function latestDate(int $toolId)
     {
-        $data = Review::where('toolId', $toolId)
+        $data = review::where('toolId', $toolId)
             ->orderBy('reviewDate', 'desc')
             ->first();
 
-        if (!$data) {
+        if (! $data) {
             return response()->json(['message' => 'Nincs ilyen vizsga'], 404);
         }
 
