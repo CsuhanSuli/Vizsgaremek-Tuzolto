@@ -35,7 +35,7 @@ export default function ViewOneForum(props) {
                 <Col lg={2} md={6} sm={12}>
                     <p className="mb-0">{props.date}</p>
                 </Col>
-                <Col lg={4} md={6} sm={12} className="text-end">
+                <Col lg={4} md={6} sm={12} className="text-center">
                     <Button 
                         className="me-2" 
                         variant="secondary"

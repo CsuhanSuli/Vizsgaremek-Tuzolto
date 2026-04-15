@@ -2,27 +2,37 @@ import { useState, useEffect } from "react";
 import { Button, Form } from "react-bootstrap";
 import LoggedInLayout from "../LoggedInLayout";
 import api from "../../Login/api";
+import { useLocation, useNavigate } from "react-router-dom";
 
-export default function NewUserExam() {
-    const [users, setUsers] = useState([]);
+export default function UpdateUserExam() {
+    const location = useLocation();
+    const props = location.state;
+    const navigate = useNavigate();
+
     const [exams, setExams] = useState([]);
     const [answer, setAnswer] = useState("");
     const [formData, setFormData] = useState({
-        examId: "",
-        userId: "",
-        examDate: "",
-        wasSuccesful: 0
+        examId: props.examId,
+        userId: props.userId || "",
+        examDate: props.examDate || "",
+        wasSuccesful: props.wasSuccesful ?? 0
     });
 
     useEffect(() => {
-        api.get("user/index")
-            .then((response) => setUsers(response.data))
-            .catch((error) => console.error(error));
-
         api.get("exam/index")
             .then((response) => setExams(response.data))
             .catch((error) => console.error(error));
-    }, []);
+
+        if (props) {
+            setFormData({
+                examId: props.examId,
+                userId: props.userId || "",
+                examDate: props.examDate || "",
+                wasSuccesful: props.wasSuccesful ?? 0
+            });
+        }
+    }, [props]);
+
 
     const handleChange = (e) => {
         const { name, value, type, checked } = e.target;
@@ -34,15 +44,19 @@ export default function NewUserExam() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        api.post("examUser/store", formData)
+        
+        if (!props?.id) {
+            setAnswer("Hiba: Nincs azonosító a módosításhoz!");
+            return;
+        }
+
+        api.put(`/examUser/put/${props.id}`, formData)
             .then(() => {
-                setFormData({
-                    examId: "",
-                    userId: "",
-                    examDate: "",
-                    wasSuccesful: 0
-                });
                 setAnswer("Sikeres mentés!");
+
+                setTimeout(() => {
+                    navigate(`/Users`);
+                }, 1000);
             })
             .catch(error => {
                 console.error(error);
@@ -58,8 +72,9 @@ export default function NewUserExam() {
 
     return (
         <LoggedInLayout>
-            <h1>Új vizsga hozzárendelése</h1>
+            <h1>Vizsga módosítása</h1>
             <Form onSubmit={handleSubmit} className="formCenter">
+
                 <Form.Group className="mb-3">
                     <Form.Label>Dátum</Form.Label>
                     <Form.Control
@@ -70,23 +85,6 @@ export default function NewUserExam() {
                         onChange={handleChange}
                         max={getYesterday()}
                     />
-                </Form.Group>
-
-                <Form.Group className="mb-3">
-                    <Form.Label>Dolgozó</Form.Label>
-                    <Form.Select
-                        name="userId"
-                        value={formData.userId}
-                        onChange={handleChange}
-                        required
-                    >
-                        <option value="" disabled>--- Válasszon dolgozót ---</option>
-                        {users.map((row) => (
-                            <option key={row.id} value={row.id}>
-                                {row.name}
-                            </option>
-                        ))}
-                    </Form.Select>
                 </Form.Group>
 
                 <Form.Group className="mb-3 checkMargin">
@@ -125,9 +123,8 @@ export default function NewUserExam() {
                 <Button 
                     type="submit" 
                     variant="danger" 
-                    disabled={!formData.examId || !formData.userId || !formData.examDate}
                 >
-                    Hozzáadás
+                    Módosítás mentése
                 </Button>
             </Form>
             {answer && (

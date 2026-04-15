@@ -36,6 +36,9 @@ export default function AllExams() {
                         id={row.id}
                         examDate={row.examDate}
                         exam_type={row.exam_type}
+                        wasSuccesful = {row.wasSuccesful}
+                        userId = {row.userId}
+                        examsName = {row.exams.name}
                     />
                 ))
             ) : (

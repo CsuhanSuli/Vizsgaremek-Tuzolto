@@ -24,7 +24,7 @@ export default function ViewOneExamType(props) {
                     <p className="mb-0"><strong>{props.typeName}</strong></p>
                 </Col>
 
-                <Col lg={4} md={6} sm={12} className="text-end">
+                <Col lg={4} md={6} sm={12} className="text-center">
                     {userIsAdmin && (
                         <Button 
                             variant="danger"

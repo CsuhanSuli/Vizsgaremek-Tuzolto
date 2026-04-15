@@ -8,7 +8,7 @@ export default function ViewOneExam(props) {
     const userIsAdmin = isAdmin();
 
     const handleChange = () => {
-        navigate(`/EditExam/${props.id}`, { state: props });
+        navigate(`/UpdateUserExam/${props.id}`, { state: props });
     };
 
     const deleteClick = () => {
@@ -24,22 +24,27 @@ export default function ViewOneExam(props) {
             });
     };
 
+    const getClassName = () => {
+        return (props.wasSuccesful === 0 || props.wasSuccesful === "0") ? "not-successful" : "success";
+    };
+
     return (
         <>
-            <Row className="mb-3 align-items-center">
+            <Row className={`mb-3 align-items-center p-2 rounded ${getClassName()}`}>
                 <Col lg={4} md={6} sm={12}>
-                    <p className="mb-0"><strong>{props.exam_type || "Vizsga"}</strong></p>
+                    <p className="mb-0 fw-bold">
+                        {props.examsName || "Vizsga"}
+                    </p>
                 </Col>
 
-                <Col lg={4} md={6} sm={12}>
+                <Col lg={4} md={3} sm={12}>
                     <p className="mb-0">{props.examDate}</p>
                 </Col>
 
-                <Col lg={4} md={6} sm={12} className="text-end">
+                <Col lg={4} md={3} sm={12} className="text-center">
                     {userIsAdmin && (
-                        <>
+                        <div className="d-flex justify-content-center gap-2">
                             <Button 
-                                className="me-2" 
                                 variant="primary"
                                 onClick={handleChange}
                             >
@@ -48,10 +53,11 @@ export default function ViewOneExam(props) {
                             <Button 
                                 variant="danger"
                                 onClick={deleteClick}
+
                             >
                                 Törlés
                             </Button>
-                        </>
+                        </div>
                     )}
                 </Col>
             </Row>

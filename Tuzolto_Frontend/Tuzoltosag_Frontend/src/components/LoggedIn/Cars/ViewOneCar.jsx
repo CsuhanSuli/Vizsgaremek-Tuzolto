@@ -33,7 +33,7 @@ export default function ViewOneCar(props) {
                     <p>{props.typename}</p>
                 </Col> 
                 
-                <Col lg={4} md={4} sm={12} className="text-end">
+                <Col lg={4} md={4} sm={12} className="text-center">
                     {userIsAdmin && (
                         <>
                             <Button 

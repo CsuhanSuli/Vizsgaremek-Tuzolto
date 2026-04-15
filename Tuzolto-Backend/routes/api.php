@@ -32,16 +32,17 @@ Route::get('/forum/get', [ForumController::class, 'index']);
 
 // cars
 Route::get('/car/get', [CarController::class, 'index']);
-    
+        Route::get('/examUser/show/{id}', [ExamUserController::class, 'show']);
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/user/logout', [UserController::class, 'logout']);
 
 
     // exam
-    Route::get('/examUser/show/{id}', [ExamUserController::class, 'show']);
+
     Route::get('/examUser/index', [ExamUserController::class, 'index']);
     Route::get('/exam/index', [ExamsController::class, 'index']);
     Route::post('/examUser/store', [ExamUserController::class, 'store'])->middleware(isAdmin::class);
+    Route::put('/examUser/put/{id}', [ExamUserController::class, 'update'])->middleware(isAdmin::class);
     Route::get('/exams/index', [ExamsController::class, 'index']);
     Route::post('/exams/store', [ExamsController::class, 'store'])->middleware(isAdmin::class);
     Route::delete('/examUser/delete/{id}', [ExamUserController::class, 'destroy'])->middleware(isAdmin::class);

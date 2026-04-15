@@ -30,6 +30,7 @@ import UpdateCar from "./components/LoggedIn/Cars/UpdateCar";
 import UpdateSchedule from "./components/LoggedIn/Schedule/UpdateSchedule";
 import Registration from "./components/LoggedIn/Registration/Registration";
 import { isAdmin } from "./components/Login/api";
+import UpdateUserExam from "./components/LoggedIn/Exams/UpdateUserExam";
 
 const AdminRoute = ({ children }) => {
   return isAdmin() ? children : <Navigate replace to="/Calendar" />;
@@ -71,6 +72,7 @@ function App() {
         <Route path="/NewCar" element={<AdminRoute><NewCar /></AdminRoute>} />
         <Route path="/UpdateCar/:id" element={<AdminRoute><UpdateCar /></AdminRoute>} />
         <Route path="/Registration" element={<AdminRoute><Registration /></AdminRoute>} />
+        <Route path="/UpdateUserExam/:id" element={<AdminRoute><UpdateUserExam /></AdminRoute>} />
 
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>

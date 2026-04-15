@@ -23,17 +23,12 @@ button {
     margin-bottom: 2%;
 }
 
-.dontHave {
+.not-successful {
   background-color: lightcoral;
   padding: 5px;
 }
 
-.dontHave {
-  background-color: rgb(255, 255, 103);
-  padding: 5px;
-}
-
-.have {
+.successful {
   background-color: lightgreen;
   padding: 5px;
 }
