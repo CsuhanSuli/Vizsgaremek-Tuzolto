@@ -22,13 +22,14 @@ Ez az útmutató végigvezeti a weboldal, a szerver és az Android alkalmazás t
 1. Letöltöd a Composert
 2. Megnyitod a parancsorban a Tuzolto-Backend mappát
 3. És ha a Composer letöltötted, akkor írd be a parancsot hogy "composer install"
-4. Aztán el tudod indítani a backendet php artisan serverell
+4. Aztán el tudod indítani a backendet. Utasitás: "php artisan servere"
 
-## Frontend elindítása - csak a backendel fog működni
+## Frontend elindítása - csak a backenddel fog működni
 1. Letöltöd a node js
 2. Megnyitod parancssorban a Tuzolto_Frontend\Tuzoltosag_Frontend (Tuzolto_Frontend be a Tuzoltosag_Frontend mappát)
 3. Beírod azt a parancsot hogy "npm install"
-4. Ha mindent jól csináltál, akkor a "npm run dev" paranccsal el tudod majd indítani a frontendet
+4. Kérem írja be a parancsot hogy "npm audit"
+5. Ha mindent jól csináltál, akkor a "npm run dev" paranccsal el tudod majd indítani a frontendet
 
 ## Android - Kell hozzá a backend, hogy működjön
 Az alkalmazás Android verziójának beállításához kövesse az alábbi lépéseket:
