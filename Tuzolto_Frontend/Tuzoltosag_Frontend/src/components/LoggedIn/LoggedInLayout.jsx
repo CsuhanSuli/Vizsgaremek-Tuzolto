@@ -63,7 +63,11 @@ function LoggedInLayout({children}) {
 
                 <NavDropdown title="Autók szerszámai" id="desktop-car-dropdown" className="sidebar-dropdown">
                   {car.map((item) => (
-                    <NavDropdown.Item key={item.id} onClick={() => navigate(`/CarTools/${item.id}`, {state:item})}>
+                    <NavDropdown.Item key={item.id} 
+                      onClick={() => {
+                        navigate(`/CarTools/${item.id}`, {state:item});
+                        window.location.reload();
+                        }}>
                       {item.name}
                     </NavDropdown.Item>
                   ))}
@@ -110,7 +114,12 @@ function LoggedInLayout({children}) {
                 
                 <NavDropdown title="Autók szerszámai" id="mobile-car-dropdown" className="sidebar-dropdown">
                   {car.map((item) => (
-                    <NavDropdown.Item key={item.id} onClick={() => { navigate(`/CarTools/${item.id}`, {state:item}); setShow(false); }}>
+                    <NavDropdown.Item key={item.id} 
+                      onClick={() => {
+                         navigate(`/CarTools/${item.id}`, {state:item}); 
+                         setShow(false); 
+                         window.location.reload();
+                         }}>
                       {item.name}
                     </NavDropdown.Item>
                   ))}

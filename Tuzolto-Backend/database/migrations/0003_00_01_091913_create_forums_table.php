@@ -19,7 +19,7 @@ return new class extends Migration
             $table->unsignedBigInteger('typeId');
             $table->foreign('typeId')->references('id')->on('forum_types');
             $table->string('place');
-            $table->string('description');
+            $table->text('description');
             $table->string('imageName');
         });
     }

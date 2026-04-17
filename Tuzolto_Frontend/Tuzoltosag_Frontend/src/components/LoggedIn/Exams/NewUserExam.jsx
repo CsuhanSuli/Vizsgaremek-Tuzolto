@@ -50,11 +50,6 @@ export default function NewUserExam() {
             });
     };
 
-    const getYesterday = () => {
-        const today = new Date();
-        today.setDate(today.getDate() - 1);
-        return today.toISOString().split("T")[0];
-    };
 
     return (
         <LoggedInLayout>
@@ -68,7 +63,6 @@ export default function NewUserExam() {
                         name="examDate"
                         value={formData.examDate}
                         onChange={handleChange}
-                        max={getYesterday()}
                     />
                 </Form.Group>
 

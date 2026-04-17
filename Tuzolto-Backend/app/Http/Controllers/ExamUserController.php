@@ -30,7 +30,7 @@ class ExamUserController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'examDate' => 'required|before:today',
+            'examDate' => 'required',
             'examId' => 'required|exists:exams,id',
             'userId' => 'required|exists:users,id',
             'wasSuccesful' => 'required|',

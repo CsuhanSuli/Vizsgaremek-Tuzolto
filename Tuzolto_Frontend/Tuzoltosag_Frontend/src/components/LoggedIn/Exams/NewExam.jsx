@@ -73,7 +73,7 @@ function NewExam() {
                             <option value="" disabled>---Válasszon!---</option>
                             {examTypes.map((item) => (
                                 <option key={item.id} value={item.id}>
-                                    {item.typName}
+                                    {item.typeName}
                                 </option>
                             ))}
                         </Form.Select>

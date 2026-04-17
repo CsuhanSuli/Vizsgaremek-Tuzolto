@@ -18,7 +18,7 @@ return new class extends Migration
             $table->boolean('isHappend');
             $table->boolean('isSuccesfull');
             $table->unsignedBigInteger('toolId')->nullable();
-            $table->foreign('toolId')->references('id')->on('tools');
+            $table->foreign('toolId')->references('id')->on('tools')->onDelete('cascade');
             // be kell valahogy tobb constraintet tenni
         });
     }

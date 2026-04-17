@@ -103,9 +103,6 @@ class ToolsController extends Controller
             return response()->json(['message' => 'Eszköz nem található'], 404);
         }
 
-        // Előbb a kapcsolódó dátumokat töröljük, ha nincs cascade delete a migrációban
-        $tool->reviews()->delete();
-
         // Ezután törölhető az eszköz
         $tool->delete();
 
