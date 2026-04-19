@@ -774,7 +774,7 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `fortyHours`, `remember_token`, `created_at`, `updated_at`, `isAdmin`) VALUES
 (1, 'admin', 'admin@gmail.com', NULL, '$2y$12$Okf73FEDztYFd.Zi3xrggeUu2MtP4E32F1vYJx9pWBWI6NCdOAeJK', 1, NULL, '2026-04-17 05:19:10', '2026-04-17 05:19:10', 1),
-(2, 'Geroge Orwell', 'George@gmail.com', NULL, '$2y$12$PFI7zYCyW70uBtKSSajhvOz56LB6HpFyFEbdHQnfIFadftRJOuywy', 0, NULL, '2026-04-17 06:52:17', '2026-04-17 06:52:17', 1),
+(2, 'Geroge Orwell', 'George@gmail.com', NULL, '$2y$12$PFI7zYCyW70uBtKSSajhvOz56LB6HpFyFEbdHQnfIFadftRJOuywy', 0, NULL, '2026-04-17 06:52:17', '2026-04-17 06:52:17', 0),
 (3, 'Franz Kafka', 'Kafka@gmail.com', NULL, '$2y$12$u/dLTsClN1nCbndJy/TaxeN4bUZhCKD7jD.19/Eks4QMVqAGogbrG', 1, NULL, '2026-04-17 06:52:44', '2026-04-17 06:52:44', 0),
 (4, 'Sun Tzu', 'artofWar@gmail.com', NULL, '$2y$12$8Y3sBp68tfL.NL9hW1pU2.EUhJF89dWrOCSSNPfnN0JHlDTCdSHGi', 1, NULL, '2026-04-17 06:53:16', '2026-04-17 06:53:16', 0);
 
