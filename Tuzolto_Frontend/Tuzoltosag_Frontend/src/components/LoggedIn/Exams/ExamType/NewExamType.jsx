@@ -3,6 +3,7 @@ import { Button, Form, Container } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import LoggedInLayout from "../../LoggedInLayout";
 import api from "../../../Login/api";
+import "./ExamType.css";
 
 function NewExamType() {
   const navigate = useNavigate();
@@ -47,7 +48,7 @@ function NewExamType() {
       <Container className="py-4">
         <h1 className="mb-4">Új vizsga típus hozzáadása</h1>
         
-        <Form onSubmit={handleSubmit} style={{ maxWidth: "500px" }}>
+        <Form onSubmit={handleSubmit} className="formCenter">
           <Form.Group className="mb-3">
             <Form.Label><strong>Típus neve:</strong></Form.Label>
             <Form.Control
